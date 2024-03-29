@@ -14,13 +14,13 @@
 
   <div class="logo">
    <img src="./images/StoryShop.png" alt="Logo">
-   <a href="./home.html">LIBRARIA LIVING</a>
+   <a href="home.html">LIBRARIA LIVING</a>
   </div>
 
   <div class="search-container">
     <form action="" class="search">
       <input type="text" class="search-bar" placeholder="Search...">
-      <button class="search-button"> <i class="fas fa-search search-icon"></i></button>
+      <button class="search-button" type="submit"> <i class="fas fa-search search-icon"></i></button>
     </form>
   </div>
 
@@ -44,14 +44,15 @@
     <li><a href="./contact.html">Contact Us</a></li>
     <li><a href="#">My account</a><span class="far fa-user" style="font-size: 20px;"></span>
     <ul class="account-content">
-      <li><button id="sign-up"><a href="./signUp.html">Sign Up</a></button></li>
+      <li><a href="#" id="signup-btn">Sign Up</a></li>
       <li role="presentation"> <hr></li>
-      <li><a href="./logIn.html">Log in</a></li>
+      <li><a href="#" id="login-btn">Log in</a></li>
       <li><a href="./cart.html">Cart</a></li>
       <li><a href="./wishlist.html">Wishlist</a></li>
      </ul>
     </li>
-    <div class="cart-box">
+   
+   <div class="cart-box">
    <div class="dropdown-cart">
           <button class="cart-toggle-btn">
             <i class="fas fa-shopping-cart"></i>
@@ -59,12 +60,14 @@
           </button>
         <div class="cart-window">
             <div class="cart-items">
-              <div class="book-card"></div>
             </div>
             <div class="cart-total">
               <p>Total: <span id="cart-total-price">0€</span></p>
             </div>
-            <button class="btn btn-success">Checkout</button>
+            <div class="cart-footer">
+              <button>View Bag</button>
+              <button>Checkout</button>
+            </div>
           </div>
         </div>
         </div>
@@ -76,7 +79,10 @@
   </button>
 <div class="cart-window-1">
     <div class="cart-items-1">
-      <div class="card-1"></div>
+    </div>
+    <div class="wishlist-footer">
+      <button>View</button>
+      <button id="move">Move to Bag</button>
     </div>
     </div>
   </div>
@@ -84,6 +90,81 @@
   </ul>
   </nav>
  </header>
+ 
+ <div class="login-form-container">
+     <div id="close-login-btn" class="fas fa-times"></div>
+    <form action="" class="login-page">
+        <h2>Login or continue as guest</h2>
+          <input
+            type="email"
+            id="email"
+            placeholder="Email"
+            class="form-group"
+          />
+          <input
+            type="password"
+            id="password"
+            placeholder="Password"
+            class="form-group"
+          />
+          <button type="submit" class="login-btn">Log in</button>
+          <button type="submit" class="guest-btn">Continue as guest</button>
+          <div class="social-login">
+            <button class="facebook-login">
+              <i class="fab fa-facebook-square"></i> Log in with Facebook
+            </button>
+
+            <button class="google-login">
+              <i class="fab fa-google"></i> Log in with Google
+            </button>
+          </div>
+          <div class="go-to-register">
+            <a href="">Don't have an account? <span id="signUp">Sign up now!</span></a>
+          </div>
+    </form>
+</div>
+<div class="signup-form-container">
+      <div id="close-signup-btn" class="fas fa-times"></div>
+      <form action="" class="login-page">
+        <h2>Create an account</h2>
+        <div class="social-login">
+          <button class="facebook-login">
+            <i class="fab fa-facebook-square"></i> Log in with Facebook
+          </button>
+
+          <button class="google-login">
+            <i class="fab fa-google"></i> Log in with Google
+          </button>
+        </div>
+        <input
+          type="text"
+          id="name"
+          placeholder="First Name"
+          class="form-group"
+        />
+        <input
+          type="text"
+          id="surname"
+          placeholder="Last Name"
+          class="form-group"
+        />
+        <input type="email" id="email" placeholder="Email" class="form-group" />
+        <input
+          type="password"
+          id="password"
+          placeholder="Password"
+          class="form-group"
+        />
+        <input
+          type="password"
+          id="confirm-password"
+          placeholder="Confirm Password"
+          class="form-group"
+        />
+        <button type="submit" class="signup-btn">Sign Up</button>
+        <button type="submit" class="guest-btn">Continue as guest</button>
+      </form>
+    </div>
    
    <div class="book-cards">
     <div class="book-card">
