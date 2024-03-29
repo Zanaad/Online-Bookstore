@@ -346,7 +346,7 @@ header .logo a {
 
 .cart-count,
 .cart-count-1 {
-  background-color: #d8565b;
+  background-color:#032161;
   color: #fff;
   border-radius: 50%;
   padding: 4px 8px;
@@ -446,7 +446,7 @@ header .logo a {
 }
 .wishlist-footer button:hover,
 .cart-footer button:hover {
-  background-color: #d8565b;
+  background-color:#032161;
   color: #fff;
 }
 
