@@ -30,22 +30,67 @@ $(document).ready(function () {
       throw new Error("Invalid book price: " + bookPriceText);
     }
 
-    var cartBook = book.clone();
-    cartBook.find(".btn button").remove();
-    cartBook.find(".star-heart").remove();
+    // Store the entire book card HTML, title, and price in local storage
+    var cartBook = {
+      title: book.find("h5").text(),
+      price: bookPrice,
+      bookHTML: book.prop("outerHTML"),
+    };
 
-    // Add the new book card to the cart items
-    $(".cart-items").append(cartBook);
+    // Retrieve existing cart items from local storage
+    var cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+    // Check if the book is already in the wishlist
+    var existingBook = cartItems.find(function (item) {
+      return item.title === cartBook.title;
+    });
+    if (!existingBook) {
+      // Add the new book to the cart items
+      cartItems.push(cartBook);
 
-    // Update the cart total price
-    var totalPrice = parseFloat($("#cart-total-price").text().replace("€", ""));
-    totalPrice += bookPrice;
-    $("#cart-total-price").text(totalPrice.toFixed(2) + "€");
+      // Update the cart items in local storage
+      localStorage.setItem("cart", JSON.stringify(cartItems));
 
-    // Update the cart count
-    var cartCount = parseInt($(".cart-count").text());
-    $(".cart-count").text(cartCount + 1);
+      // Add the new book card to the cart items
+      $(".cart-items").append(cartBook.bookHTML);
+
+      // Update the cart total price
+      var totalPrice = parseFloat(
+        $("#cart-total-price").text().replace("€", "")
+      );
+      totalPrice += bookPrice;
+      $("#cart-total-price").text(totalPrice.toFixed(2) + "€");
+      $("#cart-total-price-books").text(totalPrice.toFixed(2) + "€");
+
+      // Update the cart count
+      var cartCount = parseInt($(".cart-count").text());
+      $(".cart-count").text(cartCount + 1);
+    } else {
+      alert("This book is already in your cart.");
+    }
   }
+
+  // Function to display cart items on the page
+  function displayCartItems() {
+    var cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+    $(".cart-items").empty(); // Clear previous cart items
+    cartItems.forEach(function (item) {
+      $(".cart-items").append(item.bookHTML);
+    });
+    updateCartUI(cartItems);
+  }
+
+  // Function to update the cart UI
+  function updateCartUI(cartItems) {
+    var totalPrice = cartItems.reduce(function (total, item) {
+      return total + item.price;
+    }, 0);
+    $("#cart-total-price").text(totalPrice.toFixed(2) + "€");
+    $("#cart-total-price-books").text(totalPrice.toFixed(2) + "€");
+    $(".cart-count").text(cartItems.length);
+  }
+
+  // Call displayCartItems when the page loads
+  displayCartItems();
 
   // Click event to add a book to the cart
   $(".btn button").click(function () {
@@ -75,16 +120,59 @@ $(document).ready(function () {
 $(document).ready(function () {
   // Function to handle adding a book to the wishlist
   function addToWishlist(book) {
-    var cartBook = book.clone();
-    cartBook.find(".btn button").remove();
-    cartBook.find(".star-heart").remove();
-    // Append the new book card to the cart items
-    $(".cart-items-1").append(cartBook);
+    var wishlistBook = {
+      title: book.find("h5").text(),
+      price: parseFloat(book.find(".price").text().replace("€", "")),
+      bookHTML: book.prop("outerHTML"),
+    };
 
-    // Update the cart count
-    var cartCount = parseInt($(".cart-count-1").text());
-    $(".cart-count-1").text(cartCount + 1);
+    // Retrieve existing wishlist items from local storage
+    var wishlistItems = JSON.parse(localStorage.getItem("wishlist")) || [];
+
+    // Check if the book is already in the wishlist
+    var existingBook = wishlistItems.find(function (item) {
+      return item.title === wishlistBook.title;
+    });
+
+    if (!existingBook) {
+      // Add the new book to the wishlist items
+      wishlistItems.push(wishlistBook);
+
+      // Update the wishlist items in local storage
+      localStorage.setItem("wishlist", JSON.stringify(wishlistItems));
+
+      // Update the cart count
+      var cartCount = parseInt($(".cart-count-1").text());
+      $(".cart-count-1").text(cartCount + 1);
+      // Append the new book card to the wishlist items
+      $(".cart-items-1").append(wishlistBook.bookHTML);
+
+      // Update the wishlist count
+      // var wishlistCount = parseInt($(".wishlist-count").text());
+      // $(".wishlist-count").text(wishlistCount + 1);
+    } else {
+      // Alert the user that the book is already in the wishlist
+      alert("This book is already in your wishlist.");
+    }
   }
+
+  // Function to display wishlist items on the page
+  function displayWishlistItems() {
+    var wishlistItems = JSON.parse(localStorage.getItem("wishlist")) || [];
+    $(".cart-items-1").empty(); // Clear previous wishlist items
+    wishlistItems.forEach(function (item) {
+      $(".cart-items-1").append(item.bookHTML);
+    });
+    updateWishlistUI(wishlistItems);
+  }
+
+  // Function to update the wishlist UI
+  function updateWishlistUI(wishlistItems) {
+    $(".cart-count-1").text(wishlistItems.length);
+  }
+
+  // Call displayWishlistItems when the page loads
+  displayWishlistItems();
 
   // Click event to add a book to the wishlist
   $(".btn.btn-outline-danger").click(function () {
@@ -102,6 +190,47 @@ $(document).ready(function () {
   $(".cart-toggle-btn").click(function () {
     $(".cart-window-1").hide();
   });
+});
+// MOVE TO THE BAG
+$(document).ready(function () {
+  function moveToCart() {
+    // Retrieve wishlist items from local storage
+    var wishlistItems = JSON.parse(localStorage.getItem("wishlist")) || [];
+
+    // Retrieve cart items from local storage
+    var cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+
+    // Iterate over wishlist items
+    wishlistItems.forEach(function (item) {
+      // Check if the item is already in the cart
+      var existingItemIndex = cartItems.findIndex(function (cartItem) {
+        return cartItem.title === item.title;
+      });
+
+      // If the item is not in the cart, add it
+      if (existingItemIndex === -1) {
+        cartItems.push(item);
+      } else {
+        // If the item is already in the cart, update its quantity
+        cartItems[existingItemIndex].quantity += item.quantity;
+      }
+    });
+
+    // Update the cart items in local storage
+    localStorage.setItem("cart", JSON.stringify(cartItems));
+
+    // Clear the wishlist items
+    localStorage.removeItem("wishlist");
+
+    // Refresh the display of cart items
+    displayCartItems();
+
+    // Clear the display of wishlist items
+    $(".cart-items-1").empty();
+  }
+
+  $("#move").click(moveToCart);
+  $("#move-1").click(moveToCart);
 });
 
 //funksionet per validim te te dhenave, te forma ne pjesen e kontaktit
@@ -198,54 +327,6 @@ class Book {
     this.price = price;
   }
 }
-
-// Creating instances of the Book object
-var books = [
-  new Book("The Great Gatsby", "F. Scott Fitzgerald", "Fiction", 15.99),
-  new Book("To Kill a Mockingbird", "Harper Lee", "Classics", 12.5),
-  new Book("The Hobbit", "J.R.R. Tolkien", "Fantasy", 18.75),
-];
-
-// Using map to create an array of book titles
-var bookTitles = books.map((book) => book.title);
-console.log("Book Titles:", bookTitles);
-
-// Using filter to get only fiction books
-var fictionBooks = books.filter((book) => book.genre === "Fiction");
-console.log("Fiction Books:", fictionBooks);
-
-// Using reduce to calculate the total price of the books
-var CmimiTotal = books.reduce((acc, book) => acc + book.price, 0);
-console.log("Total Price of All Books:", CmimiTotal);
-
-// Using map and filter together to get titles of expensive books (price > 15)
-var expensiveBookTitles = books
-  .filter((book) => book.price > 15)
-  .map((book) => book.title);
-console.log("Expensive Book Titles:", expensiveBookTitles);
-
-// dokumentimi eshte 2.5
-//te dokumentimi duhet me shkru ku kena perdor ni kerkese, pse e kena perdor qitu qat kerkese
-// plotesimi i kerkesave eshte 5p
-document.addEventListener("DOMContentLoaded", function () {
-  const loginLink = document.getElementById("login-link");
-  const loginOverlay = document.getElementById("login-page");
-
-  // Add a click event listener to the login link
-  loginLink.addEventListener("click", function (event) {
-    event.preventDefault(); // Prevent the default link behavior (navigating to a new page)
-    console.log("Login link clicked");
-    loginOverlay.style.display = "flex"; // Show the login overlay
-  });
-
-  // Add a click event listener to close the overlay when clicking outside the form
-  loginOverlay.addEventListener("click", function (event) {
-    if (event.target === loginOverlay) {
-      console.log("Overlay clicked");
-      loginOverlay.style.display = "none"; // Hide the login overlay
-    }
-  });
-});
 
 //per log in
 
