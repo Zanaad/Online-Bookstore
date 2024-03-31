@@ -26,7 +26,7 @@ if(isset($_POST['login'])){
     $passwordErr = "Please enter your password";
 } else {
     $password = test_input($_POST["password1"]);
-    // Additional password validation
+    
     if (strlen($password) < 8) {
         $passwordErr = "Password must be at least 8 characters long";
     } elseif (!preg_match("/[0-9]/", $password) || !preg_match("/[a-zA-Z]/", $password)) {
@@ -35,12 +35,11 @@ if(isset($_POST['login'])){
 }
 
 
- // If there are no errors, proceed with registration
+ 
  if (empty($emailErr) && empty($passwordErr)) {
-  // Here you would perform your registration logic
-  // For demonstration purposes, let's just display a success message
+  
  $logedin="you have logged in successfully";
-  // You can redirect the user to a success page if needed
+ 
 }
 }
 
