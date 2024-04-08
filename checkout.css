@@ -1,4 +1,5 @@
-#bigDiv {
+#big {
+  display: block;
   z-index: 5004;
   width: 100%;
   height: 100%;
@@ -6,27 +7,26 @@
   bottom: 0;
   left: 0;
   right: 0;
-  display: none;
-  position: fixed;
-  background: rgba(0, 0, 0, 0.6);
+  position: absolute;
   color: #aaaaaa;
   opacity: 1;
 }
 
 .form-popup {
-  position: absolute;
-  top: 2%;
-  left: 530px;
+  display: block;
+  position: relative;
+  margin: 0 auto;
   border: 5px solid #f1f1f1;
-  z-index: 5001;
-  max-width: 600px;
+  width: 850px;
+  height: 700px;
 }
 
 .form-popup h4 {
   color: #333;
   font-size: 20px;
   font-weight: 600;
-  padding-bottom: 8px;
+  margin-top: 0px;
+  margin-bottom: 5px;
   padding-left: 15px;
 }
 
@@ -35,17 +35,17 @@
   height: 670px;
   max-height: 700px;
   padding: 10px;
-  background-color: #fff;
+  background-color: white;
 }
 
 #checkout-name {
-  width: 49%;
-  margin-right: 2%;
+  width: 45%;
   float: left;
 }
 
 #checkout-surname {
-  width: 49%;
+  margin-left: 3px;
+  width: 45%;
 }
 
 .form-container input[type="text"],
@@ -54,7 +54,7 @@
 textarea,
 select {
   border-radius: 7px;
-  width: 100%;
+  width: 95%;
   padding: 15px;
   margin-bottom: 10px;
   border: none;
@@ -85,7 +85,6 @@ select {
   width: 50%;
   float: right;
 }
-
 .form-container .cancel {
   background-color: #fff;
   color: #032161;

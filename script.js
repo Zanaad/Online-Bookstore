@@ -322,34 +322,6 @@ document.addEventListener("DOMContentLoaded", function () {
 //te dokumentimi duhet me shkru ku kena perdor ni kerkese, pse e kena perdor qitu qat kerkese
 // plotesimi i kerkesave eshte 5p
 
-// per log in
-
-let loginForm = document.querySelector(".login-form-container");
-document.querySelector("#login-btn").onclick = () => {
-  loginForm.classList.toggle("active");
-};
-document.querySelector("#close-login-btn").onclick = () => {
-  loginForm.classList.remove("active");
-};
-
-// per sign up
-let signUpForm = document.querySelector(".signup-form-container");
-document.querySelector("#signup-btn").onclick = () => {
-  signUpForm.classList.toggle("active");
-};
-document.querySelector("#close-signup-btn").onclick = () => {
-  signUpForm.classList.remove("active");
-};
-
-//per SIgn Up Now
-let signUpLink = document.querySelector(".go-to-register #signUp");
-
-signUpLink.onclick = (event) => {
-  event.preventDefault(); // Prevent default link behavior
-  loginForm.classList.remove("active");
-  signUpForm.classList.add("active");
-};
-
 //Drag and drop
 function allowDrop(event) {
   event.preventDefault();

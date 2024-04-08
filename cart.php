@@ -124,7 +124,7 @@
               </div>
               <div class="cart-footer">
                 <a href="cart.php"><button>View Bag</button></a>
-                <button onclick="openForm()">Checkout</button>
+                <a href="./checkout.php"><button>Checkout</button></a>
               </div>
             </div>
           </div>
@@ -148,35 +148,6 @@
       </ul>
     </nav>
   </header>
-
-  <div id="bigDiv" style=" z-index: 6000;">
-    <div class="form-popup" id="myForm" style="border-radius: 15px;">
-      <form action="" class="form-container" onsubmit="return validation(); changeBackground();">
-        <h4>Contact information</h4>
-        <input type="email" id="checkout-email" placeholder="Email" name="email">
-        <h4>Shipping address</h4>
-        <input type="text" id="checkout-name" placeholder="Name" name="name">
-        <input type="text" id="checkout-surname" placeholder="Surname" name="surname">
-        <input type="text" id="adress" placeholder="Adress" name="Adress">
-        <input type="text" id="pcode" placeholder="Postal Code" name="Postal Code">
-        <input type="text" id="_city" placeholder="City" name="city">
-        <select id="mySelect" onchange="change_placeholder(this)">
-          <option value="">Select your country...</option>
-          <option value="Albania">Albania</option>
-          <option value="Kosovo">Kosovo</option>
-          <option value="Montenegro">Montenegro</option>
-          <option value="North Macedonia">North Macedonia</option>
-          <option value="Serbia">Serbia</option>
-        </select>
-        <input type="tel" id="phone" name="phone" placeholder="Phone number" style="margin-top: 10px;">
-        <input type="checkbox">
-        <p style="color:#201c1c">Save this information for next time</p>
-        </br>
-        <button type="submit" class="btn" onclick="return validation() ">Submit</button>
-        <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
-      </form>
-    </div>
-  </div>
   <div class="cart-container">
     <div class="cart-items">
       <!-- Cart items will be displayed here -->

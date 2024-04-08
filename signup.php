@@ -9,15 +9,14 @@ if (isset($_POST['signup'])) {
   $password = $_POST['password'];
   $re_pass = $_POST['re_pass'];
 
-  // Use validation methods inherited from LoginValidation
   $validator->validateName($name);
   $validator->validateEmail($email);
   $validator->validatePassword($password);
   $validator->validateConfirmPassword($re_pass, $password);
 
 
-  if (empty($validator->emailErr) && empty($validator->passwordErr) && empty($validator->NameErr) && empty($validator->NameErr1) && empty($validator->confirmPasswordErr) && empty($validator->confirmPasswordErr1)) {
-    $validator->logedin = "You have signed up successfully";
+  if (empty($validator->getEmailErr()) && empty($validator->getNameErr()) && empty($validator->getPasswordErr()) && empty($validator->getConfirmPasswordErr())) {
+    $validator->setSignedUp("You have signed up successfully");
   }
 }
 ?>
@@ -48,25 +47,22 @@ if (isset($_POST['signup'])) {
               <div class="form-group">
                 <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
                 <input type="text" name="name" id="name" placeholder="Your Name">
-                <span style="color: red;"><?php echo $validator->NameErr; ?></span>
-                <span style="color: red;"><?php echo $validator->NameErr1; ?></span>
+                <span style="color: red;"><?php echo $validator->getNameErr(); ?></span>
               </div>
               <div class="form-group">
                 <label for="email"><i class="zmdi zmdi-email"></i></label>
                 <input type="email" name="email" id="email" placeholder="Your Email">
-                <span style="color: red;"><?php echo $validator->emailErr; ?></span>
-                <span style="color: red;"><?php echo $validator->emailErr1; ?></span>
+                <span style="color: red;"><?php echo $validator->getEmailErr(); ?></span>
               </div>
               <div class="form-group">
                 <label for="pass"><i class="zmdi zmdi-lock"></i></label>
                 <input type="password" name="password" id="pass" placeholder="Password">
-                <span style="color:red"><?php echo $validator->passwordErr; ?></span>
+                <span style="color:red"><?php echo $validator->getPasswordErr(); ?></span>
               </div>
               <div class="form-group">
                 <label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
                 <input type="password" name="re_pass" id="re_pass" placeholder="Repeat your password">
-                <span style="color: red;"><?php echo $validator->confirmPasswordErr; ?></span>
-                <span style="color: red;"><?php echo $validator->confirmPasswordErr1; ?></span>
+                <span style="color:red"><?php echo $validator->getConfirmPasswordErr(); ?></span>
               </div>
               <div class="form-group">
                 <input type="checkbox" name="agree-term" id="agree-term" class="agree-term">
@@ -74,7 +70,7 @@ if (isset($_POST['signup'])) {
               </div>
               <div class="form-group form-button">
                 <input type="submit" name="signup" id="signup" class="form-submit" value="Register">
-                <span><?php echo $validator->logedin; ?></span>
+                <span style="color: green;"><?php echo $validator->getSignedUp(); ?></span>
               </div>
             </form>
           </div>

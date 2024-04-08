@@ -57,11 +57,11 @@
         <li>
           <a href="#">My account</a><span class="far fa-user" style="font-size: 20px"></span>
           <ul class="account-content">
-            <li><a href="#" id="signup-btn">Sign Up</a></li>
+            <li><a href="./signup.php" id="signup-btn">Sign Up</a></li>
             <li role="presentation">
               <hr />
             </li>
-            <li><a href="#" id="login-btn">Log in</a></li>
+            <li><a href="./login.php" id="login-btn">Log in</a></li>
             <li><a href="./cart.php">Cart</a></li>
             <li><a href="./wishlist.php">Wishlist</a></li>
           </ul>
@@ -69,50 +69,7 @@
       </ul>
     </nav>
   </header>
-  <div class="login-form-container">
-    <div id="close-login-btn" class="fas fa-times"></div>
-    <form action="" method="post" class="login-page">
-      <h2>Login or continue as guest</h2>
-      <input type="text" name="loginEmail" id="login-email" placeholder="Email" class="form-group" />
-      <input type="password" name="loginPassword" id="login-password" placeholder="Password" class="form-group" />
-      <button type="submit" class="login-btn">Log in</button>
-      <button type="submit" class="guest-btn">Continue as guest</button>
-      <div class="social-login">
-        <button class="facebook-login">
-          <i class="fab fa-facebook-square"></i> Log in with Facebook
-        </button>
 
-        <button class="google-login">
-          <i class="fab fa-google"></i> Log in with Google
-        </button>
-      </div>
-      <div class="go-to-register">
-        <a href="">Don't have an account? <span id="signUp">Sign up now!</span></a>
-      </div>
-    </form>
-  </div>
-  <div class="signup-form-container">
-    <div id="close-signup-btn" class="fas fa-times"></div>
-    <form action="" class="login-page">
-      <h2>Create an account</h2>
-      <div class="social-login">
-        <button class="facebook-login">
-          <i class="fab fa-facebook-square"></i> Log in with Facebook
-        </button>
-
-        <button class="google-login">
-          <i class="fab fa-google"></i> Log in with Google
-        </button>
-      </div>
-      <input type="text" name="signupName" id="signup-name" placeholder="First Name" class="form-group" />
-      <input type="text" name="signupSurname" id="signup-surname" placeholder="Last Name" class="form-group" />
-      <input type="email" name="signupEmail" id="signup-email" placeholder="Email" class="form-group" />
-      <input type="password" name="signupPassword" id="signup-password" placeholder="Password" class="form-group" />
-      <input type="password" name="signupConfirmPassword" id="confirm-password" placeholder="Confirm Password" class="form-group" />
-      <button type="submit" class="signup-btn">Sign Up</button>
-      <button type="submit" class="guest-btn">Continue as guest</button>
-    </form>
-  </div>
   <div class="evente" style="margin-top: 60px">
     <video autoplay loop muted plays-inline class="background-clip">
       <source src="./audiot/pexels-videos-1584831-2160p_pcWE9MFZ.mp4" />

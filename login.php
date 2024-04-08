@@ -10,8 +10,8 @@ if (isset($_POST['login'])) {
   $validator->validateEmail($email);
   $validator->validatePassword($password);
 
-  if (empty($validator->emailErr) && empty($validator->passwordErr)) {
-    $validator->logedin = "You have logged in successfully";
+  if (empty($validator->getEmailErr()) && empty($validator->getPasswordErr())) {
+    $validator->setLoggedin("You have logged in successfully");
   }
 }
 ?>
@@ -45,13 +45,12 @@ if (isset($_POST['login'])) {
               <div class="form-group">
                 <label for="your_email"><i class="zmdi zmdi-account material-icons-name"></i></label>
                 <input type="email" name="name" id="your_email" placeholder="Email">
-                <span style="color: red;"><?php echo $validator->emailErr; ?></span>
-                <span style="color: red;"><?php echo $validator->emailErr1; ?></span>
+                <span style="color: red;"><?php echo $validator->getEmailErr(); ?></span>
               </div>
               <div class="form-group">
                 <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
                 <input type="password" name="password" id="your_pass" placeholder="Password">
-                <span style="color:red"><?php echo $validator->passwordErr; ?></span>
+                <span style="color:red"><?php echo $validator->getPasswordErr(); ?></span>
               </div>
               <div class="form-group">
                 <input type="checkbox" name="remember-me" id="remember-me" class="agree-term">
@@ -59,7 +58,7 @@ if (isset($_POST['login'])) {
               </div>
               <div class="form-group form-button">
                 <input type="submit" name="login" id="signin" class="form-submit" value="Log in">
-                <span><?php echo $validator->logedin; ?></span>
+                <span style="color: green;"><?php echo $validator->getLoggedin(); ?></span>
               </div>
             </form>
             <div class="social-login">

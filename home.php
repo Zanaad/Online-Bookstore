@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bookstore website</title>
   <link rel="stylesheet" href="style1.css">
-  <link rel="stylesheet" href="checkout.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
   <link rel="stylesheet" href="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 
@@ -71,8 +70,8 @@
                 <p>Total: <span id="cart-total-price">0€</span></p>
               </div>
               <div class="cart-footer">
-                <a href="cart.php"><button>View Bag</button></a>
-                <button onclick="openForm()">Checkout</button>
+                <a href="./cart.php"><button>View Bag</button></a>
+                <a href="./checkout.php"><button>Checkout</button></a>
               </div>
             </div>
           </div>
@@ -97,34 +96,6 @@
     </nav>
   </header>
 
-  <div id="bigDiv" style=" z-index: 6000;">
-    <div class="form-popup" id="myForm" style="border-radius: 15px;">
-      <form action="" class="form-container" onsubmit="return validation(); changeBackground();">
-        <h4>Contact information</h4>
-        <input type="email" id="checkout-email" placeholder="Email" name="email">
-        <h4>Shipping address</h4>
-        <input type="text" id="checkout-name" placeholder="Name" name="name">
-        <input type="text" id="checkout-surname" placeholder="Surname" name="surname">
-        <input type="text" id="adress" placeholder="Adress" name="Adress">
-        <input type="text" id="pcode" placeholder="Postal Code" name="Postal Code">
-        <input type="text" id="_city" placeholder="City" name="city">
-        <select id="mySelect" onchange="change_placeholder(this)">
-          <option value="">Select your country...</option>
-          <option value="Albania">Albania</option>
-          <option value="Kosovo">Kosovo</option>
-          <option value="Montenegro">Montenegro</option>
-          <option value="North Macedonia">North Macedonia</option>
-          <option value="Serbia">Serbia</option>
-        </select>
-        <input type="tel" id="phone" name="phone" placeholder="Phone number" style="margin-top: 10px;">
-        <input type="checkbox">
-        <p style="color:#201c1c">Save this information for next time</p>
-        </br>
-        <button type="submit" class="btn" onclick="return validation() ">Submit</button>
-        <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
-      </form>
-    </div>
-  </div>
   <div class="background-section">
     <!-- Fotoja e background shkon ne kete pjese. E vendosim ne pjesen e css -->
   </div>
@@ -1203,8 +1174,6 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="script.js"></script>
-  <script src="checkout.js"></script>
-
 </body>
 
 </html>
