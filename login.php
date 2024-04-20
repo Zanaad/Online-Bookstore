@@ -5,46 +5,45 @@ $validator = new LoginValidation();
 
 session_start();
 
-$logoutMessage = "";
-if (isset($_SESSION['login_timer']) && $_SESSION['login_timer'] > time()) {
-  $validator->setLoggedin("You cannot log in again so soon. Please wait.");
+// pjesa e remember me
+if(isset($_POST['remember-me'])) {
+    
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    setcookie('remember_email', $email, time() + (30 * 24 * 3600)); // mas ni muji expire
+    setcookie('remember_password', $password, time() + (30 * 24 * 3600)); 
+} else {
+   
+    setcookie('remember_email', '', time() - 3600); 
+    setcookie('remember_password', '', time() - 3600); 
 }
 
-if (isset($_GET['message'])) {
-  $message = $_GET['message'];
-  echo "<script>alert('$message');</script>";
+$logoutMessage = ""; 
+if(isset($_SESSION['login_timer']) && $_SESSION['login_timer'] > time()) {
+    $validator->setLoggedin("You cannot log in again so soon. Please wait.");
 }
 
 if (isset($_POST['login'])) {
-  $email = $_POST['email'];
-  $password = $_POST['password'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
 
-  if (isset($_SESSION['users'][$email])) {
-    $userData = $_SESSION['users'][$email];
-    $storedPassword = $userData['password'];
+    if (isset($_SESSION['users'][$email])) {
+        $userData = $_SESSION['users'][$email];
+        $storedPassword = $userData['password'];
 
-    if ($password === $storedPassword) {
-      $validator->setLoggedin("You have logged in successfully");
-      $_SESSION['user_name'] = $userData['name'];
-      $_SESSION['login_timer'] = time() + 30;
-      $username = $userData['name'];
-      setcookie("logged_in", $username, time() + (10 * 60), "/");
-      header("Location: home.php");
-      exit();
+        if ($password === $storedPassword) {
+            $validator->setLoggedin("You have logged in successfully");
+            $_SESSION['login_timer'] = time() + 30; 
+            header("Location: home.php");
+            exit();
+        } else {
+            $validator->setPasswordErr("Incorrect email or password");
+        }
     } else {
-      $validator->setPasswordErr("Incorrect email or password");
+        $validator->setPasswordErr("User not found. Register!!");
     }
-  } else {
-    $validator->setPasswordErr("User not found. Register!!");
-  }
 }
 
-
-
-if (isset($_POST['logout'])) {
-  unset($_SESSION['users']);
-  $logoutMessage = "You have been logged out.";
-}
 
 ?>
 
