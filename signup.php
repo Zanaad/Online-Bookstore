@@ -63,6 +63,12 @@ if (isset($_POST['signup'])) {
     }
   }
 }
+
+if(isset($_GET['message'])) {
+  $message = $_GET['message'];
+
+  echo "<script>alert('$message');</script>";
+}
 ?>
 
 <html lang="en">
