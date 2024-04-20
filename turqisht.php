@@ -1,32 +1,3 @@
-<?php
-include('book_data.php');
-
-function searchBook($books, $title)
-{
-  foreach ($books as $book) {
-    if ($book['title'] == $title) {
-      return $book;
-    }
-  }
-  return null;
-}
-
-if (isset($_GET['search'])) {
-  $searchTerm = $_GET['search'];
-  $foundBook = searchBook($books, $searchTerm);
-  if ($foundBook) {
-    echo "<div class='book-card'>";
-    echo "<div class='content'>";
-    echo "<h5>" . $foundBook['title'] . "</h5>";
-    echo "<h6>" . $foundBook['author'] . "</h6>";
-    echo "<h5 class='price'>" . $foundBook['price'] . "</h5>";
-    echo "</div>";
-    echo "</div>";
-  } else {
-    echo "Book not found";
-  }
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 
