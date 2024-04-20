@@ -9,7 +9,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
   <link rel="stylesheet" href="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
 </head>
-
 <body>
   <header class="container-fluid header-container">
 
@@ -67,7 +66,17 @@
             <li><a href="./wishlist.php">Wishlist</a></li>
           </ul>
         </li>
-
+        <script>
+            console.log("Script is running");
+            function displayWelcomeMessage() {
+            <?php if(isset($_SESSION['user_email'])): ?>
+              alert("Miresevini, <?php echo $_SESSION['user_email']; ?>");
+            <?php else: ?>
+              alert("Miresevini!");
+            <?php endif; ?>
+          }
+          displayWelcomeMessage();
+        </script>
 
         <div class="cart-box">
           <div class="dropdown-cart">
