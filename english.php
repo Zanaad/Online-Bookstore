@@ -374,34 +374,6 @@
         </div>
       </div>
     </div>
-<div class="col">
-    <div class="book-card">
-    
-        <div class="content">
-            <div class="star-heart">
-                <div class="stars" id="L'Etranger">
-    
-    </div>
-                <button class="wishlist-heart"><i class="far fa-heart"></i></button>
-            </div>
-            <h5>L'Etranger</h5>
-            <h6>Albert Camus</h6>
-            
-            <?php
-            $bookPrice = 16.00; // Për shembull, çmimi i librit
-            if ($bookPrice > MAX_PRICE) {
-                echo '<h5 class="price" style="color: red;">' . $bookPrice . '€</h5>';
-            } else {
-                echo '<h5 class="price">' . $bookPrice . '€</h5>';
-            }
-            ?>
-            
-            <div class="btn">
-                <button>Shto në shportë</button>
-            </div>
-        </div>
-    </div>
-</div>
 
     <div class="book-card">
       <img src="./images/bell_jar.png" alt="">
