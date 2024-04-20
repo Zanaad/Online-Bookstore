@@ -3,6 +3,8 @@ include 'validation.php';
 
 $validator = new SignupValidation();
 
+session_start(); // Start the session
+
 if (isset($_POST['signup'])) {
   $name = $_POST['name'];
   $email = $_POST['email'];
@@ -14,9 +16,51 @@ if (isset($_POST['signup'])) {
   $validator->validatePassword($password);
   $validator->validateConfirmPassword($re_pass, $password);
 
-
   if (empty($validator->getEmailErr()) && empty($validator->getNameErr()) && empty($validator->getPasswordErr()) && empty($validator->getConfirmPasswordErr())) {
-    $validator->setSignedUp("You have signed up successfully");
+    // Check if the user data array already exists in the session
+    if (!isset($_SESSION['users'])) {
+      // If not, create it
+      $_SESSION['users'] = array();
+    }
+
+    // Generate a unique session ID for the user
+    $sessionId = session_id();
+
+    // Generate a unique user ID
+    $userId = uniqid();
+
+    // Check if the email is already registered
+    $emailExists = false;
+    foreach ($_SESSION['users'] as $user) {
+      if ($user['email'] === $email) {
+        $emailExists = true;
+        break;
+      }
+    }
+
+    if (!$emailExists) {
+      // Store user details along with session ID and user ID
+      $_SESSION['users'][$email] = array(
+        'id' => $userId, // Add a unique user ID
+        'name' => $name,
+        'email' => $email,
+        'password' => $password,
+        'session_id' => $sessionId // Store session ID
+      );
+
+      // Initialize an empty cart for the user
+      $_SESSION['cart'][$sessionId] = array();
+
+      $validator->setSignedUp("You have signed up successfully");
+
+      echo '<script>
+              setTimeout(function(){
+                window.location.href = "login.php";
+              }, 3000);
+            </script>';
+    } else {
+      $validator->setSignedUp('<span style="color: red;">User already exists</span>');
+    }
   }
 }
 ?>
