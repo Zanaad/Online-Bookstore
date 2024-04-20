@@ -32,11 +32,6 @@ if (isset($_POST['login'])) {
     }
 }
 
-if(isset($_GET['message'])) {
-    $message = $_GET['message'];
-
-    echo "<script>alert('$message');</script>";
-}
 
 
 if(isset($_POST['logout'])) {
