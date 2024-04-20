@@ -17,19 +17,9 @@ if (isset($_POST['signup'])) {
   $validator->validateConfirmPassword($re_pass, $password);
 
   if (empty($validator->getEmailErr()) && empty($validator->getNameErr()) && empty($validator->getPasswordErr()) && empty($validator->getConfirmPasswordErr())) {
-    // Check if the user data array already exists in the session
     if (!isset($_SESSION['users'])) {
-      // If not, create it
       $_SESSION['users'] = array();
     }
-
-    // Generate a unique session ID for the user
-    $sessionId = session_id();
-
-    // Generate a unique user ID
-    $userId = uniqid();
-
-    // Check if the email is already registered
     $emailExists = false;
     foreach ($_SESSION['users'] as $user) {
       if ($user['email'] === $email) {
@@ -39,17 +29,11 @@ if (isset($_POST['signup'])) {
     }
 
     if (!$emailExists) {
-      // Store user details along with session ID and user ID
       $_SESSION['users'][$email] = array(
-        'id' => $userId, // Add a unique user ID
         'name' => $name,
         'email' => $email,
-        'password' => $password,
-        'session_id' => $sessionId // Store session ID
+        'password' => $password
       );
-
-      // Initialize an empty cart for the user
-      $_SESSION['cart'][$sessionId] = array();
 
       $validator->setSignedUp("You have signed up successfully");
 
@@ -63,14 +47,9 @@ if (isset($_POST['signup'])) {
     }
   }
 }
-
-if(isset($_GET['message'])) {
-  $message = $_GET['message'];
-
-  echo "<script>alert('$message');</script>";
-}
 ?>
 
+<!DOCTYPE html>
 <html lang="en">
 
 <head>

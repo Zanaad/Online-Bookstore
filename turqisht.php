@@ -1,3 +1,32 @@
+<?php
+include('book_data.php');
+
+function searchBook($books, $title)
+{
+  foreach ($books as $book) {
+    if ($book['title'] == $title) {
+      return $book;
+    }
+  }
+  return null;
+}
+
+if (isset($_GET['search'])) {
+  $searchTerm = $_GET['search'];
+  $foundBook = searchBook($books, $searchTerm);
+  if ($foundBook) {
+    echo "<div class='book-card'>";
+    echo "<div class='content'>";
+    echo "<h5>" . $foundBook['title'] . "</h5>";
+    echo "<h6>" . $foundBook['author'] . "</h6>";
+    echo "<h5 class='price'>" . $foundBook['price'] . "</h5>";
+    echo "</div>";
+    echo "</div>";
+  } else {
+    echo "Book not found";
+  }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -43,17 +72,31 @@
         </li>
         <li><a href="evente.php">Evente</a></li>
         <li><a href="./contact.php">Contact Us</a></li>
-        <li><a href="#">My account</a><span class="far fa-user" style="font-size: 20px;"></span>
+        <li><a href="#">
+            <?php
+            session_start();
+            if (isset($_SESSION['user_name'])) {
+              echo $_SESSION['user_name'];
+            } else {
+              echo "My account";
+            }
+            ?>
+          </a><span class="far fa-user" style="font-size: 20px; <?php echo isset($_COOKIE['logged_in']) ? 'color: darkblue;' : ''; ?>"></span>
           <ul class="account-content">
-            <li><a href="./signup.php" id="signup-btn">Sign Up</a></li>
-            <li role="presentation">
-              <hr>
-            </li>
-            <li><a href="./login.php" id="login-btn">Log in</a></li>
+            <?php if (isset($_SESSION['user_name'])) : ?>
+              <li><a href="logout.php">Log Out</a></li>
+            <?php else : ?>
+              <li><a href="./signup.php" id="signup-btn">Sign Up</a></li>
+              <li role="presentation">
+                <hr>
+              </li>
+              <li><a href="login.php" id="login-btn">Log in</a></li>
+            <?php endif; ?>
             <li><a href="./cart.php">Cart</a></li>
             <li><a href="./wishlist.php">Wishlist</a></li>
           </ul>
         </li>
+
 
         <div class="cart-box">
           <div class="dropdown-cart">
@@ -68,7 +111,7 @@
                 <p>Total: <span id="cart-total-price">0€</span></p>
               </div>
               <div class="cart-footer">
-                <a href="cart.php"><button>View Bag</button></a>
+                <a href="login.php"><button>View Bag</button></a>
                 <a href="./checkout.php"><button>Checkout</button></a>
               </div>
             </div>
@@ -94,7 +137,9 @@
     </nav>
   </header>
 
+
   <div class="book-cards">
+    <!-- <a href="singlePage.php?book_id=1" class="single-page"> -->
     <div class="book-card">
       <img src="./images/yagmur.png" alt="">
       <div class="content">
@@ -118,7 +163,8 @@
         </div>
       </div>
     </div>
-
+    <!-- </a> -->
+    <!-- <a href="singlePage.php?book_id=2" class="single-page"> -->
     <div class="book-card">
       <img src="./images/labirent.png" alt="">
 
@@ -145,6 +191,7 @@
         </div>
       </div>
     </div>
+    <!-- </a> -->
 
     <div class="book-card">
       <img src="./images/hayat.png" alt="">
