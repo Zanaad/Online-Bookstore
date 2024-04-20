@@ -4,7 +4,7 @@ session_start();
 
 if(!isset($_SESSION['users'])) {
    
-    header("Location: login.php?message=Please log in to access events.");
+    header("Location: signup.php?message=Please log in to access events.");
     exit();
 }
 ?>
