@@ -3,18 +3,58 @@ include 'validation.php';
 
 $validator = new LoginValidation();
 
-if (isset($_POST['login'])) {
-  $email = $_POST['name'];
-  $password = $_POST['password'];
+session_start(); 
 
-  $validator->validateEmail($email);
-  $validator->validatePassword($password);
 
-  if (empty($validator->getEmailErr()) && empty($validator->getPasswordErr())) {
-    $validator->setLoggedin("You have logged in successfully");
-  }
+if (isset($_POST['logout'])) {
+    
+    unset($_SESSION['logged_in']);
+    $_SESSION = array();
+  
+
+    session_destroy();
+  
+
+    header("Location: login.php");
+    exit();
 }
+
+
+if(isset($_SESSION['login_timer']) && $_SESSION['login_timer'] > time()) {
+    
+    $validator->setLoggedin("You cannot log in again so soon. Please wait.");
+   
+}
+
+if (isset($_POST['login'])) {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    if (isset($_SESSION['users'][$email])) {
+        $userData = $_SESSION['users'][$email];
+        $storedPassword = $userData['password'];
+
+        
+        if ($password === $storedPassword) {
+            $validator->setLoggedin("You have logged in successfully");
+
+         
+            $_SESSION['login_timer'] = time() + 30; 
+            header("Location: home.php");
+            exit();
+        } else {
+            $validator->setPasswordErr("Incorrect email or password");
+        }
+    } else {
+        $validator->setPasswordErr("User not found.Register!!");
+    }
+}
+
+
+header("Location: login.php");
+exit();
 ?>
+
 
 <html lang="en">
 
