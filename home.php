@@ -25,10 +25,10 @@ trackTimeOnSite();
 if(isset($_COOKIE['color'])) {
     $color = $_COOKIE['color'];
 } else {
-    $colors = array('red', 'green', 'blue', 'yellow', 'orange');
+    $colors = array('green', 'blue');
     $color = $colors[array_rand($colors)];
 }
-$colors = array('red', 'green', 'blue', 'yellow', 'orange');
+$colors = array('green', 'blue');
 $newColor = $colors[array_rand($colors)];
 setcookie('color', $newColor, time() + 5); 
 ?>
@@ -54,9 +54,8 @@ setcookie('color', $newColor, time() + 5);
 
 </head>
 <style>
-        body {
+        footer {
             background-color: <?php echo $color; ?>;
-            color: white;
           
         }
     </style>
