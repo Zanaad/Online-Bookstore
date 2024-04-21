@@ -30,7 +30,7 @@ if(isset($_COOKIE['color'])) {
 }
 $colors = array('#055e1a', '#5e0532','#3c0878','#5e0532');
 $newColor = $colors[array_rand($colors)];
-setcookie('color', $newColor, time() + 5); 
+setcookie('color', $newColor, time() + 10); 
 ?>
 
 
