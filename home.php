@@ -21,6 +21,24 @@ function trackTimeOnSite() {
 trackTimeOnSite();
 ?>
 
+<?php
+if(isset($_COOKIE['color'])) {
+    $color = $_COOKIE['color'];
+} else {
+    $colors = array('red', 'green', 'blue', 'yellow', 'orange');
+    $color = $colors[array_rand($colors)];
+}
+$colors = array('red', 'green', 'blue', 'yellow', 'orange');
+$newColor = $colors[array_rand($colors)];
+setcookie('color', $newColor, time() + 5); 
+?>
+
+ <script>
+        
+        setTimeout(function(){
+            window.location.reload(1);
+        }, 5000); 
+    </script>
 
 
 
@@ -36,6 +54,15 @@ trackTimeOnSite();
   <link rel="stylesheet" href="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 
 </head>
+<style>
+        body {
+            background-color: <?php echo $color; ?>;
+            color: white;
+          
+        }
+    </style>
+
+<body>
 
 <body>
 
