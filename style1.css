@@ -367,7 +367,6 @@ header .logo a {
 }
 footer {
   position: inherit;
-  background: #032161;
   width: 100%;
 }
 footer::before {
