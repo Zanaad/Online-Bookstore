@@ -1,3 +1,17 @@
+?>
+
+<?php
+if(isset($_COOKIE['color'])) {
+    $color = $_COOKIE['color'];
+} else {
+    $colors = array('#055e1a', '#5e0532','#3c0878','#5e0532');
+    $color = $colors[array_rand($colors)];
+}
+$colors = array('#055e1a', '#5e0532','#3c0878','#5e0532');
+$newColor = $colors[array_rand($colors)];
+setcookie('color', $newColor, time() + 5); 
+?>
+
 
 <?php
 
@@ -54,7 +68,19 @@ if (isset($_POST['sortBooks'])) {
     .btn-outline-primary {
       margin: 0 20px;
     }
+   .search-button ,.btn button , footer {
+            background-color: <?php echo $color; ?>;
+          
+        }
+   
   </style>
+   <script>
+        
+        setTimeout(function(){
+            window.location.reload(1);
+        }, 5000); 
+    </script>
+
 </head>
 
 <body>

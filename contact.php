@@ -1,3 +1,18 @@
+?>
+
+<?php
+if(isset($_COOKIE['color'])) {
+    $color = $_COOKIE['color'];
+} else {
+    $colors = array('#055e1a', '#5e0532','#3c0878','#5e0532');
+    $color = $colors[array_rand($colors)];
+}
+$colors = array('#055e1a', '#5e0532','#3c0878','#5e0532');
+$newColor = $colors[array_rand($colors)];
+setcookie('color', $newColor, time() + 5); 
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,7 +23,20 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
   <link rel="stylesheet" href="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
   <title>Contact Us</title>
+  <script>
+        
+        setTimeout(function(){
+            window.location.reload(1);
+        }, 5000); 
+    </script>
+
 </head>
+<style>
+        .search-button ,.btn button , footer {
+            background-color: <?php echo $color; ?>;
+          
+        }
+    </style>
 
 <body>
   <header class="container-fluid header-container">
