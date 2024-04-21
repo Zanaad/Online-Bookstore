@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo "Vlerësimi dhe komenti u ruajtën me sukses!";
 } else {
     // Nëse kërkesa nuk është POST, ridrejto përdoruesin në faqen e duhur
-    header("Location: homepage.php");
+    header("Location: home.php");
     exit;
 }
 ?>
