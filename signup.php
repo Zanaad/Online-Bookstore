@@ -5,6 +5,18 @@ $validator = new SignupValidation();
 
 session_start(); // Start the session
 
+// Function to generate a random salt
+function generateSalt($length = 16)
+{
+  return bin2hex(random_bytes($length));
+}
+
+// Function to generate a salted hash of the password
+function saltedHashPassword($password, $salt)
+{
+  return hash('sha256', $password . $salt);
+}
+
 if (isset($_POST['signup'])) {
   $name = $_POST['name'];
   $email = $_POST['email'];
@@ -29,25 +41,49 @@ if (isset($_POST['signup'])) {
     }
 
     if (!$emailExists) {
+      // Generate salt
+      $salt = generateSalt();
+
+      // Generate salted hash of the password
+      $hashedPassword = saltedHashPassword($password, $salt);
+
       $_SESSION['users'][$email] = array(
         'name' => $name,
         'email' => $email,
-        'password' => $password
+        'password' => $hashedPassword,
+        'salt' => $salt // Store the salt in the session
       );
 
       $validator->setSignedUp("You have signed up successfully");
 
       echo '<script>
-              setTimeout(function(){
-                window.location.href = "login.php";
-              }, 3000);
-            </script>';
+                    setTimeout(function(){
+                      window.location.href = "login.php";
+                    }, 10000);
+                  </script>';
     } else {
       $validator->setSignedUp('<span style="color: red;">User already exists</span>');
     }
   }
 }
+echo "<h2>All Users:</h2>";
+echo "<table border='1'>";
+echo "<tr><th>Name</th><th>Email</th><th>Password</th></tr>";
+
+if (isset($_SESSION['users']) && is_array($_SESSION['users'])) {
+  foreach ($_SESSION['users'] as $user) {
+    echo "<tr>";
+    echo "<td>" . $user['name'] . "</td>";
+    echo "<td>" . $user['email'] . "</td>";
+    echo "<td>" . $user['password'] . "</td>";
+    echo "</tr>";
+  }
+}
+
+echo "</table>";
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
