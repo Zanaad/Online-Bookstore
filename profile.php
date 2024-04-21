@@ -73,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])) {
                 <div class="profile-usermenu">
                     <ul class="nav">
                         <li class="active">
-                            <a href="homepage.php">
+                            <a href="home.php">
                                 <i class="glyphicon glyphicon-home"></i>
                                 Homepage </a>
                         </li>
