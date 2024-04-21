@@ -33,13 +33,6 @@ $newColor = $colors[array_rand($colors)];
 setcookie('color', $newColor, time() + 5); 
 ?>
 
- <script>
-        
-        setTimeout(function(){
-            window.location.reload(1);
-        }, 5000); 
-    </script>
-
 
 
 <!DOCTYPE html>
@@ -52,6 +45,12 @@ setcookie('color', $newColor, time() + 5);
   <link rel="stylesheet" href="style1.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
   <link rel="stylesheet" href="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <script>
+        
+        setTimeout(function(){
+            window.location.reload(1);
+        }, 5000); 
+    </script>
 
 </head>
 <style>
