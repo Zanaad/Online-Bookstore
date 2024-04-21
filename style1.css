@@ -113,7 +113,7 @@ header .logo a {
   border: 1px solid #f0f0f0;
   border-bottom-right-radius: 20px;
   border-top-right-radius: 20px;
-  background-color: #032161;
+  
   color: #fff;
 }
 .icons a {
@@ -352,7 +352,6 @@ header .logo a {
 
 .btn button {
   width: 12rem;
-  background-color: #032161;
   color: #fff;
   padding: 10px 0;
   border: none;

@@ -25,10 +25,10 @@ trackTimeOnSite();
 if(isset($_COOKIE['color'])) {
     $color = $_COOKIE['color'];
 } else {
-    $colors = array('green', 'blue');
+    $colors = array('#055e1a', '#5e0532','#3c0878','#5e0532');
     $color = $colors[array_rand($colors)];
 }
-$colors = array('green', 'blue');
+$colors = array('#055e1a', '#5e0532','#3c0878','#5e0532');
 $newColor = $colors[array_rand($colors)];
 setcookie('color', $newColor, time() + 5); 
 ?>
@@ -54,7 +54,7 @@ setcookie('color', $newColor, time() + 5);
 
 </head>
 <style>
-        footer {
+        .search-button ,.btn button , footer {
             background-color: <?php echo $color; ?>;
           
         }
