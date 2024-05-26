@@ -107,309 +107,35 @@
       </ul>
     </nav>
   </header>
-
   <div class="book-cards">
-    <div class="book-card">
-      <img src="./images/juvenilja.jpg" alt="">
-      <div class="content">
-        <div class="star-heart">
-          <div class="stars" id="Juvenilja">
-            <i class="far fa-star" data-value="1"></i>
-            <i class="far fa-star" data-value="2"></i>
-            <i class="far fa-star" data-value="3"></i>
-            <i class="far fa-star" data-value="4"></i>
-            <i class="far fa-star" data-value="5"></i>
+    <?php
+    include 'db_connect.php';
+    $query = "SELECT * FROM books where genre='Novels'";
+    $result = mysqli_query($conn, $query);
+    if (mysqli_num_rows($result) > 0) {
+      while ($row = mysqli_fetch_assoc($result)) {
+    ?>
+        <div class="book-card">
+          <img src="<?php echo $row['image']; ?>" alt="<?php echo $row['title']; ?>">
+          <div class="content">
+            <h5><?php echo $row['title']; ?></h5>
+            <h6><?php echo $row['author']; ?></h6>
+            <h5 class="price"><?php echo $row['price']; ?>€</h5>
+            <div class="btn">
+              <button>Shto në shportë</button>
+            </div>
           </div>
-          <button class="btn btn-outline-danger">
-            <i class="fas fa-heart"></i>
-          </button>
         </div>
-        <h5>Juvenilja</h5>
-        <h6>Ndre Mjeda</h6>
-        <h5 class="price">12.00€</h5>
-        <div class="btn">
-          <button>Shto në shportë</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="book-card">
-      <img src="./images/kadare.jpg" alt="">
-
-      <div class="content">
-        <div class="star-heart">
-          <div class="stars" id="Keshtjella">
-            <i class="far fa-star" data-value="1"></i>
-            <i class="far fa-star" data-value="2"></i>
-            <i class="far fa-star" data-value="3"></i>
-            <i class="far fa-star" data-value="4"></i>
-            <i class="far fa-star" data-value="5"></i>
-          </div>
-          <button class="btn btn-outline-danger">
-            <i class="fas fa-heart"></i>
-          </button>
-        </div>
-
-        <h5>Keshtjella</h5>
-        <h6>Ismail Kadare</h6>
-        <h5 class="price">11.80€</h5>
-
-        <div class="btn">
-          <button>Shto në shportë</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="book-card">
-      <img src="./images/doctor.jpg" alt="">
-
-      <div class="content">
-        <div class="star-heart">
-          <div class="stars" id="Doktor-Gjilpera">
-            <i class="far fa-star" data-value="1"></i>
-            <i class="far fa-star" data-value="2"></i>
-            <i class="far fa-star" data-value="3"></i>
-            <i class="far fa-star" data-value="4"></i>
-            <i class="far fa-star" data-value="5"></i>
-          </div>
-          <button class="btn btn-outline-danger">
-            <i class="fas fa-heart"></i>
-          </button>
-        </div>
-        <h5>Doktor Gjilpera</h5>
-        <h6>Faik Konica</h6>
-        <h5 class="price">13.00€</h5>
-        <div class="btn">
-          <button>Shto në shportë</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="book-card">
-      <img src="./images/luletveres.png" alt="">
-
-      <div class="content">
-        <div class="star-heart">
-          <div class="stars" id="Lulet-e-Veres">
-            <i class="far fa-star" data-value="1"></i>
-            <i class="far fa-star" data-value="2"></i>
-            <i class="far fa-star" data-value="3"></i>
-            <i class="far fa-star" data-value="4"></i>
-            <i class="far fa-star" data-value="5"></i>
-          </div>
-          <button class="btn btn-outline-danger">
-            <i class="fas fa-heart"></i>
-          </button>
-        </div>
-        <h5>Lulet e Veres</h5>
-        <h6>Naim Frasheri</h5>
-          <h5 class="price">10.00€</h5>
-          <div class="btn">
-            <button>Shto në shportë</button>
-          </div>
-      </div>
-    </div>
-
-    <div class="book-card">
-      <img src="./images/deti.jpg" alt="">
-
-      <div class="content">
-        <div class="star-heart">
-          <div class="stars" id="Plaku-Dhe-Deti">
-            <i class="far fa-star" data-value="1"></i>
-            <i class="far fa-star" data-value="2"></i>
-            <i class="far fa-star" data-value="3"></i>
-            <i class="far fa-star" data-value="4"></i>
-            <i class="far fa-star" data-value="5"></i>
-          </div>
-          <button class="btn btn-outline-danger">
-            <i class="fas fa-heart"></i>
-          </button>
-        </div>
-        <h5>Plaku Dhe Deti</h5>
-        <h6>Ernest Hemingway</h6>
-        <h5 class="price">12.90€</h5>
-        <div class="btn">
-          <button>Shto në shportë</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="book-card">
-      <img src="./images/gorioi.jpg" alt="">
-
-      <div class="content">
-        <div class="star-heart">
-          <div class="stars" id="Xha-Gorio">
-            <i class="far fa-star" data-value="1"></i>
-            <i class="far fa-star" data-value="2"></i>
-            <i class="far fa-star" data-value="3"></i>
-            <i class="far fa-star" data-value="4"></i>
-            <i class="far fa-star" data-value="5"></i>
-          </div>
-          <button class="btn btn-outline-danger">
-            <i class="fas fa-heart"></i>
-          </button>
-        </div>
-        <h5>Xha Gorio</h5>
-        <h6>Honore De Balzak</h6>
-        <h5 class="price">12.70€</h5>
-        <div class="btn">
-          <button>Shto në shportë</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="book-card">
-      <img src="./images/i-huaji.jpg" alt="">
-
-      <div class="content">
-        <div class="star-heart">
-          <div class="stars" id="I-Huaji">
-            <i class="far fa-star" data-value="1"></i>
-            <i class="far fa-star" data-value="2"></i>
-            <i class="far fa-star" data-value="3"></i>
-            <i class="far fa-star" data-value="4"></i>
-            <i class="far fa-star" data-value="5"></i>
-          </div>
-          <button class="btn btn-outline-danger">
-            <i class="fas fa-heart"></i>
-          </button>
-        </div>
-        <h5>I Huaji</h5>
-        <h6>Albert Camus</h6>
-        <h5 class="price">14.00€</h5>
-        <div class="btn">
-          <button>Shto në shportë</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="book-card">
-      <img src="./images/faustin.jpg" alt="">
-
-      <div class="content">
-        <div class="star-heart">
-          <div class="stars" id="Fausti">
-            <i class="far fa-star" data-value="1"></i>
-            <i class="far fa-star" data-value="2"></i>
-            <i class="far fa-star" data-value="3"></i>
-            <i class="far fa-star" data-value="4"></i>
-            <i class="far fa-star" data-value="5"></i>
-          </div>
-          <button class="btn btn-outline-danger">
-            <i class="fas fa-heart"></i>
-          </button>
-        </div>
-        <h5>Fausti</h5>
-        <h6>Volfgang Gëte</h6>
-        <h5 class="price">13.50€</h5>
-        <div class="btn">
-          <button>Shto në shportë</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="book-card">
-      <img src="./images/metamorfoza.jpg" alt="">
-
-      <div class="content">
-        <div class="star-heart">
-          <div class="stars" id="Metamorfoza">
-            <i class="far fa-star" data-value="1"></i>
-            <i class="far fa-star" data-value="2"></i>
-            <i class="far fa-star" data-value="3"></i>
-            <i class="far fa-star" data-value="4"></i>
-            <i class="far fa-star" data-value="5"></i>
-          </div>
-          <button class="btn btn-outline-danger">
-            <i class="fas fa-heart"></i>
-          </button>
-        </div>
-        <h5>Metamorfoza</h5>
-        <h6>Franz Kafka</h6>
-        <h5 class="price">10.00€</h5>
-        <div class="btn">
-          <button>Shto në shportë</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="book-card">
-      <img src="./images/procesi.jpg" alt="">
-
-      <div class="content">
-        <div class="star-heart">
-          <div class="stars" id="Procesi">
-            <i class="far fa-star" data-value="1"></i>
-            <i class="far fa-star" data-value="2"></i>
-            <i class="far fa-star" data-value="3"></i>
-            <i class="far fa-star" data-value="4"></i>
-            <i class="far fa-star" data-value="5"></i>
-          </div>
-          <button class="btn btn-outline-danger">
-            <i class="fas fa-heart"></i>
-          </button>
-        </div>
-        <h5>Procesi</h5>
-        <h6>Franz Kafka</h6>
-        <h5 class="price">13.60€</h5>
-        <div class="btn">
-          <button>Shto në shportë</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="book-card">
-      <img src="./images/lulet.jpg" alt="">
-
-      <div class="content">
-        <div class="star-heart">
-          <div class="stars" id="LuletESeKeqes">
-            <i class="far fa-star" data-value="1"></i>
-            <i class="far fa-star" data-value="2"></i>
-            <i class="far fa-star" data-value="3"></i>
-            <i class="far fa-star" data-value="4"></i>
-            <i class="far fa-star" data-value="5"></i>
-          </div>
-          <button class="btn btn-outline-danger">
-            <i class="fas fa-heart"></i>
-          </button>
-        </div>
-        <h5>Lulet E Se Keqes</h5>
-        <h6>Sharl Bodler</h6>
-        <h5 class="price">9.50€</h5>
-        <div class="btn">
-          <button>Shto në shportë</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="book-card">
-      <img src="./images/bija.png" alt="">
-
-      <div class="content">
-        <div class="star-heart">
-          <div class="stars" id="Bija-E-Mallkuar">
-            <i class="far fa-star" data-value="1"></i>
-            <i class="far fa-star" data-value="2"></i>
-            <i class="far fa-star" data-value="3"></i>
-            <i class="far fa-star" data-value="4"></i>
-            <i class="far fa-star" data-value="5"></i>
-          </div>
-          <button class="btn btn-outline-danger">
-            <i class="fas fa-heart"></i>
-          </button>
-        </div>
-        <h5>Bija e Mallkuar</h5>
-        <h6>Emile Richbourg</h6>
-        <h5 class="price">10.40€</h5>
-        <div class="btn">
-          <button>Shto në shportë</button>
-        </div>
-      </div>
-    </div>
+    <?php
+      }
+    } else {
+      echo "No books found";
+    }
+    ?>
   </div>
+
+
+
   <footer>
     <div class="content">
       <div class="top">

@@ -61,3 +61,34 @@ VALUES
 ('Ensemble, c\'est tout', 'Anna Gavalda', './images/ensemble.png', 11.90, 'French'),
 ('Madame Bovary', 'Gustave Flaubert', './images/bovary.png', 13.70, 'French'),
 ('Le Petite Prince', 'Antoine de Saint', './images/PetitePrince.png', 12.60, 'French');
+
+INSERT INTO books (title, author, image_url, price, genre) 
+VALUES 
+('Juvenilja', 'Ndre Mjeda', './images/juvenilja.jpg', 12.00, 'Novels'),
+('Keshtjella', 'Ismail Kadare', './images/kadare.jpg', 11.80, 'Novels'),
+('Doktor Gjilpera', 'Faik Konica', './images/doctor.jpg', 13.00, 'Novels'),
+('Lulet e Veres', 'Naim Frasheri', './images/luletveres.png', 10.00, 'Novels'),
+('Plaku Dhe Deti', 'Ernest Hemingway', './images/deti.jpg', 12.90, 'Novels'),
+('Xha Gorio', 'Honore De Balzak', './images/gorioi.jpg', 12.70, 'Novels'),
+('I Huaji', 'Albert Camus', './images/i-huaji.jpg', 14.00, 'Novels'),
+('Fausti', 'Volfgang Gëte', './images/faustin.jpg', 13.50, 'Novels'),
+('Metamorfoza', 'Franz Kafka', './images/metamorfoza.jpg', 10.00, 'Novels'),
+('Procesi', 'Franz Kafka', './images/procesi.jpg', 13.60, 'Novels'),
+('Lulet E Se Keqes', 'Sharl Bodler', './images/lulet.jpg', 9.50, 'Novels'),
+('Bija e Mallkuar', 'Emile Richbourg', './images/bija.png', 10.40, 'Novels');
+
+
+INSERT INTO books (title, author, image_url, price, genre) 
+VALUES 
+('Five Feet Apart', 'Rachael Lippincott', './images/five_feet_apart.jpg', 16.50, 'Romance'),
+('All The Bright Places', 'Jennifer Niven', './images/all_the_bright_places.jpg', 15.80, 'Romance'),
+('The Fault In Our Stars', 'John Green', './images/fault.jpg', 14.90, 'Romance'),
+('The Library Of Lost Things', 'Laura Taylor', './images/library.png', 12.00, 'Romance'),
+('The Cruel Prince', 'Holly Black', './images/prince.jpg', 10.50, 'Romance'),
+('The Wicked King', 'Holly Black', './images/wikced.png', 12.30, 'Romance'),
+('The Queen Of Nothing', 'Holly Black', './images/queen.png', 13.60, 'Romance'),
+('Every Other Weekend', 'Abigail Johnson', './images/weekend.png', 12.50, 'Romance'),
+('Things We Never Got Over', 'Lucy Score', './images/over.png', 14.00, 'Romance'),
+('Things We Hide From The Light', 'Lucy Score', './images/light.png', 14.50, 'Romance'),
+('Midnight Sun', 'Trish Cook', './images/sun.jpg', 15.00, 'Romance'),
+('Shatter Me Series', 'Tahereh Mafi', './images/shatter.png', 30.00, 'Romance');
