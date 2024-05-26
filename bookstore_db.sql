@@ -92,3 +92,18 @@ VALUES
 ('Things We Hide From The Light', 'Lucy Score', './images/light.png', 14.50, 'Romance'),
 ('Midnight Sun', 'Trish Cook', './images/sun.jpg', 15.00, 'Romance'),
 ('Shatter Me Series', 'Tahereh Mafi', './images/shatter.png', 30.00, 'Romance');
+
+INSERT INTO books (title, author, image, price, genre) 
+VALUES 
+('Biraz Yagmur Kimseyi Incitmez', 'Kemal Sayar', './images/yagmur.png', 12.00, 'Turkish'),
+('Ruhun Labirentleri', 'Kemal Sayar', './images/labirent.png', 12.50, 'Turkish'),
+('Hayatin anlami var mi?', 'Erol Goka', './images/hayat.png', 11.80, 'Turkish'),
+('Gerçek insanin yuzunde yazar mi?', 'Erol Goka&Murat', './images/gercek.png', 12.50, 'Turkish'),
+('Mesnevi Terapi', 'Nevzat Tarhan', './images/mesnevi.png', 14.30, 'Turkish'),
+('Benim Adim Kirmizi', 'Orhan Pamuk', './images/kirmizi.png', 13.40, 'Turkish'),
+('Kara Kitap', 'Orhan Pamuk', './images/KaraKitap.png', 12.80, 'Turkish'),
+('Ince Memed', 'Yasar Kemal', './images/ince.png', 12.70, 'Turkish'),
+('Kuyucakli Yusuf', 'Sabahattin Ali', './images/yusuf.png', 14.90, 'Turkish'),
+('Korkuyu Beklerken', 'Oguz Atay', './images/korku.jpg', 11.30, 'Turkish'),
+('Istanbul\'a Son Tren', 'Ayse Kulin', './images/last.png', 13.50, 'Turkish'),
+('Aylak Adam', 'Yusuf Atilgan', './images/aylak.png', 9.80, 'Turkish');
