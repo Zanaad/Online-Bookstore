@@ -1,57 +1,44 @@
 <?php
+include 'db_connect.php';
 include 'validation.php';
 
 $validator = new LoginValidation();
 
 session_start();
 
-function verifyPassword($password, $storedPassword, $salt)
-{
-  return hash('sha256', $password . $salt) === $storedPassword;
-}
-
-$logoutMessage = "";
-if (isset($_SESSION['login_timer']) && $_SESSION['login_timer'] > time()) {
-  $validator->setLoggedin("You cannot log in again so soon. Please wait.");
-}
-
-if (isset($_GET['message'])) {
-  $message = $_GET['message'];
-  echo "<script>alert('$message');</script>";
-}
-
 if (isset($_POST['login'])) {
-  $email = $_POST['email'];
-  $password = $_POST['password'];
 
-  if (isset($_SESSION['users'][$email])) {
-    $userData = $_SESSION['users'][$email];
-    $storedPassword = $userData['password'];
-    $salt = $userData['salt'];
+  $email = mysqli_real_escape_string($conn, $_POST['email']);
+  $password = mysqli_real_escape_string($conn, $_POST['password']);
 
-    // Verify the password using salt
-    if (verifyPassword($password, $storedPassword, $salt)) {
-      $validator->setLoggedin("You have logged in successfully");
-      $_SESSION['user_name'] = $userData['name'];
-      $_SESSION['login_timer'] = time() + 30;
-      $username = $userData['name'];
-      setcookie("logged_in", $username, time() + (10 * 60), "/");
-      header("Location: home.php");
-      exit();
+  $select_users = mysqli_query($conn, "SELECT * FROM `users` WHERE email = '$email'") or die('query failed');
+
+  if (mysqli_num_rows($select_users) > 0) {
+    $row = mysqli_fetch_assoc($select_users);
+
+    $salt = $row['salt'];
+    $storedHashedPassword = $row['hashPassword'];
+    $enteredHashedPassword = hash('sha256', $password . $salt);
+
+    if ($storedHashedPassword === $enteredHashedPassword) {
+      $_SESSION['user_id'] = $row['id'];
+      $_SESSION['user_name'] = $row['name'];
+      $validator->setLoggedin("Logged in successfully!");
+      header('location:home.php');
     } else {
-      $validator->setPasswordErr("Incorrect email or password");
+      $validator->setPasswordErr("Invalid password!");
     }
   } else {
-    $validator->setPasswordErr("User not found. Register!!");
+    $validator->setEmailErr("Invalid email!");
   }
 }
 
 if (isset($_POST['logout'])) {
-  unset($_SESSION['users']);
-  $logoutMessage = "You have been logged out.";
+  session_destroy();
+  header('location:login.php');
 }
-?>
 
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -72,7 +59,7 @@ if (isset($_POST['logout'])) {
       <div class="container">
         <div class="signin-content">
           <div class="signin-image">
-            <figure><img src="images/signin-image.jpg" alt="sing up image"></figure>
+            <figure><img src="images/signin-image.jpg" alt="sign up image"></figure>
             <a href="signup.php" class="signup-image-link">Create an account</a>
           </div>
           <div class="signin-form">
@@ -96,11 +83,8 @@ if (isset($_POST['logout'])) {
                 <input type="submit" name="login" id="signin" class="form-submit" value="Log in" style="margin-top: 30px;">
                 <span style="color: green;"><?php echo $validator->getLoggedin(); ?></span>
                 <input type="submit" name="logout" id="signout" class="form-submit" value="Log out">
-                <span style="color: red;"><?php echo $logoutMessage; ?></span>
               </div>
-
             </form>
-
             <div class="social-login">
               <span class="social-label">Or login with</span>
               <ul class="socials">
