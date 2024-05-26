@@ -108,6 +108,32 @@
     </nav>
   </header>
 
+  <div class="book-cards">
+    <?php
+    include 'db_connect.php';
+    $query = "SELECT * FROM books where genre='Romance'";
+    $result = mysqli_query($conn, $query);
+    if (mysqli_num_rows($result) > 0) {
+      while ($row = mysqli_fetch_assoc($result)) {
+    ?>
+        <div class="book-card">
+          <img src="<?php echo $row['image']; ?>" alt="<?php echo $row['title']; ?>">
+          <div class="content">
+            <h5><?php echo $row['title']; ?></h5>
+            <h6><?php echo $row['author']; ?></h6>
+            <h5 class="price"><?php echo $row['price']; ?>€</h5>
+            <div class="btn">
+              <button>Shto në shportë</button>
+            </div>
+          </div>
+        </div>
+    <?php
+      }
+    } else {
+      echo "No books found";
+    }
+    ?>
+  </div>
 
 
   <footer>

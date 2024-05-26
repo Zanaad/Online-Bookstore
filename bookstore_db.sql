@@ -62,7 +62,7 @@ VALUES
 ('Madame Bovary', 'Gustave Flaubert', './images/bovary.png', 13.70, 'French'),
 ('Le Petite Prince', 'Antoine de Saint', './images/PetitePrince.png', 12.60, 'French');
 
-INSERT INTO books (title, author, image_url, price, genre) 
+INSERT INTO books (title, author, image, price, genre) 
 VALUES 
 ('Juvenilja', 'Ndre Mjeda', './images/juvenilja.jpg', 12.00, 'Novels'),
 ('Keshtjella', 'Ismail Kadare', './images/kadare.jpg', 11.80, 'Novels'),
@@ -78,7 +78,7 @@ VALUES
 ('Bija e Mallkuar', 'Emile Richbourg', './images/bija.png', 10.40, 'Novels');
 
 
-INSERT INTO books (title, author, image_url, price, genre) 
+INSERT INTO books (title, author, image, price, genre) 
 VALUES 
 ('Five Feet Apart', 'Rachael Lippincott', './images/five_feet_apart.jpg', 16.50, 'Romance'),
 ('All The Bright Places', 'Jennifer Niven', './images/all_the_bright_places.jpg', 15.80, 'Romance'),
