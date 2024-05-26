@@ -8,17 +8,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
  if (empty($name) || empty($email) || empty($message)) {
-  echo "Please fill in all fields.";
+  echo "Mbushni te gjitha fushat";
  } else {
 
-  $to = "zanaademi4@gmail.com";
-  $subject = "New Contact Form Submission";
-  $body = "Name: $name\nEmail: $email\nMessage:\n$message";
+  $to = "?";
+  $subject = "Form Submission";
+  $body = "Emri: $name\nEmail: $email\nMesazhi:\n$message";
 
   if (mail($to, $subject, $body)) {
-   echo "Thank you! Your message has been sent.";
+   echo "Ju faleminderit!Mesazhi i juaj u dergua.";
   } else {
-   echo "Sorry, there was an error sending your message. Please try again later.";
+   echo "Mesazhi i juaj nuk u dergua me sukses";
   }
  }
 }
+
+?>
