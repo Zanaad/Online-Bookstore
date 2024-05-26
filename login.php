@@ -1,83 +1,119 @@
 <?php
+include 'validation.php';
 
-include 'config.php';
+$validator = new LoginValidation();
+
 session_start();
 
-if (isset($_POST['submit'])) {
-
-   $email = mysqli_real_escape_string($conn, $_POST['email']);
-   $pass = mysqli_real_escape_string($conn, md5($_POST['password']));
-
-   $select_users = mysqli_query($conn, "SELECT * FROM `users` WHERE email = '$email' AND password = '$pass'") or die('query failed');
-
-   if (mysqli_num_rows($select_users) > 0) {
-
-      $row = mysqli_fetch_assoc($select_users);
-
-      if ($row['user_type'] == 'admin') {
-
-         $_SESSION['admin_name'] = $row['name'];
-         $_SESSION['admin_email'] = $row['email'];
-         $_SESSION['admin_id'] = $row['id'];
-         header('location:admin_page.php');
-      } elseif ($row['user_type'] == 'user') {
-
-         $_SESSION['user_name'] = $row['name'];
-         $_SESSION['user_email'] = $row['email'];
-         $_SESSION['user_id'] = $row['id'];
-         header('location:home.php');
-      }
-   } else {
-      $message[] = 'incorrect email or password!';
-   }
+function verifyPassword($password, $storedPassword, $salt)
+{
+  return hash('sha256', $password . $salt) === $storedPassword;
 }
 
+$logoutMessage = "";
+if (isset($_SESSION['login_timer']) && $_SESSION['login_timer'] > time()) {
+  $validator->setLoggedin("You cannot log in again so soon. Please wait.");
+}
+
+if (isset($_GET['message'])) {
+  $message = $_GET['message'];
+  echo "<script>alert('$message');</script>";
+}
+
+if (isset($_POST['login'])) {
+  $email = $_POST['email'];
+  $password = $_POST['password'];
+
+  if (isset($_SESSION['users'][$email])) {
+    $userData = $_SESSION['users'][$email];
+    $storedPassword = $userData['password'];
+    $salt = $userData['salt'];
+
+    // Verify the password using salt
+    if (verifyPassword($password, $storedPassword, $salt)) {
+      $validator->setLoggedin("You have logged in successfully");
+      $_SESSION['user_name'] = $userData['name'];
+      $_SESSION['login_timer'] = time() + 30;
+      $username = $userData['name'];
+      setcookie("logged_in", $username, time() + (10 * 60), "/");
+      header("Location: home.php");
+      exit();
+    } else {
+      $validator->setPasswordErr("Incorrect email or password");
+    }
+  } else {
+    $validator->setPasswordErr("User not found. Register!!");
+  }
+}
+
+if (isset($_POST['logout'])) {
+  unset($_SESSION['users']);
+  $logoutMessage = "You have been logged out.";
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-   <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>login</title>
-
-   <!-- font awesome cdn link  -->
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
-   <!-- custom css file link  -->
-   <link rel="stylesheet" href="css/style.css">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Log in</title>
+  <link rel="stylesheet" href="css/material-design-iconic-font.min.css">
+  <link rel="stylesheet" href="login.css">
+  <meta name="robots" content="noindex, follow">
 </head>
 
 <body>
+  <div class="main">
+    <section class="sign-in">
+      <div class="container">
+        <div class="signin-content">
+          <div class="signin-image">
+            <figure><img src="images/signin-image.jpg" alt="sing up image"></figure>
+            <a href="signup.php" class="signup-image-link">Create an account</a>
+          </div>
+          <div class="signin-form">
+            <h2 class="form-title">Log in</h2>
+            <form method="POST" class="register-form" id="login-form">
+              <div class="form-group">
+                <label for="your_email"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                <input type="email" name="email" id="your_email" placeholder="Email">
+                <span style="color: red;"><?php echo $validator->getEmailErr(); ?></span>
+              </div>
+              <div class="form-group">
+                <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
+                <input type="password" name="password" id="your_pass" placeholder="Password">
+                <span style="color:red"><?php echo $validator->getPasswordErr(); ?></span>
+              </div>
+              <div class="form-group">
+                <input type="checkbox" name="remember-me" id="remember-me" class="agree-term">
+                <label for="remember-me" class="label-agree-term"><span><span></span></span>Remember me</label>
+              </div>
+              <div class="form-group form-button">
+                <input type="submit" name="login" id="signin" class="form-submit" value="Log in" style="margin-top: 30px;">
+                <span style="color: green;"><?php echo $validator->getLoggedin(); ?></span>
+                <input type="submit" name="logout" id="signout" class="form-submit" value="Log out">
+                <span style="color: red;"><?php echo $logoutMessage; ?></span>
+              </div>
 
-   <?php
-   if (isset($message)) {
-      foreach ($message as $message) {
-         echo '
-      <div class="message">
-         <span>' . $message . '</span>
-         <i class="fas fa-times" onclick="this.parentElement.remove();"></i>
+            </form>
+
+            <div class="social-login">
+              <span class="social-label">Or login with</span>
+              <ul class="socials">
+                <li><a href="#"><i class="display-flex-center zmdi zmdi-facebook"></i></a></li>
+                <li><a href="#"><i class="display-flex-center zmdi zmdi-twitter"></i></a></li>
+                <li><a href="#"><i class="display-flex-center zmdi zmdi-google"></i></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
-      ';
-      }
-   }
-   ?>
-
-   <div class="form-container">
-
-      <form action="" method="post">
-         <h3>login now</h3>
-         <input type="email" name="email" placeholder="enter your email" required class="box">
-         <input type="password" name="password" placeholder="enter your password" required class="box">
-         <input type="submit" name="submit" value="login now" class="btn">
-         <p>don't have an account? <a href="register.php">register now</a></p>
-      </form>
-
-   </div>
-
+    </section>
+  </div>
 </body>
 
 </html>

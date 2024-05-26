@@ -1,169 +1,84 @@
 <?php
+include 'validation.php';
 
-include 'config.php';
+$validator = new CheckoutValidation();
 
-session_start();
+if (isset($_POST['submit'])) {
+ $email = $_POST['email'];
+ $name = $_POST['name'];
+ $surname = $_POST['surname'];
+ $address = $_POST['address'];
+ $city = $_POST['city'];
+ $postalCode = $_POST['PostalCode'];
+ $phone = $_POST['phone'];
 
-$user_id = $_SESSION['user_id'];
 
-if(!isset($user_id)){
-   header('location:login.php');
+
+ $validator->validateEmail($email);
+ $validator->validateNameSurname($name, $surname);
+ $validator->validateAddress($address);
+ $validator->validateCity($city);
+ $validator->validatePhoneNumber($phone);
+ $validator->validatePostalCode($postalCode);
+
+
+ if (empty($validator->getEmailErr()) && empty($validator->getNameErr()) && empty($validator->getAddressErr()) && empty($validator->getCityErr()) && empty($validator->getPCodeErr()) && empty($validator->getPhoneErr())) {
+  $validator->setOrder("Checkout completed");
+ }
 }
-
-if(isset($_POST['order_btn'])){
-
-   $name = mysqli_real_escape_string($conn, $_POST['name']);
-   $number = $_POST['number'];
-   $email = mysqli_real_escape_string($conn, $_POST['email']);
-   $method = mysqli_real_escape_string($conn, $_POST['method']);
-   $address = mysqli_real_escape_string($conn, 'flat no. '. $_POST['flat'].', '. $_POST['street'].', '. $_POST['city'].', '. $_POST['country'].' - '. $_POST['pin_code']);
-   $placed_on = date('d-M-Y');
-
-   $cart_total = 0;
-   $cart_products[] = '';
-
-   $cart_query = mysqli_query($conn, "SELECT * FROM `cart` WHERE user_id = '$user_id'") or die('query failed');
-   if(mysqli_num_rows($cart_query) > 0){
-      while($cart_item = mysqli_fetch_assoc($cart_query)){
-         $cart_products[] = $cart_item['name'].' ('.$cart_item['quantity'].') ';
-         $sub_total = ($cart_item['price'] * $cart_item['quantity']);
-         $cart_total += $sub_total;
-      }
-   }
-
-   $total_products = implode(', ',$cart_products);
-
-   $order_query = mysqli_query($conn, "SELECT * FROM `orders` WHERE name = '$name' AND number = '$number' AND email = '$email' AND method = '$method' AND address = '$address' AND total_products = '$total_products' AND total_price = '$cart_total'") or die('query failed');
-
-   if($cart_total == 0){
-      $message[] = 'your cart is empty';
-   }else{
-      if(mysqli_num_rows($order_query) > 0){
-         $message[] = 'order already placed!'; 
-      }else{
-         mysqli_query($conn, "INSERT INTO `orders`(user_id, name, number, email, method, address, total_products, total_price, placed_on) VALUES('$user_id', '$name', '$number', '$email', '$method', '$address', '$total_products', '$cart_total', '$placed_on')") or die('query failed');
-         $message[] = 'order placed successfully!';
-         mysqli_query($conn, "DELETE FROM `cart` WHERE user_id = '$user_id'") or die('query failed');
-      }
-   }
-   
-}
-
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-   <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>checkout</title>
-
-   <!-- font awesome cdn link  -->
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
-   <!-- custom css file link  -->
-   <link rel="stylesheet" href="css/style.css">
-
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <link rel="stylesheet" href="checkout.css">
+ <title>Document</title>
 </head>
+
 <body>
-   
-<?php include 'header.php'; ?>
-
-<div class="heading">
-   <h3>checkout</h3>
-   <p> <a href="home.php">home</a> / checkout </p>
-</div>
-
-<section class="display-order">
-
-   <?php  
-      $grand_total = 0;
-      $select_cart = mysqli_query($conn, "SELECT * FROM `cart` WHERE user_id = '$user_id'") or die('query failed');
-      if(mysqli_num_rows($select_cart) > 0){
-         while($fetch_cart = mysqli_fetch_assoc($select_cart)){
-            $total_price = ($fetch_cart['price'] * $fetch_cart['quantity']);
-            $grand_total += $total_price;
-   ?>
-   <p> <?php echo $fetch_cart['name']; ?> <span>(<?php echo '$'.$fetch_cart['price'].'/-'.' x '. $fetch_cart['quantity']; ?>)</span> </p>
-   <?php
-      }
-   }else{
-      echo '<p class="empty">your cart is empty</p>';
-   }
-   ?>
-   <div class="grand-total"> grand total : <span>$<?php echo $grand_total; ?>/-</span> </div>
-
-</section>
-
-<section class="checkout">
-
-   <form action="" method="post">
-      <h3>place your order</h3>
-      <div class="flex">
-         <div class="inputBox">
-            <span>your name :</span>
-            <input type="text" name="name" required placeholder="enter your name">
-         </div>
-         <div class="inputBox">
-            <span>your number :</span>
-            <input type="number" name="number" required placeholder="enter your number">
-         </div>
-         <div class="inputBox">
-            <span>your email :</span>
-            <input type="email" name="email" required placeholder="enter your email">
-         </div>
-         <div class="inputBox">
-            <span>payment method :</span>
-            <select name="method">
-               <option value="cash on delivery">cash on delivery</option>
-               <option value="credit card">credit card</option>
-               <option value="paypal">paypal</option>
-               <option value="paytm">paytm</option>
-            </select>
-         </div>
-         <div class="inputBox">
-            <span>address line 01 :</span>
-            <input type="number" min="0" name="flat" required placeholder="e.g. flat no.">
-         </div>
-         <div class="inputBox">
-            <span>address line 01 :</span>
-            <input type="text" name="street" required placeholder="e.g. street name">
-         </div>
-         <div class="inputBox">
-            <span>city :</span>
-            <input type="text" name="city" required placeholder="e.g. mumbai">
-         </div>
-         <div class="inputBox">
-            <span>state :</span>
-            <input type="text" name="state" required placeholder="e.g. maharashtra">
-         </div>
-         <div class="inputBox">
-            <span>country :</span>
-            <input type="text" name="country" required placeholder="e.g. india">
-         </div>
-         <div class="inputBox">
-            <span>pin code :</span>
-            <input type="number" min="0" name="pin_code" required placeholder="e.g. 123456">
-         </div>
-      </div>
-      <input type="submit" value="order now" class="btn" name="order_btn">
+ <div id="big" style=" z-index: 6000; display: block">
+  <div class="form-popup" id="myForm" style="border-radius: 15px;">
+   <form method="POST" class="form-container">
+    <h4>Contact information</h4>
+    <input type="email" id="checkout-email" placeholder="Email" name="email">
+    <span style="color:red"><?php echo $validator->getEmailErr(); ?></span>
+    <h4>Shipping address</h4>
+    <div style="display: flex;">
+     <input type="text" id="checkout-name" placeholder="Name" name="name">
+     <input type="text" id="checkout-surname" placeholder="Surname" name="surname">
+    </div>
+    <span style="color:red;"><?php echo $validator->getNameErr(); ?></span>
+    <input type="text" id="adress" placeholder="Adress" name="address">
+    <span style="color:red"><?php echo $validator->getAddressErr(); ?></span>
+    <input type="text" id="pcode" placeholder="Postal Code" name="PostalCode">
+    <span style="color:red"><?php echo $validator->getPCodeErr() ?></span>
+    <input type="text" id="_city" placeholder="City" name="city">
+    <span style="color:red"><?php echo $validator->getCityErr(); ?></span>
+    <select id="mySelect" onchange="change_placeholder(this)">
+     <option value="">Select your country...</option>
+     <option value="Albania">Albania</option>
+     <option value="Kosovo">Kosovo</option>
+     <option value="Montenegro">Montenegro</option>
+     <option value="North Macedonia">North Macedonia</option>
+     <option value="Serbia">Serbia</option>
+    </select>
+    <input type="tel" id="phone" name="phone" placeholder="Phone number" style="margin-top: 10px;">
+    <span style="color:red"><?php echo $validator->getPhoneErr(); ?></span>
+    <br>
+    <div>
+     <input type="checkbox" value="" id="save-info">
+     <label for="save-info" style="color:#201c1c">Save this information for next time</label>
+    </div>
+    </br>
+    <button type="submit" name="submit" class="btn">Submit</button>
+    <a href=" ./home.php"> <button type="button" class="btn cancel">Close</button></a>
+    <span style="color:green"><?php echo $validator->getOrder(); ?></span>
    </form>
-
-</section>
-
-
-
-
-
-
-
-
-
-<?php include 'footer.php'; ?>
-
-<!-- custom js file link  -->
-<script src="js/script.js"></script>
-
+  </div>
+ </div>
+ <script src="checkout.js"></script>
 </body>
+
 </html>
