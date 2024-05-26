@@ -58,7 +58,7 @@
           <label for="lastname">Last Name:</label>
           <input type="text" id="lastname" name="lastname" placeholder="Enter your Last name..." />
           <label for="contact-email">Email:</label>
-          <input type="text" id="contact-email" name="email" value="@gmail.com" />
+          <input type="text" id="contact-email" name="email"  />
           <label for="subject">Subject:</label>
           <input type="text" id="subject" name="subject" placeholder="Enter subject">
           <label for="message">Message:</label>
