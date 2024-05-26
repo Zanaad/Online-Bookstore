@@ -17,7 +17,7 @@
   <div class="book-cards">
     <?php
     include 'db_connect.php';
-    $query = "SELECT * FROM books where genre='Turkish'";
+    $query = "SELECT * FROM books WHERE genre='Turkish'";
     $result = mysqli_query($conn, $query);
     if (mysqli_num_rows($result) > 0) {
       while ($row = mysqli_fetch_assoc($result)) {
@@ -25,6 +25,18 @@
         <div class="book-card">
           <img src="<?php echo $row['image']; ?>" alt="<?php echo $row['title']; ?>">
           <div class="content">
+            <div class="star-heart">
+              <div class="stars" id="<?php echo str_replace(' ', '-', $row['title']); ?>">
+                <i class="far fa-star" data-value="1"></i>
+                <i class="far fa-star" data-value="2"></i>
+                <i class="far fa-star" data-value="3"></i>
+                <i class="far fa-star" data-value="4"></i>
+                <i class="far fa-star" data-value="5"></i>
+              </div>
+              <button class="btn btn-outline-danger">
+                <i class="fas fa-heart"></i>
+              </button>
+            </div>
             <h5><?php echo $row['title']; ?></h5>
             <h6><?php echo $row['author']; ?></h6>
             <h5 class="price"><?php echo $row['price']; ?>€</h5>
