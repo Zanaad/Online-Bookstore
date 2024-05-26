@@ -110,7 +110,7 @@
   <div class="book-cards">
     <?php
     include 'db_connect.php';
-    $query = "SELECT * FROM books";
+    $query = "SELECT * FROM books where genre='English'";
     $result = mysqli_query($conn, $query);
     if (mysqli_num_rows($result) > 0) {
       while ($row = mysqli_fetch_assoc($result)) {
