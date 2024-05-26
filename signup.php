@@ -18,6 +18,8 @@ function saltedHashPassword($password, $salt)
   return hash('sha256', $password . $salt);
 }
 
+$message = '';
+
 if (isset($_POST['signup'])) {
 
   $name = mysqli_real_escape_string($conn, $_POST['name']);
@@ -25,13 +27,11 @@ if (isset($_POST['signup'])) {
   $pass = mysqli_real_escape_string($conn, $_POST['password']);
   $cpass = mysqli_real_escape_string($conn, $_POST['re_pass']);
 
-  // Validate the inputs
   $validator->validateName($name);
   $validator->validateEmail($email);
   $validator->validatePassword($pass);
   $validator->validateConfirmPassword($cpass, $pass);
 
-  // If there are no validation errors, proceed
   if (
     empty($validator->getNameErr()) &&
     empty($validator->getEmailErr()) &&
