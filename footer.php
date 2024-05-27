@@ -1,9 +1,23 @@
+<?php
+// Përcjellja përmes referencës
+$link_name = "Libraria";
+$subscribe_text = "Enter your email";
+$input_placeholder =& $subscribe_text;
+
+// Kthimi përmes referencës
+function changeLinkName(&$link_name_ref) {
+    $link_name_ref = "Libraria Living";
+}
+
+changeLinkName($link_name);
+
+?>
   <footer>
    <div class="content">
     <div class="top">
      <div class="logo-details">
       <i class="fab fa-slack"></i>
-      <span class="logo_name">Libraria Living</span>
+      <span class="logo_name"><?php echo $link_name; ?></span>
      </div>
      <div class="media-icons">
       <a href="https://www.facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
@@ -30,8 +44,9 @@
 
      <ul class="box input-box">
       <li class="link_name">Subscribe</li>
-      <li><input type="text" placeholder="Enter your email"></li>
+      <li><input type="text" placeholder="<?php echo $input_placeholder; ?>"></li>
      </ul>
     </div>
    </div>
   </footer>
+ 

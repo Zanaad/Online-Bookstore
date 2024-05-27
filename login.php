@@ -8,36 +8,31 @@ if (isset($_POST['submit'])) {
    $email = mysqli_real_escape_string($conn, $_POST['email']);
    $password = mysqli_real_escape_string($conn, $_POST['password']);
 
-   $select_users = mysqli_query($conn, "SELECT * FROM `users` WHERE email = '$email'") or die('Query failed');
+   $select_users = mysqli_query($conn, "SELECT * FROM `users` WHERE email = '$email'") or die('query failed');
 
    if (mysqli_num_rows($select_users) > 0) {
       $row = mysqli_fetch_assoc($select_users);
 
       $salt = $row['salt'];
-      $hashed_password = $row['hashPassword'];
+      $storedHashedPassword = $row['hashPassword'];
+      $enteredHashedPassword = hash('sha256', $password . $salt);
 
-
-      $entered_password_hashed = hash('sha256', $password . $salt);
-
-      if ($entered_password_hashed === $hashed_password) {
-
-         if ($row['user_type'] == 'admin') {
-            $_SESSION['admin_name'] = $row['name'];
-            $_SESSION['admin_email'] = $row['email'];
-            $_SESSION['admin_id'] = $row['id'];
-            header('location:admin_page.php');
-         } elseif ($row['user_type'] == 'user') {
-            $_SESSION['user_name'] = $row['name'];
-            $_SESSION['user_email'] = $row['email'];
-            $_SESSION['user_id'] = $row['id'];
-            header('location:home.php');
-         }
+      if ($storedHashedPassword === $enteredHashedPassword) {
+         $_SESSION['user_id'] = $row['id'];
+         $_SESSION['user_name'] = $row['name'];
+         $validator->setLoggedin("Logged in successfully!");
+         header('location:home.php');
       } else {
-         $message[] = 'Incorrect email or password!';
+         $validator->setPasswordErr("Invalid password!");
       }
    } else {
-      $message[] = 'User not found!';
+      $validator->setEmailErr("Invalid email!");
    }
+}
+
+if (isset($_POST['logout'])) {
+   session_destroy();
+   header('location:login.php');
 }
 
 ?>
