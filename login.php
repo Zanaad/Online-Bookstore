@@ -8,31 +8,38 @@ if (isset($_POST['submit'])) {
    $email = mysqli_real_escape_string($conn, $_POST['email']);
    $password = mysqli_real_escape_string($conn, $_POST['password']);
 
-   $select_users = mysqli_query($conn, "SELECT * FROM `users` WHERE email = '$email'") or die('query failed');
+   // Fetch user data based on email
+   $select_users = mysqli_query($conn, "SELECT * FROM `users` WHERE email = '$email'") or die('Query failed');
 
    if (mysqli_num_rows($select_users) > 0) {
       $row = mysqli_fetch_assoc($select_users);
-
+      // Extract the salt and hashed password from the fetched user data
       $salt = $row['salt'];
-      $storedHashedPassword = $row['hashPassword'];
-      $enteredHashedPassword = hash('sha256', $password . $salt);
+      $hashed_password = $row['hashPassword'];
 
-      if ($storedHashedPassword === $enteredHashedPassword) {
-         $_SESSION['user_id'] = $row['id'];
-         $_SESSION['user_name'] = $row['name'];
-         $validator->setLoggedin("Logged in successfully!");
-         header('location:home.php');
+      // Combine the entered password with the retrieved salt, then hash it
+      $entered_password_hashed = hash('sha256', $password . $salt);
+
+      // Check if the hashed entered password matches the stored hashed password
+      if ($entered_password_hashed === $hashed_password) {
+         // Passwords match, proceed with login
+         if ($row['user_type'] == 'admin') {
+            $_SESSION['admin_name'] = $row['name'];
+            $_SESSION['admin_email'] = $row['email'];
+            $_SESSION['admin_id'] = $row['id'];
+            header('location:admin_page.php');
+         } elseif ($row['user_type'] == 'user') {
+            $_SESSION['user_name'] = $row['name'];
+            $_SESSION['user_email'] = $row['email'];
+            $_SESSION['user_id'] = $row['id'];
+            header('location:home.php');
+         }
       } else {
-         $validator->setPasswordErr("Invalid password!");
+         $message[] = 'Incorrect email or password!';
       }
    } else {
-      $validator->setEmailErr("Invalid email!");
+      $message[] = 'User not found!';
    }
-}
-
-if (isset($_POST['logout'])) {
-   session_destroy();
-   header('location:login.php');
 }
 
 ?>
