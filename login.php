@@ -10,7 +10,7 @@ if (isset($_POST['submit'])) {
 
    // Fetch user data based on email
   // $select_users = mysqli_query($conn, "SELECT * FROM `users` WHERE email = '$email'") or die('Query failed');
-$stmt=$conn->prepare("SELECT * FROM 'users' WHERE EMAIL = ?");
+$stmt=$conn->prepare("SELECT * FROM 'users' WHERE email = ?");
 $stmt->bind_param('s', $email);
 $stmt->execute();
 $result=$stmt->get_result();
