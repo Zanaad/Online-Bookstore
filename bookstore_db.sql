@@ -4,6 +4,7 @@ CREATE TABLE `users` (
   `email` varchar(100) NOT NULL,
   `hashPassword` varchar(64) NOT NULL,
   `salt` varchar(32) NOT NULL
+  `user_type` varchar(20)  NOT NULL
 )
 
 CREATE TABLE `books` (
@@ -15,6 +16,14 @@ CREATE TABLE `books` (
     `genre` VARCHAR(100) NOT NULL
 );
 
+CREATE TABLE `cart` (
+  `id` int(100) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `user_id` int(100) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `price` int(100) NOT NULL,
+  `quantity` int(100) NOT NULL,
+  `image` varchar(100) NOT NULL
+)
 
 INSERT INTO books (title, author, price, image, genre)
 VALUES 

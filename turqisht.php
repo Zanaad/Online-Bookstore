@@ -4,16 +4,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Librat Turqisht</title>
+  <title>Novela</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-  <link rel="stylesheet" href="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 </head>
 
 <body>
   <?php
-  include 'header.php'
+  include 'header.php';
   ?>
+
   <div class="book-cards">
     <?php
     include 'db_connect.php';
@@ -40,9 +41,12 @@
             <h5><?php echo $row['title']; ?></h5>
             <h6><?php echo $row['author']; ?></h6>
             <h5 class="price"><?php echo $row['price']; ?>€</h5>
-            <div class="btn">
-              <button>Shto në shportë</button>
-            </div>
+            <form action="add_to_cart.php" method="post">
+              <input type="hidden" name="book_id" value="<?php echo $row['id']; ?>">
+              <div class="btn">
+                <button type="submit" name="add_to_cart">Add to Cart</button>
+              </div>
+            </form>
           </div>
         </div>
     <?php
@@ -53,12 +57,15 @@
     ?>
   </div>
 
+
   <?php
-  include 'footer.php'
+  include 'footer.php';
   ?>
+
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="script.js"></script>
+
 </body>
 
 </html>
