@@ -20,6 +20,8 @@ CREATE TABLE `cart` (
   `user_id` int NOT NULL,
   `book_id` int NOT NULL,
   `name` varchar(100) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `author` varchar(100) NOT NULL,
   `price` int NOT NULL,
   `quantity` int NOT NULL,
   `image` varchar(100) NOT NULL,
@@ -32,7 +34,9 @@ CREATE TABLE `cart` (
   `user_id` int NOT NULL,
   `book_id` int NOT NULL,
   `name` varchar(100) NOT NULL,
+  `author` varchar(100) NOT NULL,
   `price` int NOT NULL,
+   `quantity` int NOT NULL,
   `image` varchar(100) NOT NULL,
   FOREIGN KEY (`user_id`) REFERENCES `users`(`id`),
   FOREIGN KEY (`book_id`) REFERENCES `books`(`id`)

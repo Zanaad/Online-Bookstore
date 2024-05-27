@@ -54,6 +54,7 @@ if (isset($_GET['delete_all'])) {
             <a href="wishlist.php?delete=<?php echo $fetch_wishlist['wishlist_id']; ?>" class="fas fa-times" onclick="return confirm('delete this from wishlist?');"></a>
             <img src="<?php echo $fetch_wishlist['image']; ?>" alt="<?php echo $fetch_wishlist['title']; ?>">
             <div class="name"><?php echo $fetch_wishlist['title']; ?></div>
+            <div class="name"><?php echo $fetch_wishlist['author']; ?></div>
             <div class="price"><?php echo $fetch_wishlist['price']; ?>€</div>
             <button class="move-to-bag-btn move-btn" data-id="<?php echo $fetch_wishlist['wishlist_id']; ?>">Move to Bag</button>
           </div>

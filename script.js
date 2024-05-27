@@ -63,6 +63,7 @@ $(document).ready(function () {
               `<div class="book-card" data-id="${item.id}">
                                 <img src="${item.image}" alt="${item.title}">
                                 <h5>${item.title}</h5>
+                                 <h6>${item.author}</h6>
                                 <p class="price">${item.price}€</p>
                                 <p class="quantity">Quantity: ${item.quantity}</p>
                             </div>`
@@ -103,7 +104,6 @@ $(document).ready(function () {
       data: { book_id: bookId },
       success: function (response) {
         var data = JSON.parse(response);
-        console.log("Add to wishlist response:", data); // Log the response
         if (data.status === "success") {
           // Update wishlist count
           var newCount = parseInt($(".cart-count-1").text()) + 1;
@@ -135,6 +135,7 @@ $(document).ready(function () {
               `<div class="book-card" data-id="${item.id}">
                 <img src="${item.image}" alt="${item.title}">
                 <h5>${item.title}</h5>
+                  <h6>${item.author}</h6>
                 <p class="price">${item.price}€</p>
               </div>`
             );

@@ -30,7 +30,7 @@ if ($book_count > 0) {
 }
 
 // Fetch book details
-$query = $conn->prepare("SELECT title, price, image FROM books WHERE id = ?");
+$query = $conn->prepare("SELECT title, author, price, image FROM books WHERE id = ?");
 $query->bind_param('i', $book_id);
 $query->execute();
 $result = $query->get_result();
@@ -38,13 +38,14 @@ $book = $result->fetch_assoc();
 
 if ($book) {
  $title = $book['title'];
+ $author = $book['author'];
  $price = $book['price'];
  $image = $book['image'];
- $quantity = 1; // default quantity
+ $quantity = 1;
 
  // Insert book details into the cart table
- $insert_query = $conn->prepare("INSERT INTO cart (user_id, book_id, name, price, quantity, image) VALUES (?, ?, ?, ?, ?, ?)");
- $insert_query->bind_param('iisdis', $user_id, $book_id, $title, $price, $quantity, $image);
+ $insert_query = $conn->prepare("INSERT INTO cart (user_id, book_id, name, author, price, quantity, image) VALUES (?, ?, ?, ?, ?, ?, ?)");
+ $insert_query->bind_param('iissdis', $user_id, $book_id, $title, $author, $price, $quantity, $image);
 
  if ($insert_query->execute()) {
   // Get the updated cart count

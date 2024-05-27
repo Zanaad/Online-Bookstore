@@ -27,8 +27,8 @@ if (isset($_POST['wishlist_id'])) {
   $query->execute();
 
   // Add the item to the cart
-  $query = $conn->prepare("INSERT INTO cart (user_id, book_id, name, price, image) VALUES (?, ?, ?, ?, ?)");
-  $query->bind_param('iisss', $user_id, $wishlist_item['book_id'], $wishlist_item['name'], $wishlist_item['price'], $wishlist_item['image']);
+  $query = $conn->prepare("INSERT INTO cart (user_id, book_id, name, price,quantity, image) VALUES (?, ?, ?, ?, ?, ?)");
+  $query->bind_param('iissis', $user_id, $wishlist_item['book_id'], $wishlist_item['name'], $wishlist_item['price'], $wishlist_item['quantity'], $wishlist_item['image']);
   $query->execute();
 
   echo json_encode(['status' => 'success', 'message' => 'Item moved to cart']);
