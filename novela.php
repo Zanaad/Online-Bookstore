@@ -41,7 +41,6 @@
             <h5><?php echo $row['title']; ?></h5>
             <h6><?php echo $row['author']; ?></h6>
             <h5 class="price"><?php echo $row['price']; ?>€</h5>
-            <!-- Change the form to a button -->
             <div class="btn">
               <button class="add-to-cart" data-id="<?php echo $row['id']; ?>">Add to Cart</button>
             </div>
