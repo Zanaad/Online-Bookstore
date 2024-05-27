@@ -11,11 +11,17 @@ if (isset($_POST['login'])) {
   $email = mysqli_real_escape_string($conn, $_POST['email']);
   $password = mysqli_real_escape_string($conn, $_POST['password']);
 
-  $select_users = mysqli_query($conn, "SELECT * FROM `users` WHERE email = '$email'") or die('query failed');
+  //$select_users = mysqli_query($conn, "SELECT * FROM `users` WHERE email = '$email'") or die('query failed');
+  $stmt=$conn->prepare("SELECT * FROM 'users' WHERE email = ?");
+  $stmt->bind_param('s', $email);
+  $stmt->execute();
+  $result=$stmt->get_result();
 
-  if (mysqli_num_rows($select_users) > 0) {
-    $row = mysqli_fetch_assoc($select_users);
-
+  //if (mysqli_num_rows($select_users) > 0) {
+    //$row = mysqli_fetch_assoc($select_users);
+if($result->num_rows>0){
+$row=$result->fetch_assoc();
+}
     $salt = $row['salt'];
     $storedHashedPassword = $row['hashPassword'];
     $enteredHashedPassword = hash('sha256', $password . $salt);
@@ -25,17 +31,21 @@ if (isset($_POST['login'])) {
       $_SESSION['user_name'] = $row['name'];
       $validator->setLoggedin("Logged in successfully!");
       header('location:home.php');
+      exit();
     } else {
       $validator->setPasswordErr("Invalid password!");
     }
   } else {
     $validator->setEmailErr("Invalid email!");
   }
+
+$stmt->close();
 }
 
 if (isset($_POST['logout'])) {
   session_destroy();
   header('location:login.php');
+  exit();
 }
 
 ?>
