@@ -155,47 +155,27 @@ $(document).ready(function () {
     $(".cart-window-1").toggle();
   });
 });
-
-// MOVE TO THE BAG
+//move to bag
 $(document).ready(function () {
-  function moveToCart() {
-    // Retrieve wishlist items from local storage
-    var wishlistItems = JSON.parse(localStorage.getItem("wishlist")) || [];
-
-    // Retrieve cart items from local storage
-    var cartItems = JSON.parse(localStorage.getItem("cart")) || [];
-
-    // Iterate over wishlist items
-    wishlistItems.forEach(function (item) {
-      // Check if the item is already in the cart
-      var existingItemIndex = cartItems.findIndex(function (cartItem) {
-        return cartItem.title === item.title;
-      });
-
-      // If the item is not in the cart, add it
-      if (existingItemIndex === -1) {
-        cartItems.push(item);
-      } else {
-        // If the item is already in the cart, update its quantity
-        cartItems[existingItemIndex].quantity += item.quantity;
-      }
+  $(".move-to-bag-btn").click(function () {
+    var wishlistId = $(this).data("id");
+    $.ajax({
+      type: "POST",
+      url: "move_to_cart.php",
+      data: { wishlist_id: wishlistId },
+      success: function (response) {
+        var data = JSON.parse(response);
+        if (data.status === "success") {
+          location.reload();
+        } else {
+          alert("Error: " + data.message);
+        }
+      },
+      error: function () {
+        alert("Error moving item to bag");
+      },
     });
-
-    // Update the cart items in local storage
-    localStorage.setItem("cart", JSON.stringify(cartItems));
-
-    // Clear the wishlist items
-    localStorage.removeItem("wishlist");
-
-    // Refresh the display of cart items
-    displayCartItems();
-
-    // Clear the display of wishlist items
-    $(".cart-items-1").empty();
-  }
-
-  $("#move").click(moveToCart);
-  $("#move-1").click(moveToCart);
+  });
 });
 
 //funksionet per validim te te dhenave, te forma ne pjesen e kontaktit

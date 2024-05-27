@@ -100,7 +100,8 @@ section {
 .btn,
 .option-btn,
 .delete-btn,
-.white-btn {
+.white-btn,
+.move-btn {
   display: inline-block;
   margin-top: 1rem;
   padding: 1rem 3rem;
@@ -113,7 +114,8 @@ section {
 
 .btn:hover,
 .option-btn:hover,
-.delete-btn:hover {
+.delete-btn:hover,
+.move-btn:hover {
   background-color: var(--black);
 }
 
@@ -126,7 +128,8 @@ section {
   background-color: var(--orange);
 }
 
-.delete-btn {
+.delete-btn,
+.move-btn {
   background-color: var(--red);
 }
 

@@ -46,15 +46,16 @@ if (isset($_GET['delete_all'])) {
     <h1 class="title">Books Added</h1>
     <div class="box-container">
       <?php
-      $select_wishlist = mysqli_query($conn, "SELECT * FROM `wishlist` WHERE user_id = '$user_id'") or die('query failed');
+      $select_wishlist = mysqli_query($conn, "SELECT wishlist.id as wishlist_id, books.* FROM `wishlist` JOIN `books` ON wishlist.book_id = books.id WHERE wishlist.user_id = '$user_id'") or die('query failed');
       if (mysqli_num_rows($select_wishlist) > 0) {
         while ($fetch_wishlist = mysqli_fetch_assoc($select_wishlist)) {
       ?>
           <div class="box">
-            <a href="wishlist.php?delete=<?php echo $fetch_wishlist['id']; ?>" class="fas fa-times" onclick="return confirm('delete this from wishlist?');"></a>
-            <img src="<?php echo $fetch_wishlist['image']; ?>" alt="<?php echo $fetch_wishlist['name']; ?>">
-            <div class="name"><?php echo $fetch_wishlist['name']; ?></div>
+            <a href="wishlist.php?delete=<?php echo $fetch_wishlist['wishlist_id']; ?>" class="fas fa-times" onclick="return confirm('delete this from wishlist?');"></a>
+            <img src="<?php echo $fetch_wishlist['image']; ?>" alt="<?php echo $fetch_wishlist['title']; ?>">
+            <div class="name"><?php echo $fetch_wishlist['title']; ?></div>
             <div class="price"><?php echo $fetch_wishlist['price']; ?>€</div>
+            <button class="move-to-bag-btn move-btn" data-id="<?php echo $fetch_wishlist['wishlist_id']; ?>">Move to Bag</button>
           </div>
       <?php
         }
@@ -68,14 +69,12 @@ if (isset($_GET['delete_all'])) {
       <a href="wishlist.php?delete_all" class="delete-btn">Delete All</a>
     </div>
 
-    <div class="flex" style="justify-content: center;">
-      <button id="move">Move to bag</button>
-    </div>
   </section>
 
   <?php include 'footer.php'; ?>
-
-  <script src="js/script.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script.js"></script>
 </body>
 
 </html>

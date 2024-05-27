@@ -87,14 +87,16 @@ if (isset($_GET['delete_all'])) {
          <p>Grand total: <span><?php echo $grand_total; ?>€</span></p>
          <div class="flex">
             <a href="home.php" class="option-btn">Continue Shopping</a>
-            <a href="checkout.php" class="btn <?php echo ($grand_total > 1) ? '' : 'disabled'; ?>">Proceed to Checkout</a>
+            <a href="checkout.php" class="btn" <?php echo ($grand_total > 1) ? '' : 'disabled'; ?>">Proceed to Checkout</a>
          </div>
       </div>
    </section>
 
    <?php include 'footer.php'; ?>
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+   <script src="script.js"></script>
 
-   <script src="js/script.js"></script>
 </body>
 
 </html>

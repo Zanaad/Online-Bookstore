@@ -84,7 +84,6 @@
               </div>
               <div class="wishlist-footer">
                 <a href="wishlist.php"><button>View</button></a>
-                <button id="move">Move to Bag</button>
               </div>
             </div>
           </div>
