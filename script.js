@@ -91,79 +91,71 @@ $(document).ready(function () {
 
 //add to wishlist
 $(document).ready(function () {
-  // Function to handle adding a book to the wishlist
-  function addToWishlist(book) {
-    var wishlistBook = {
-      title: book.find("h5").text(),
-      price: parseFloat(book.find(".price").text().replace("€", "")),
-      bookHTML: book.prop("outerHTML"),
-    };
+  // Change event binding to the button
+  $(".btn btn-outline-danger").on("click", function (e) {
+    e.preventDefault(); // Prevent default button behavior
 
-    // Retrieve existing wishlist items from local storage
-    var wishlistItems = JSON.parse(localStorage.getItem("wishlist")) || [];
+    var bookId = $(this).data("id");
 
-    // Check if the book is already in the wishlist
-    var existingBook = wishlistItems.find(function (item) {
-      return item.title === wishlistBook.title;
+    $.ajax({
+      type: "POST",
+      url: "add_to_wishlist.php",
+      data: { book_id: bookId },
+      success: function (response) {
+        var data = JSON.parse(response);
+        if (data.status === "success") {
+          // Update wishlist count
+          var newCount = parseInt($(".cart-count-1").text()) + 1;
+          $(".cart-count-1").text(newCount);
+
+          // Refresh cart items display
+          displayWishlistItems();
+        } else {
+          alert("Error: " + data.message);
+        }
+      },
+      error: function () {
+        alert("Error adding book to wishlist");
+      },
     });
-
-    if (!existingBook) {
-      // Add the new book to the wishlist items
-      wishlistItems.push(wishlistBook);
-
-      // Update the wishlist items in local storage
-      localStorage.setItem("wishlist", JSON.stringify(wishlistItems));
-
-      // Update the cart count
-      var cartCount = parseInt($(".cart-count-1").text());
-      $(".cart-count-1").text(cartCount + 1);
-      // Append the new book card to the wishlist items
-      $(".cart-items-1").append(wishlistBook.bookHTML);
-
-      // Update the wishlist count
-      // var wishlistCount = parseInt($(".wishlist-count").text());
-      // $(".wishlist-count").text(wishlistCount + 1);
-    } else {
-      // Alert the user that the book is already in the wishlist
-      alert("This book is already in your wishlist.");
-    }
-  }
-
-  // Function to display wishlist items on the page
-  function displayWishlistItems() {
-    var wishlistItems = JSON.parse(localStorage.getItem("wishlist")) || [];
-    $(".cart-items-1").empty(); // Clear previous wishlist items
-    wishlistItems.forEach(function (item) {
-      $(".cart-items-1").append(item.bookHTML);
-    });
-    updateWishlistUI(wishlistItems);
-  }
-
-  // Function to update the wishlist UI
-  function updateWishlistUI(wishlistItems) {
-    $(".cart-count-1").text(wishlistItems.length);
-  }
-
-  // Call displayWishlistItems when the page loads
-  displayWishlistItems();
-
-  // Click event to add a book to the wishlist
-  $(".btn.btn-outline-danger").click(function () {
-    var book = $(this).closest(".book-card");
-    addToWishlist(book);
   });
 
-  // Click event to toggle the visibility of the cart window
+  function displayWishlistItems() {
+    $.ajax({
+      type: "GET",
+      url: "get_wishlist_items.php",
+      success: function (response) {
+        var data = JSON.parse(response);
+        if (data.status === "success") {
+          $(".cart-items-1").empty();
+          var totalPrice = 0;
+          data.cart_items.forEach(function (item) {
+            $(".cart-items-1").append(
+              `<div class="book-card" data-id="${item.id}">
+                                <img src="${item.image}" alt="${item.title}">
+                                <h5>${item.title}</h5>
+                                <p class="price">${item.price}€</p>
+                            </div>`
+            );
+          });
+        } else {
+          alert("Error: " + data.message);
+        }
+      },
+      error: function () {
+        alert("Error fetching wishlist items");
+      },
+    });
+  }
+
+  // Call displayWishlistItems() when the page is ready
+  displayWishlistItems();
+
   $(".cart-toggle-btn-1").click(function () {
     $(".cart-window-1").toggle();
   });
-  $(".btn.btn-outline-danger").click(function () {
-    $(".cart-count-1").show();
-  });
-  $(".cart-toggle-btn").click(function () {
-    $(".cart-window-1").hide();
-  });
 });
+
 // MOVE TO THE BAG
 $(document).ready(function () {
   function moveToCart() {

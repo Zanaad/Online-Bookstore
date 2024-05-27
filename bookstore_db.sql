@@ -7,6 +7,14 @@ CREATE TABLE `users` (
   `user_type` varchar(20)  NOT NULL
 )
 
+CREATE TABLE `books`{
+   `id` int(100) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+     `title` varchar(100) NOT NULL,
+  `author` varchar(100) NOT NULL,
+    `price`int NOT NULL,
+  `image` varchar(255) NOT NULL,
+  `genre` varchar(100) NOT NULL,
+}
 CREATE TABLE `cart` (
   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `user_id` int NOT NULL,
@@ -19,14 +27,18 @@ CREATE TABLE `cart` (
   FOREIGN KEY (`book_id`) REFERENCES `books`(`id`)
 );
 
-CREATE TABLE `cart` (
-  `id` int(100) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `user_id` int(100) NOT NULL,
+  CREATE TABLE `wishlist` (
+  `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `book_id` int NOT NULL,
   `name` varchar(100) NOT NULL,
-  `price` int(100) NOT NULL,
-  `quantity` int(100) NOT NULL,
-  `image` varchar(100) NOT NULL
-)
+  `price` int NOT NULL,
+  `image` varchar(100) NOT NULL,
+  FOREIGN KEY (`user_id`) REFERENCES `users`(`id`),
+  FOREIGN KEY (`book_id`) REFERENCES `books`(`id`)
+);
+
+  
 
 INSERT INTO books (title, author, price, image, genre)
 VALUES 

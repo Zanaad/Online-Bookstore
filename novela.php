@@ -34,9 +34,7 @@
                 <i class="far fa-star" data-value="4"></i>
                 <i class="far fa-star" data-value="5"></i>
               </div>
-              <button class="btn btn-outline-danger">
-                <i class="fas fa-heart"></i>
-              </button>
+              <button class="btn btn-outline-danger" data-id="<?php echo $row['id']; ?>"> <i class="fas fa-heart"></i></button>
             </div>
             <h5><?php echo $row['title']; ?></h5>
             <h6><?php echo $row['author']; ?></h6>
