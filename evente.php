@@ -4,6 +4,15 @@ if (!isset($_SESSION['users'])) {
   header("Location: login.php?message=Please log in to access events.");
   exit();
 }
+$a = 1984;
+// Krijoni një referencë të variablës $a
+$referenceToA = &$a;
+// Shtyp vlerën e $a përpara largimit të referencës
+echo $a; // Output: 10
+// Largo referencën
+unset($referenceToA);
+// Shtyp vlerën e $a pas largimit të referencës
+echo $a; 
 ?>
 
 <!DOCTYPE html>
@@ -121,7 +130,7 @@ if (!isset($_SESSION['users'])) {
     <thead>
       <tr>
         <th>Titulli</th>
-        <th>1984</th>
+        <th><?php echo $a; ?></th>
         <th>The Alchemist</th>
         <th>The psychology of money</th>
       </tr>
@@ -174,7 +183,7 @@ if (!isset($_SESSION['users'])) {
     <div class="book" draggable="true" ondragstart="drag(event)">
       The Alchemist
     </div>
-    <div class="book" draggable="true" ondragstart="drag(event)">1984</div>
+    <div class="book" draggable="true" ondragstart="drag(event)"><?php echo $a; ?></div>
     <div class="book" draggable="true" ondragstart="drag(event)">Mindset</div>
   </div>
 
