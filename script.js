@@ -91,8 +91,8 @@ $(document).ready(function () {
 
 //add to wishlist
 $(document).ready(function () {
-  // Change event binding to the button
-  $(".btn btn-outline-danger").on("click", function (e) {
+  // Event binding to the add-to-wishlist button
+  $(".add-to-wishlist").on("click", function (e) {
     e.preventDefault(); // Prevent default button behavior
 
     var bookId = $(this).data("id");
@@ -103,6 +103,7 @@ $(document).ready(function () {
       data: { book_id: bookId },
       success: function (response) {
         var data = JSON.parse(response);
+        console.log("Add to wishlist response:", data); // Log the response
         if (data.status === "success") {
           // Update wishlist count
           var newCount = parseInt($(".cart-count-1").text()) + 1;
@@ -126,16 +127,16 @@ $(document).ready(function () {
       url: "get_wishlist_items.php",
       success: function (response) {
         var data = JSON.parse(response);
+        console.log("Wishlist items response:", data); // Log the response
         if (data.status === "success") {
           $(".cart-items-1").empty();
-          var totalPrice = 0;
-          data.cart_items.forEach(function (item) {
+          data.wishlist_items.forEach(function (item) {
             $(".cart-items-1").append(
               `<div class="book-card" data-id="${item.id}">
-                                <img src="${item.image}" alt="${item.title}">
-                                <h5>${item.title}</h5>
-                                <p class="price">${item.price}€</p>
-                            </div>`
+                <img src="${item.image}" alt="${item.title}">
+                <h5>${item.title}</h5>
+                <p class="price">${item.price}€</p>
+              </div>`
             );
           });
         } else {
@@ -148,7 +149,6 @@ $(document).ready(function () {
     });
   }
 
-  // Call displayWishlistItems() when the page is ready
   displayWishlistItems();
 
   $(".cart-toggle-btn-1").click(function () {

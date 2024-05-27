@@ -9,13 +9,6 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-if (isset($_POST['update_wishlist'])) {
-  $wishlist_id = $_POST['wishlist_id'];
-  $wishlist_quantity = $_POST['wishlist_quantity'];
-  mysqli_query($conn, "UPDATE `wishlist` SET quantity = '$wishlist_quantity' WHERE id = '$wishlist_id'") or die('query failed');
-  $message[] = 'wishlist quantity updated!';
-}
-
 if (isset($_GET['delete'])) {
   $delete_id = $_GET['delete'];
   mysqli_query($conn, "DELETE FROM `wishlist` WHERE id = '$delete_id'") or die('query failed');
@@ -49,11 +42,10 @@ if (isset($_GET['delete_all'])) {
     <p> <a href="home.php">Home</a> / wishlist </p>
   </div>
 
-  <section class="shopping-wishlist">
+  <section class="shopping-cart">
     <h1 class="title">Books Added</h1>
     <div class="box-container">
       <?php
-      $grand_total = 0;
       $select_wishlist = mysqli_query($conn, "SELECT * FROM `wishlist` WHERE user_id = '$user_id'") or die('query failed');
       if (mysqli_num_rows($select_wishlist) > 0) {
         while ($fetch_wishlist = mysqli_fetch_assoc($select_wishlist)) {
@@ -63,12 +55,8 @@ if (isset($_GET['delete_all'])) {
             <img src="<?php echo $fetch_wishlist['image']; ?>" alt="<?php echo $fetch_wishlist['name']; ?>">
             <div class="name"><?php echo $fetch_wishlist['name']; ?></div>
             <div class="price"><?php echo $fetch_wishlist['price']; ?>€</div>
-            <form action="" method="post">
-              <input type="hidden" name="wishlist_id" value="<?php echo $fetch_wishlist['id']; ?>">
-            </form>
           </div>
       <?php
-          $grand_total += $sub_total;
         }
       } else {
         echo '<p class="empty">Your wishlist is empty</p>';
@@ -77,15 +65,11 @@ if (isset($_GET['delete_all'])) {
     </div>
 
     <div style="margin-top: 2rem; text-align:center;">
-      <a href="wishlist.php?delete_all" class="delete-btn <?php echo ($grand_total > 1) ? '' : 'disabled'; ?>" onclick="return confirm('delete all from wishlist?');">Delete All</a>
+      <a href="wishlist.php?delete_all" class="delete-btn">Delete All</a>
     </div>
 
-    <div class="wishlist-total">
-      <p>Grand total: <span><?php echo $grand_total; ?>€</span></p>
-      <div class="flex">
-        <a href="home.php" class="option-btn">Continue Shopping</a>
-        <button id="move">Move to bag</button>
-      </div>
+    <div class="flex" style="justify-content: center;">
+      <button id="move">Move to bag</button>
     </div>
   </section>
 

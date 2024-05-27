@@ -41,13 +41,11 @@ if ($book) {
  $price = $book['price'];
  $image = $book['image'];
 
-
  // Insert book details into the wishlist table
- $insert_query = $conn->prepare("INSERT INTO wishlist (user_id, book_id, name, price, quantity, image) VALUES (?, ?, ?, ?, ?, ?)");
- $insert_query->bind_param('iisdis', $user_id, $book_id, $title, $price, $quantity, $image);
+ $insert_query = $conn->prepare("INSERT INTO wishlist (user_id, book_id, name, price, image) VALUES (?, ?, ?, ?, ?)");
+ $insert_query->bind_param('iisss', $user_id, $book_id, $title, $price, $image);
 
  if ($insert_query->execute()) {
-
   $wishlist_count_query = $conn->prepare("SELECT COUNT(*) AS wishlist_count FROM wishlist WHERE user_id = ?");
   $wishlist_count_query->bind_param('i', $user_id);
   $wishlist_count_query->execute();
