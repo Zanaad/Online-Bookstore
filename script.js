@@ -18,11 +18,14 @@ $(document).ready(function () {
   });
 });
 
-// Adding books to the cart - Ne kete pjese perfshihen try, catch and throw error nese cmimet jane invalide
+// Adding books to the cart
 $(document).ready(function () {
+  // Change event binding to the button
   $(".add-to-cart").on("click", function (e) {
-    e.preventDefault(); // Prevent form submission
+    e.preventDefault(); // Prevent default button behavior
+
     var bookId = $(this).data("id");
+
     $.ajax({
       type: "POST",
       url: "add_to_cart.php",
@@ -30,6 +33,11 @@ $(document).ready(function () {
       success: function (response) {
         var data = JSON.parse(response);
         if (data.status === "success") {
+          // Update cart count
+          var newCount = parseInt($(".cart-count").text()) + 1;
+          $(".cart-count").text(newCount);
+
+          // Refresh cart items display
           displayCartItems();
         } else {
           alert("Error: " + data.message);
@@ -62,7 +70,7 @@ $(document).ready(function () {
             totalPrice += parseFloat(item.price) * item.quantity;
           });
           $("#cart-total-price").text(totalPrice.toFixed(2) + "€");
-          $(".cart-count").text(data.cart_items.length);
+          $(".cart-count").text(data.cart_count); // Update cart count
         } else {
           alert("Error: " + data.message);
         }
@@ -73,6 +81,7 @@ $(document).ready(function () {
     });
   }
 
+  // Call displayCartItems() when the page is ready
   displayCartItems();
 
   $(".cart-toggle-btn").click(function () {

@@ -41,12 +41,10 @@
             <h5><?php echo $row['title']; ?></h5>
             <h6><?php echo $row['author']; ?></h6>
             <h5 class="price"><?php echo $row['price']; ?>€</h5>
-            <form action="add_to_cart.php" method="post">
-              <input type="hidden" name="book_id" value="<?php echo $row['id']; ?>">
-              <div class="btn">
-                <button type="submit" name="add_to_cart">Add to Cart</button>
-              </div>
-            </form>
+            <!-- Change the form to a button -->
+            <div class="btn">
+              <button class="add-to-cart" data-id="<?php echo $row['id']; ?>">Add to Cart</button>
+            </div>
           </div>
         </div>
     <?php
@@ -56,6 +54,7 @@
     }
     ?>
   </div>
+
 
 
   <?php

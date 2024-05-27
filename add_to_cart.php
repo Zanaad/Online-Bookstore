@@ -2,13 +2,27 @@
 session_start();
 include 'db_connect.php';
 
+// Check if the request is an AJAX request
+if (!isset($_SERVER['HTTP_X_REQUESTED_WITH']) || strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) !== 'xmlhttprequest') {
+ // If not an AJAX request, deny access
+ http_response_code(403);
+ exit('Forbidden');
+}
+
 if (!isset($_SESSION['user_id'])) {
  echo json_encode(['status' => 'error', 'message' => 'User not logged in']);
  exit();
 }
 
 $user_id = $_SESSION['user_id'];
-$book_id = $_POST['book_id'];
+
+// Retrieve book_id from AJAX request data
+$book_id = isset($_POST['book_id']) ? $_POST['book_id'] : null;
+
+if (!$book_id) {
+ echo json_encode(['status' => 'error', 'message' => 'Book ID not provided']);
+ exit();
+}
 
 // Fetch book details
 $query = $conn->prepare("SELECT title, price, image FROM books WHERE id = ?");
