@@ -9,16 +9,10 @@ if (isset($_POST['submit'])) {
    $password = mysqli_real_escape_string($conn, $_POST['password']);
 
    // Fetch user data based on email
-  // $select_users = mysqli_query($conn, "SELECT * FROM `users` WHERE email = '$email'") or die('Query failed');
-$stmt=$conn->prepare("SELECT * FROM 'users' WHERE EMAIL = ?");
-$stmt->bind_param('s', $email);
-$stmt->execute();
-$result=$stmt->get_result();
-if($result->num_rows>0){
-   $row=$result->fetch_assoc();
-}
-  // if (mysqli_num_rows($select_users) > 0) {
-    //  $row = mysqli_fetch_assoc($select_users);
+   $select_users = mysqli_query($conn, "SELECT * FROM `users` WHERE email = '$email'") or die('Query failed');
+
+   if (mysqli_num_rows($select_users) > 0) {
+      $row = mysqli_fetch_assoc($select_users);
       // Extract the salt and hashed password from the fetched user data
       $salt = $row['salt'];
       $hashed_password = $row['hashPassword'];
@@ -46,7 +40,6 @@ if($result->num_rows>0){
    } else {
       $message[] = 'User not found!';
    }
-   $stmt->close();
 }
 
 ?>

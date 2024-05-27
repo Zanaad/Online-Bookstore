@@ -3,42 +3,35 @@ session_start();
 include 'db_connect.php';
 
 if (!isset($_SESSION['user_id'])) {
- header('location: login.php');
+ echo json_encode(['status' => 'error', 'message' => 'User not logged in']);
  exit();
 }
 
-if (isset($_POST['add_to_cart'])) {
- $book_id = $_POST['book_id'];
- $quantity = $_POST['quantity'];
+$user_id = $_SESSION['user_id'];
+$book_id = $_POST['book_id'];
 
- // Retrieve book details from the database
- $query = "SELECT * FROM books WHERE id = $book_id";
- $result = mysqli_query($conn, $query);
+// Fetch book details
+$query = $conn->prepare("SELECT title, price, image FROM books WHERE id = ?");
+$query->bind_param('i', $book_id);
+$query->execute();
+$result = $query->get_result();
+$book = $result->fetch_assoc();
 
- if ($result && mysqli_num_rows($result) > 0) {
-  $book = mysqli_fetch_assoc($result);
+if ($book) {
+ $title = $book['title'];
+ $price = $book['price'];
+ $image = $book['image'];
+ $quantity = 1; // default quantity
 
-  // Add the book to the cart
-  $user_id = $_SESSION['user_id'];
-  $name = $book['title'];
-  $price = $book['price'];
-  $image = $book['image'];
+ // Insert book details into the cart table
+ $insert_query = $conn->prepare("INSERT INTO cart (user_id, book_id, name, price, quantity, image) VALUES (?, ?, ?, ?, ?, ?)");
+ $insert_query->bind_param('iisdis', $user_id, $book_id, $title, $price, $quantity, $image);
 
-  $insert_query = "INSERT INTO cart (user_id, name, price, image, quantity) 
-                         VALUES ('$user_id', '$name', '$price', '$image', '$quantity')";
-
-  $insert_result = mysqli_query($conn, $insert_query);
-
-  if ($insert_result) {
-   // Redirect to cart page
-   header('location: cart.php');
-   exit();
-  } else {
-   // Handle insertion error
-   echo "Failed to add item to cart";
-  }
+ if ($insert_query->execute()) {
+  echo json_encode(['status' => 'success']);
  } else {
-  // Handle book not found
-  echo "Book not found";
+  echo json_encode(['status' => 'error', 'message' => 'Failed to add book to cart']);
  }
+} else {
+ echo json_encode(['status' => 'error', 'message' => 'Book not found']);
 }

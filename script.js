@@ -20,15 +20,63 @@ $(document).ready(function () {
 
 // Adding books to the cart - Ne kete pjese perfshihen try, catch and throw error nese cmimet jane invalide
 $(document).ready(function () {
-  // Click event to toggle the visibility of the cart window
+  $(".add-to-cart").on("click", function (e) {
+    e.preventDefault(); // Prevent form submission
+    var bookId = $(this).data("id");
+    $.ajax({
+      type: "POST",
+      url: "add_to_cart.php",
+      data: { book_id: bookId },
+      success: function (response) {
+        var data = JSON.parse(response);
+        if (data.status === "success") {
+          displayCartItems();
+        } else {
+          alert("Error: " + data.message);
+        }
+      },
+      error: function () {
+        alert("Error adding book to cart");
+      },
+    });
+  });
+
+  function displayCartItems() {
+    $.ajax({
+      type: "GET",
+      url: "get_cart_items.php",
+      success: function (response) {
+        var data = JSON.parse(response);
+        if (data.status === "success") {
+          $(".cart-items").empty();
+          var totalPrice = 0;
+          data.cart_items.forEach(function (item) {
+            $(".cart-items").append(
+              `<div class="book-card" data-id="${item.id}">
+                                <img src="${item.image}" alt="${item.title}">
+                                <h5>${item.title}</h5>
+                                <p class="price">${item.price}€</p>
+                                <p class="quantity">Quantity: ${item.quantity}</p>
+                            </div>`
+            );
+            totalPrice += parseFloat(item.price) * item.quantity;
+          });
+          $("#cart-total-price").text(totalPrice.toFixed(2) + "€");
+          $(".cart-count").text(data.cart_items.length);
+        } else {
+          alert("Error: " + data.message);
+        }
+      },
+      error: function () {
+        alert("Error fetching cart items");
+      },
+    });
+  }
+
+  displayCartItems();
+
   $(".cart-toggle-btn").click(function () {
     $(".cart-window").toggle();
-  });
-  $(".btn button").click(function () {
-    $(".cart-count").show();
-  });
-  $(".cart-toggle-btn-1").click(function () {
-    $(".cart-window").hide();
   });
 });
 

@@ -7,13 +7,16 @@ CREATE TABLE `users` (
   `user_type` varchar(20)  NOT NULL
 )
 
-CREATE TABLE `books` (
-    `id` INT PRIMARY KEY AUTO_INCREMENT,
-    `title` VARCHAR(100) NOT NULL,
-    `author` VARCHAR(100) NOT NULL,
-    `price` INT NOT NULL,
-    `image` VARCHAR(255) NOT NULL,
-    `genre` VARCHAR(100) NOT NULL
+CREATE TABLE `cart` (
+  `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `book_id` int NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `price` int NOT NULL,
+  `quantity` int NOT NULL,
+  `image` varchar(100) NOT NULL,
+  FOREIGN KEY (`user_id`) REFERENCES `users`(`id`),
+  FOREIGN KEY (`book_id`) REFERENCES `books`(`id`)
 );
 
 CREATE TABLE `cart` (

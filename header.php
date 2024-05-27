@@ -54,7 +54,6 @@
           </ul>
         </li>
 
-
         <div class="cart-box">
           <div class="dropdown-cart">
             <button class="cart-toggle-btn">
@@ -62,18 +61,18 @@
               <span class="cart-count">0</span>
             </button>
             <div class="cart-window">
-              <div class="cart-items">
-              </div>
+              <div class="cart-items"></div>
               <div class="cart-total">
                 <p>Total: <span id="cart-total-price">0€</span></p>
               </div>
               <div class="cart-footer">
                 <a href="cart.php"><button>View Bag</button></a>
-                <a href="./checkout.php"><button>Checkout</button></a>
+                <a href="checkout.php"><button>Checkout</button></a>
               </div>
             </div>
           </div>
         </div>
+
         <div class="cart-box-1">
           <div class="dropdown-cart-1">
             <button class="cart-toggle-btn-1">
