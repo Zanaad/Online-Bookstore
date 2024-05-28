@@ -1,5 +1,5 @@
 <?php
-include 'validation.php';
+include 'php/validation.php';
 require_once 'vendor/autoload.php';
 $validator = new CheckoutValidation();
 
@@ -11,17 +11,17 @@ if (isset($_POST['submit'])) {
     $city = $_POST['city'];
     $postalCode = $_POST['PostalCode'];
     $phone = $_POST['phone'];
-    $paymentType = $_POST['paymentType']; 
+    $paymentType = $_POST['paymentType'];
     $validator->validateNameSurname($name, $surname);
     $validator->validateAddress($address);
     $validator->validateCity($city);
     $validator->validatePhoneNumber($phone);
     $validator->validatePostalCode($postalCode);
 
-   
+
     if (empty($validator->getEmailErr()) && empty($validator->getNameErr()) && empty($validator->getAddressErr()) && empty($validator->getCityErr()) && empty($validator->getPCodeErr()) && empty($validator->getPhoneErr())) {
         if ($paymentType === 'Stripe') {
-           
+
             \Stripe\Stripe::setApiKey('sk_test_51PL9rsP3T9Vo3uW19tdhUPNsfEwv678WIhQHzsXc7qHwwt6tOdJ2YWt1A3ZhwDf4BfCXQM9W4bFK1QytG1950l1C00WmIZKFId'); // Set your Stripe secret key
 
             $checkout_session = \Stripe\Checkout\Session::create([
@@ -33,7 +33,7 @@ if (isset($_POST['submit'])) {
                             'product_data' => [
                                 'name' => 'Your Product Name',
                             ],
-                            'unit_amount' => 2000, 
+                            'unit_amount' => 2000,
                         ],
                         'quantity' => 1,
                     ],
@@ -43,12 +43,12 @@ if (isset($_POST['submit'])) {
                 'cancel_url' => 'https://yourdomain.com/cancel.php',
             ]);
 
-           
+
             header("Location: " . $checkout_session->url);
             exit;
         } else {
-            
-            $validator->setOrder("Checkout completed. Payment Type: $paymentType"); 
+
+            $validator->setOrder("Checkout completed. Payment Type: $paymentType");
 
             $to = "adealluhani@gmail.com";
             $subject = "New Order Received";
