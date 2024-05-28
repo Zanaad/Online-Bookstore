@@ -1,7 +1,6 @@
 <?php
-include 'php/db_connect.php';
+include './php/db_connect.php';
 
-// Get the search query from the URL
 $query = isset($_GET['query']) ? mysqli_real_escape_string($conn, $_GET['query']) : '';
 
 ?>
@@ -18,7 +17,7 @@ $query = isset($_GET['query']) ? mysqli_real_escape_string($conn, $_GET['query']
 </head>
 
 <body>
-  <?php include 'php/header.php'; ?>
+  <?php include './php/header.php'; ?>
 
   <div class="search-results-container">
     <h2>Search Results for "<?php echo htmlspecialchars($query); ?>"</h2>
@@ -33,7 +32,8 @@ $query = isset($_GET['query']) ? mysqli_real_escape_string($conn, $_GET['query']
           while ($row = mysqli_fetch_assoc($search_result)) {
       ?>
             <div class="book-card">
-              <img src="<?php echo $row['image']; ?>" alt="<?php echo $row['title']; ?>">
+              <!-- Adjust the path to the image here -->
+              <img src="./<?php echo $row['image']; ?>" alt="<?php echo $row['title']; ?>">
               <div class="content">
                 <div class="star-heart">
                   <div class="stars" id="<?php echo str_replace(' ', '-', $row['title']); ?>">
@@ -67,11 +67,11 @@ $query = isset($_GET['query']) ? mysqli_real_escape_string($conn, $_GET['query']
     </div>
   </div>
 
-  <?php include 'php/footer.php'; ?>
+  <?php include './php/footer.php'; ?>
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="js/script.js"></script>
+  <script src="../js/script.js"></script>
 </body>
 
 </html>
