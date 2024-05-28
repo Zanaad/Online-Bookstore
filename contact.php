@@ -14,7 +14,7 @@
 
 <body>
   <?php
-  include 'header.php'
+  include './php/header.php'
   ?>
   <section class="contact-container1">
     <div class="row">
@@ -58,7 +58,7 @@
           <label for="lastname">Last Name:</label>
           <input type="text" id="lastname" name="lastname" placeholder="Enter your Last name..." />
           <label for="contact-email">Email:</label>
-          <input type="text" id="contact-email" name="email"  />
+          <input type="text" id="contact-email" name="email" />
           <label for="subject">Subject:</label>
           <input type="text" id="subject" name="subject" placeholder="Enter subject">
           <label for="message">Message:</label>
@@ -70,7 +70,7 @@
   </section>
 
   <?php
-  include 'footer.php'
+  include './php/footer.php'
   ?>
 
   <script>

@@ -12,12 +12,12 @@
 
 <body>
   <?php
-  include 'header.php';
+  include './php/header.php';
   ?>
 
   <div class="book-cards">
     <?php
-    include 'db_connect.php';
+    include './php/db_connect.php';
     $query = "SELECT * FROM books WHERE genre='Novels'";
     $result = mysqli_query($conn, $query);
     if (mysqli_num_rows($result) > 0) {
@@ -58,7 +58,7 @@
 
 
   <?php
-  include 'footer.php';
+  include './php/footer.php';
   ?>
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

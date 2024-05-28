@@ -8,7 +8,7 @@ $(document).ready(function () {
 
     $.ajax({
       type: "POST",
-      url: "add_to_cart.php",
+      url: "./php/add_to_cart.php",
       data: { book_id: bookId },
       success: function (response) {
         var data = JSON.parse(response);
@@ -32,7 +32,7 @@ $(document).ready(function () {
   function displayCartItems() {
     $.ajax({
       type: "GET",
-      url: "get_cart_items.php",
+      url: "./php/get_cart_items.php",
       success: function (response) {
         var data = JSON.parse(response);
         if (data.status === "success") {
@@ -80,7 +80,7 @@ $(document).ready(function () {
 
     $.ajax({
       type: "POST",
-      url: "add_to_wishlist.php",
+      url: "./php/add_to_wishlist.php",
       data: { book_id: bookId },
       success: function (response) {
         var data = JSON.parse(response);
@@ -104,7 +104,7 @@ $(document).ready(function () {
   function displayWishlistItems() {
     $.ajax({
       type: "GET",
-      url: "get_wishlist_items.php",
+      url: "./php/get_wishlist_items.php",
       success: function (response) {
         var data = JSON.parse(response);
         console.log("Wishlist items response:", data); // Log the response
@@ -142,7 +142,7 @@ $(document).ready(function () {
     var wishlistId = $(this).data("id");
     $.ajax({
       type: "POST",
-      url: "move_to_cart.php",
+      url: "./php/move_to_cart.php",
       data: { wishlist_id: wishlistId },
       success: function (response) {
         var data = JSON.parse(response);

@@ -33,7 +33,7 @@
 
  <body>
    <?php
-    include 'header.php'
+    include './php/header.php'
     ?>
    <div class="background-section" style="margin-top: 45px;">
      <?php
@@ -1081,7 +1081,7 @@
    </div>
 
    <?php
-    include 'footer.php'
+    include './php/footer.php'
     ?>
    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>

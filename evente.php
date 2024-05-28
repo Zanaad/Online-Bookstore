@@ -12,7 +12,7 @@ echo $a; // Output: 10
 // Largo referencën
 unset($referenceToA);
 // Shtyp vlerën e $a pas largimit të referencës
-echo $a; 
+echo $a;
 ?>
 
 <!DOCTYPE html>
@@ -37,7 +37,7 @@ echo $a;
 
 <body>
   <?php
-  include 'header.php'
+  include './php/header.php'
   ?>
 
   <div class="evente" style="margin-top: 60px">
@@ -200,7 +200,7 @@ echo $a;
   </p>
 
   <?php
-  include 'footer.php'
+  include './php/footer.php'
   ?>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="script.js"></script>
