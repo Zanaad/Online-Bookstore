@@ -9,9 +9,9 @@ CREATE TABLE `users` (
 
 CREATE TABLE `books`{
    `id` int(100) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-     `title` varchar(100) NOT NULL,
+  `title` varchar(100) NOT NULL,
   `author` varchar(100) NOT NULL,
-    `price`int NOT NULL,
+  `price`int NOT NULL,
   `image` varchar(255) NOT NULL,
   `genre` varchar(100) NOT NULL,
 }
@@ -42,7 +42,15 @@ CREATE TABLE `cart` (
   FOREIGN KEY (`book_id`) REFERENCES `books`(`id`)
 );
 
-  
+CREATE TABLE book_ratings (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    book_id INT,
+    user_id INT,
+    rating FLOAT,
+    FOREIGN KEY (book_id) REFERENCES books(id),
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+ALTER TABLE books ADD COLUMN average_rating FLOAT DEFAULT 0;
 
 INSERT INTO books (title, author, price, image, genre)
 VALUES 
@@ -135,3 +143,6 @@ VALUES
 ('Korkuyu Beklerken', 'Oguz Atay', './images/korku.jpg', 11.30, 'Turkish'),
 ('Istanbul\'a Son Tren', 'Ayse Kulin', './images/last.png', 13.50, 'Turkish'),
 ('Aylak Adam', 'Yusuf Atilgan', './images/aylak.png', 9.80, 'Turkish');
+
+
+
