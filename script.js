@@ -1,23 +1,3 @@
-// Search form
-$(document).ready(function () {
-  $(".search").on("submit", function (e) {
-    e.preventDefault(); // Prevent form submission
-
-    var searchTerm = $(".search-bar").val().toLowerCase();
-
-    $(".book-card").each(function () {
-      var cardTitle = $(this).find("h5").text().toLowerCase();
-
-      // Check if the card title contains the search term
-      if (cardTitle.includes(searchTerm)) {
-        $(this).show();
-      } else {
-        $(this).hide();
-      }
-    });
-  });
-});
-
 // Adding books to the cart
 $(document).ready(function () {
   // Change event binding to the button

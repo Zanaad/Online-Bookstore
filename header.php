@@ -6,8 +6,8 @@
     </div>
 
     <div class="search-container">
-      <form action="" class="search">
-        <input type="text" class="search-bar" placeholder="Search...">
+      <form action="search.php" class="search" method="GET">
+        <input type="text" class="search-bar" name="query" placeholder="Search...">
         <button class="search-button" type="submit"> <i class="fas fa-search search-icon"></i></button>
       </form>
     </div>
