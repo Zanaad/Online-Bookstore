@@ -1,33 +1,3 @@
-<?php
-session_start();
-include 'db_connect.php';
-
-if (!isset($_SESSION['user_id'])) {
-   header('Location: login.php');
-   exit();
-}
-
-$user_id = $_SESSION['user_id'];
-
-if (isset($_POST['update_cart'])) {
-   $cart_id = $_POST['cart_id'];
-   $cart_quantity = $_POST['cart_quantity'];
-   mysqli_query($conn, "UPDATE `cart` SET quantity = '$cart_quantity' WHERE id = '$cart_id'") or die('query failed');
-   $message[] = 'Cart quantity updated!';
-}
-
-if (isset($_GET['delete'])) {
-   $delete_id = $_GET['delete'];
-   mysqli_query($conn, "DELETE FROM `cart` WHERE id = '$delete_id'") or die('query failed');
-   header('location:cart.php');
-}
-
-if (isset($_GET['delete_all'])) {
-   mysqli_query($conn, "DELETE FROM `cart` WHERE user_id = '$user_id'") or die('query failed');
-   header('location:cart.php');
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -42,7 +12,36 @@ if (isset($_GET['delete_all'])) {
 </head>
 
 <body>
-   <?php include 'header.php'; ?>
+   <?php
+   include 'header.php';
+
+   include 'db_connect.php';
+
+   if (!isset($_SESSION['user_id'])) {
+      header('Location: login.php');
+      exit();
+   }
+
+   $user_id = $_SESSION['user_id'];
+
+   if (isset($_POST['update_cart'])) {
+      $cart_id = $_POST['cart_id'];
+      $cart_quantity = $_POST['cart_quantity'];
+      mysqli_query($conn, "UPDATE `cart` SET quantity = '$cart_quantity' WHERE id = '$cart_id'") or die('query failed');
+      $message[] = 'Cart quantity updated!';
+   }
+
+   if (isset($_GET['delete'])) {
+      $delete_id = $_GET['delete'];
+      mysqli_query($conn, "DELETE FROM `cart` WHERE id = '$delete_id'") or die('query failed');
+      header('location:cart.php');
+   }
+
+   if (isset($_GET['delete_all'])) {
+      mysqli_query($conn, "DELETE FROM `cart` WHERE user_id = '$user_id'") or die('query failed');
+      header('location:cart.php');
+   }
+   ?>
 
    <div class="heading">
       <h3>Shopping Cart</h3>
