@@ -4,17 +4,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Novela</title>
+  <title>Novels</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 </head>
 
 <body>
-  <?php include './php/header.php'; ?>
+  <?php
+  include './php/header.php';
+  $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
+  ?>
 
   <div class="container" style="margin-top: 110px;">
-    <select id="sort" class="form-select" onchange="sortBooks()">
+    <select id="sort" class="form-select">
       <option value="none">Default</option>
       <option value="title_asc">Title (A-Z)</option>
       <option value="title_desc">Title (Z-A)</option>
@@ -61,12 +64,10 @@
           <img src="<?php echo $row['image']; ?>" alt="<?php echo $row['title']; ?>">
           <div class="content">
             <div class="star-heart">
-              <div class="stars" id="<?php echo str_replace(' ', '-', $row['title']); ?>">
-                <i class="far fa-star" data-value="1"></i>
-                <i class="far fa-star" data-value="2"></i>
-                <i class="far fa-star" data-value="3"></i>
-                <i class="far fa-star" data-value="4"></i>
-                <i class="far fa-star" data-value="5"></i>
+              <div class="stars" id="stars-<?php echo $row['id']; ?>">
+                <?php for ($i = 1; $i <= 5; $i++) { ?>
+                  <i class="far fa-star" data-value="<?php echo $i; ?>" onclick="rateBook(<?php echo $row['id']; ?>, <?php echo $i; ?>)"></i>
+                <?php } ?>
               </div>
               <button class="add-to-wishlist btn btn-outline-danger" data-id="<?php echo $row['id']; ?>">
                 <i class="fas fa-heart"></i>
@@ -75,6 +76,7 @@
             <h5><?php echo $row['title']; ?></h5>
             <h6><?php echo $row['author']; ?></h6>
             <h5 class="price"><?php echo $row['price']; ?>€</h5>
+            <h5 class="average-rating" id="average-rating-<?php echo $row['id']; ?>">Average Rating: <?php echo number_format($row['average_rating'], 2); ?></h5>
             <div class="btn">
               <button class="add-to-cart" data-id="<?php echo $row['id']; ?>">Add to Cart</button>
             </div>
@@ -92,22 +94,10 @@
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="script.js"></script>
-
   <script>
-    function sortBooks() {
-      const sort = document.getElementById('sort').value;
-      window.location.href = `?sort=${sort}`;
-    }
-
-    // Set the selected option based on the current sort parameter
-    const urlParams = new URLSearchParams(window.location.search);
-    const currentSort = urlParams.get('sort');
-    if (currentSort) {
-      document.getElementById('sort').value = currentSort;
-    }
+    window.userId = <?php echo json_encode($user_id); ?>;
   </script>
-
+  <script src="script.js"></script>
 </body>
 
 </html>

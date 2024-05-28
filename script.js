@@ -159,6 +159,61 @@ $(document).ready(function () {
   });
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+  // Sort Books Function
+  const sortBooks = () => {
+    const sort = document.getElementById("sort").value;
+    window.location.href = `?sort=${sort}`;
+  };
+
+  // Set the selected option based on the current sort parameter
+  const urlParams = new URLSearchParams(window.location.search);
+  const currentSort = urlParams.get("sort");
+  if (currentSort) {
+    document.getElementById("sort").value = currentSort;
+  }
+
+  // Rate Book Function
+  window.rateBook = (bookId, rating) => {
+    const userId = window.userId; // Retrieve user ID set globally
+    $.ajax({
+      url: "./php/rate_book.php",
+      method: "POST",
+      data: {
+        book_id: bookId,
+        rating: rating,
+        user_id: userId,
+      },
+      success: function (response) {
+        const data = JSON.parse(response);
+        if (data.success) {
+          alert("Rating submitted successfully!");
+          // Update the average rating in the DOM
+          const avgRatingElem = document.getElementById(
+            `average-rating-${bookId}`
+          );
+          if (avgRatingElem) {
+            avgRatingElem.textContent = `Average Rating: ${data.average_rating.toFixed(
+              2
+            )}`;
+          }
+        } else {
+          alert("Failed to submit rating: " + data.message);
+        }
+      },
+      error: function () {
+        alert("An error occurred while submitting the rating.");
+      },
+    });
+  };
+
+  // Attach event listener to the sort select element
+  const sortElement = document.getElementById("sort");
+  if (sortElement) {
+    sortElement.addEventListener("change", sortBooks);
+  }
+});
+
 //funksionet per validim te te dhenave, te forma ne pjesen e kontaktit
 function validateName() {
   var name = document.getElementById("emri").value;
@@ -198,56 +253,6 @@ function validateForm() {
     return false;
   }
 }
-
-// Review stars
-document.addEventListener("DOMContentLoaded", function () {
-  const starsContainers = document.querySelectorAll(".stars");
-
-  starsContainers.forEach((starsContainer) => {
-    const stars = starsContainer.querySelectorAll("i");
-
-    stars.forEach((star) => {
-      star.addEventListener("click", function () {
-        rateStar(this, starsContainer);
-      });
-
-      star.addEventListener("mouseover", function () {
-        hoverStar(this, stars);
-      });
-
-      star.addEventListener("mouseout", function () {
-        resetStars(stars);
-      });
-    });
-  });
-
-  function rateStar(clickedStar, starsContainer) {
-    const value = clickedStar.getAttribute("data-value");
-    alert(`You rated ${starsContainer.id} ${value} stars`);
-  }
-
-  function hoverStar(hoveredStar, stars) {
-    const value = hoveredStar.getAttribute("data-value");
-    resetStars(stars);
-
-    for (let i = 0; i < value; i++) {
-      stars[i].classList.add("fas");
-      stars[i].classList.remove("far");
-    }
-  }
-
-  function resetStars(stars) {
-    stars.forEach((star) => {
-      star.classList.remove("fas");
-      star.classList.add("far");
-    });
-  }
-});
-
-// dokumentimi eshte 2.5
-//te dokumentimi duhet me shkru ku kena perdor ni kerkese, pse e kena perdor qitu qat kerkese
-// plotesimi i kerkesave eshte 5p
-
 //Drag and drop
 function allowDrop(event) {
   event.preventDefault();
