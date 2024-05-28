@@ -11,15 +11,50 @@
 </head>
 
 <body>
-  <?php
-  include './php/header.php';
-  ?>
+  <?php include './php/header.php'; ?>
+
+  <div class="container" style="margin-top: 110px;">
+    <select id="sort" class="form-select" onchange="sortBooks()">
+      <option value="none">Default</option>
+      <option value="title_asc">Title (A-Z)</option>
+      <option value="title_desc">Title (Z-A)</option>
+      <option value="price_asc">Price (Low to High)</option>
+      <option value="price_desc">Price (High to Low)</option>
+    </select>
+  </div>
 
   <div class="book-cards">
     <?php
     include './php/db_connect.php';
+
+    $sort_option = isset($_GET['sort']) ? $_GET['sort'] : 'none';
+    $order_by = '';
+
+    switch ($sort_option) {
+      case 'title_asc':
+        $order_by = 'title ASC';
+        break;
+      case 'title_desc':
+        $order_by = 'title DESC';
+        break;
+      case 'price_asc':
+        $order_by = 'price ASC';
+        break;
+      case 'price_desc':
+        $order_by = 'price DESC';
+        break;
+      default:
+        $order_by = ''; // Default: No specific order
+    }
+
+    // Update the query to include the ORDER BY clause if specified
     $query = "SELECT * FROM books WHERE genre='Turkish'";
+    if ($order_by) {
+      $query .= " ORDER BY $order_by";
+    }
+
     $result = mysqli_query($conn, $query);
+
     if (mysqli_num_rows($result) > 0) {
       while ($row = mysqli_fetch_assoc($result)) {
     ?>
@@ -37,7 +72,6 @@
               <button class="add-to-wishlist btn btn-outline-danger" data-id="<?php echo $row['id']; ?>">
                 <i class="fas fa-heart"></i>
               </button>
-
             </div>
             <h5><?php echo $row['title']; ?></h5>
             <h6><?php echo $row['author']; ?></h6>
@@ -55,15 +89,25 @@
     ?>
   </div>
 
-
-
-  <?php
-  include './php/footer.php';
-  ?>
+  <?php include './php/footer.php'; ?>
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="script.js"></script>
+
+  <script>
+    function sortBooks() {
+      const sort = document.getElementById('sort').value;
+      window.location.href = `?sort=${sort}`;
+    }
+
+    // Set the selected option based on the current sort parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const currentSort = urlParams.get('sort');
+    if (currentSort) {
+      document.getElementById('sort').value = currentSort;
+    }
+  </script>
 
 </body>
 

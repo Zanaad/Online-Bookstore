@@ -263,9 +263,14 @@ header .logo a {
   color: #444;
   cursor: pointer;
 }
+
+#sort {
+  max-width: 200px;
+  margin-left: 1090px;
+}
 /* book cards */
 .book-cards {
-  padding-top: 100px;
+  padding-top: 30px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
