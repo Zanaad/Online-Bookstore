@@ -1,5 +1,4 @@
 <?php
-
 include './php/db_connect.php';
 include './php/validation.php';
 
@@ -40,7 +39,6 @@ if (isset($_POST['submit'])) {
       }
    }
 }
-
 ?>
 
 <!DOCTYPE html>
