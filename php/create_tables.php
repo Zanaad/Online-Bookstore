@@ -1,58 +1,57 @@
-CREATE TABLE `users` (
-  `id` int(100) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `name` varchar(100) NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `hashPassword` varchar(64) NOT NULL,
-  `salt` varchar(32) NOT NULL
-  `user_type` varchar(20)  NOT NULL
-)
+<?php
+include 'db_connect.php';
 
-CREATE TABLE `books`{
-   `id` int(100) NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `title` varchar(100) NOT NULL,
-  `author` varchar(100) NOT NULL,
-  `price`int NOT NULL,
-  `image` varchar(255) NOT NULL,
-  `genre` varchar(100) NOT NULL,
-  `average_rating` FLOAT DEFAULT 0
-}
-CREATE TABLE `cart` (
-  `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `user_id` int NOT NULL,
-  `book_id` int NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `author` varchar(100) NOT NULL,
-  `price` int NOT NULL,
-  `quantity` int NOT NULL,
-  `image` varchar(100) NOT NULL,
-  FOREIGN KEY (`user_id`) REFERENCES `users`(`id`),
-  FOREIGN KEY (`book_id`) REFERENCES `books`(`id`)
-);
-
-  CREATE TABLE `wishlist` (
-  `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  `user_id` int NOT NULL,
-  `book_id` int NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `author` varchar(100) NOT NULL,
-  `price` int NOT NULL,
-   `quantity` int NOT NULL,
-  `image` varchar(100) NOT NULL,
-  FOREIGN KEY (`user_id`) REFERENCES `users`(`id`),
-  FOREIGN KEY (`book_id`) REFERENCES `books`(`id`)
-);
-
-CREATE TABLE book_ratings (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    book_id INT,
-    user_id INT,
-    rating FLOAT,
-    FOREIGN KEY (book_id) REFERENCES books(id),
-    FOREIGN KEY (user_id) REFERENCES users(id)
-);
-
-INSERT INTO books (title, author, price, image, genre)
+$queries = [
+ "CREATE TABLE `users` (
+        `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+        `name` varchar(100) NOT NULL,
+        `email` varchar(100) NOT NULL,
+        `hashPassword` varchar(64) NOT NULL,
+        `salt` varchar(32) NOT NULL,
+        `user_type` varchar(20) NOT NULL
+    )",
+ "CREATE TABLE `books` (
+        `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+        `title` varchar(100) NOT NULL,
+        `author` varchar(100) NOT NULL,
+        `price` int NOT NULL,
+        `image` varchar(255) NOT NULL,
+        `genre` varchar(100) NOT NULL,
+        `average_rating` FLOAT DEFAULT 0
+    )",
+ "CREATE TABLE `cart` (
+        `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+        `user_id` int(11) NOT NULL,
+        `book_id` int(11) NOT NULL,
+        `name` varchar(100) NOT NULL,
+        `author` varchar(100) NOT NULL,
+        `price` int NOT NULL,
+        `quantity` int NOT NULL,
+        `image` varchar(255) NOT NULL,
+        FOREIGN KEY (`user_id`) REFERENCES `users`(`id`),
+        FOREIGN KEY (`book_id`) REFERENCES `books`(`id`)
+    )",
+ "CREATE TABLE `wishlist` (
+        `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+        `user_id` int(11) NOT NULL,
+        `book_id` int(11) NOT NULL,
+        `name` varchar(100) NOT NULL,
+        `author` varchar(100) NOT NULL,
+        `price` int NOT NULL,
+        `quantity` int NOT NULL,
+        `image` varchar(255) NOT NULL,
+        FOREIGN KEY (`user_id`) REFERENCES `users`(`id`),
+        FOREIGN KEY (`book_id`) REFERENCES `books`(`id`)
+    )",
+ "CREATE TABLE `book_ratings` (
+        `id` INT AUTO_INCREMENT PRIMARY KEY,
+        `book_id` INT,
+        `user_id` INT,
+        `rating` FLOAT,
+        FOREIGN KEY (`book_id`) REFERENCES `books`(`id`),
+        FOREIGN KEY (`user_id`) REFERENCES `users`(`id`)
+    )",
+ "INSERT INTO books (title, author, price, image, genre)
 VALUES 
 ('Orbiting Jupiter', 'Gary Schmidt', 14.00, './images/Orbiting.png', 'English'),
 ('The Book Thief', 'Markus Zusak', 13.50, './images/book_thief.jpg', 'English'),
@@ -65,10 +64,9 @@ VALUES
 ('The Setting sun', 'Osamu Dazai', 12.00, './images/setting_sun.png', 'English'),
 ('No Longer Human', 'Osamu Dazai', 12.00, './images/human.png', 'English'),
 ('To Kill A Mockingbird', 'Harper Lee', 11.60, './images/mockingbird.png', 'English'),
-('The Bell Jar', 'Sylvia Plath', 11.00, './images/bell_jar.png', 'English');
+('The Bell Jar', 'Sylvia Plath', 11.00, './images/bell_jar.png', 'English');",
 
-
-INSERT INTO books (title, author, image, price, genre) 
+ "INSERT INTO books (title, author, image, price, genre) 
 VALUES 
 ('Marsiani', 'Andy Weir', './images/Marsiani.png', 16.00, 'Fantasy'),
 ('Harry Potter 1', 'Joanne Rowling', './images/hp1.jpg', 12.50, 'Fantasy'),
@@ -81,9 +79,9 @@ VALUES
 ('Eragon', 'Christopher Paulini', './images/eragon.png', 14.00, 'Fantasy'),
 ('Hobbit', 'J. K. R Tolklen', './images/hobbit.png', 11.50, 'Fantasy'),
 ('Divergjentja', 'Veronica Roth', './images/divergjentja.png', 10.60, 'Fantasy'),
-('Besnikja', 'Veronica Roth', './images/besnikja.png', 11.00, 'Fantasy');
+('Besnikja', 'Veronica Roth', './images/besnikja.png', 11.00, 'Fantasy');",
 
-INSERT INTO books (title, author, image, price, genre) 
+ "INSERT INTO books (title, author, image, price, genre) 
 VALUES 
 ('L\'Etranger', 'Albert Camus', './images/Etranger.png', 16.00, 'French'),
 ('La Peste', 'Albert Camus', './images/plague.png', 11.80, 'French'),
@@ -96,9 +94,9 @@ VALUES
 ('La Fille Maudite', 'Emile Richebourg', './images/FilleMaudite.png', 14.00, 'French'),
 ('Ensemble, c\'est tout', 'Anna Gavalda', './images/ensemble.png', 11.90, 'French'),
 ('Madame Bovary', 'Gustave Flaubert', './images/bovary.png', 13.70, 'French'),
-('Le Petite Prince', 'Antoine de Saint', './images/PetitePrince.png', 12.60, 'French');
+('Le Petite Prince', 'Antoine de Saint', './images/PetitePrince.png', 12.60, 'French');",
 
-INSERT INTO books (title, author, image, price, genre) 
+ "INSERT INTO books (title, author, image, price, genre) 
 VALUES 
 ('Juvenilja', 'Ndre Mjeda', './images/juvenilja.jpg', 12.00, 'Novels'),
 ('Keshtjella', 'Ismail Kadare', './images/kadare.jpg', 11.80, 'Novels'),
@@ -111,10 +109,9 @@ VALUES
 ('Metamorfoza', 'Franz Kafka', './images/metamorfoza.jpg', 10.00, 'Novels'),
 ('Procesi', 'Franz Kafka', './images/procesi.jpg', 13.60, 'Novels'),
 ('Lulet E Se Keqes', 'Sharl Bodler', './images/lulet.jpg', 9.50, 'Novels'),
-('Bija e Mallkuar', 'Emile Richbourg', './images/bija.png', 10.40, 'Novels');
+('Bija e Mallkuar', 'Emile Richbourg', './images/bija.png', 10.40, 'Novels');",
 
-
-INSERT INTO books (title, author, image, price, genre) 
+ "INSERT INTO books (title, author, image, price, genre) 
 VALUES 
 ('Five Feet Apart', 'Rachael Lippincott', './images/five_feet_apart.jpg', 16.50, 'Romance'),
 ('All The Bright Places', 'Jennifer Niven', './images/all_the_bright_places.jpg', 15.80, 'Romance'),
@@ -127,9 +124,9 @@ VALUES
 ('Things We Never Got Over', 'Lucy Score', './images/over.png', 14.00, 'Romance'),
 ('Things We Hide From The Light', 'Lucy Score', './images/light.png', 14.50, 'Romance'),
 ('Midnight Sun', 'Trish Cook', './images/sun.jpg', 15.00, 'Romance'),
-('Shatter Me Series', 'Tahereh Mafi', './images/shatter.png', 30.00, 'Romance');
+('Shatter Me Series', 'Tahereh Mafi', './images/shatter.png', 30.00, 'Romance');",
 
-INSERT INTO books (title, author, image, price, genre) 
+ "INSERT INTO books (title, author, image, price, genre) 
 VALUES 
 ('Biraz Yagmur Kimseyi Incitmez', 'Kemal Sayar', './images/yagmur.png', 12.00, 'Turkish'),
 ('Ruhun Labirentleri', 'Kemal Sayar', './images/labirent.png', 12.50, 'Turkish'),
@@ -142,7 +139,20 @@ VALUES
 ('Kuyucakli Yusuf', 'Sabahattin Ali', './images/yusuf.png', 14.90, 'Turkish'),
 ('Korkuyu Beklerken', 'Oguz Atay', './images/korku.jpg', 11.30, 'Turkish'),
 ('Istanbul\'a Son Tren', 'Ayse Kulin', './images/last.png', 13.50, 'Turkish'),
-('Aylak Adam', 'Yusuf Atilgan', './images/aylak.png', 9.80, 'Turkish');
+('Aylak Adam', 'Yusuf Atilgan', './images/aylak.png', 9.80, 'Turkish');"
 
 
 
+
+
+];
+
+foreach ($queries as $query) {
+ if ($conn->query($query) === TRUE) {
+  echo "Krijimi i tabeles dhe insertimi i te dhenave ne tabele u krye me sukses.<br>";
+ } else {
+  echo "Gabim në krijimin e tabelës: " . $conn->error . "<br>";
+ }
+}
+
+$conn->close();

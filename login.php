@@ -26,17 +26,10 @@ if (isset($_POST['submit'])) {
       // Check if the hashed entered password matches the stored hashed password
       if ($entered_password_hashed === $hashed_password) {
          // Passwords match, proceed with login
-         if ($row['user_type'] == 'admin') {
-            $_SESSION['admin_name'] = $row['name'];
-            $_SESSION['admin_email'] = $row['email'];
-            $_SESSION['admin_id'] = $row['id'];
-            header('location:admin_page.php');
-         } elseif ($row['user_type'] == 'user') {
-            $_SESSION['user_name'] = $row['name'];
-            $_SESSION['user_email'] = $row['email'];
-            $_SESSION['user_id'] = $row['id'];
-            header('location:home.php');
-         }
+         $_SESSION['user_name'] = $row['name'];
+         $_SESSION['user_email'] = $row['email'];
+         $_SESSION['user_id'] = $row['id'];
+         header('location:home.php');
       } else {
          $message[] = 'Incorrect email or password!';
       }
@@ -51,6 +44,7 @@ if (isset($_POST['submit'])) {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -63,6 +57,7 @@ if (isset($_POST['submit'])) {
    <!-- custom css file link  -->
    <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
 
    <?php
@@ -89,4 +84,5 @@ if (isset($_POST['submit'])) {
    </div>
 
 </body>
+
 </html>

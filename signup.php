@@ -8,20 +8,18 @@ if (isset($_POST['submit'])) {
    $email = mysqli_real_escape_string($conn, $_POST['email']);
    $password = mysqli_real_escape_string($conn, $_POST['password']);
    $cpassword = mysqli_real_escape_string($conn, $_POST['cpassword']);
-   $user_type = $_POST['user_type'];
 
    if ($password != $cpassword) {
       $message[] = 'Confirm password not matched!';
    } else {
       $salt = bin2hex(random_bytes(16));
-
       $hashed_password = hash('sha256', $password . $salt);
 
       $select_users = mysqli_query($conn, "SELECT * FROM `users` WHERE email = '$email'") or die('Query failed');
       if (mysqli_num_rows($select_users) > 0) {
          $message[] = 'User already exists!';
       } else {
-         mysqli_query($conn, "INSERT INTO `users`(name, email, hashPassword, salt, user_type) VALUES('$name', '$email', '$hashed_password', '$salt', '$user_type')") or die('Query failed');
+         mysqli_query($conn, "INSERT INTO `users`(name, email, hashPassword, salt) VALUES('$name', '$email', '$hashed_password', '$salt')") or die('Query failed');
          $message[] = 'Registered successfully!';
          header('location: login.php');
       }
@@ -70,10 +68,6 @@ if (isset($_POST['submit'])) {
          <input type="email" name="email" placeholder="Enter your email" required class="box">
          <input type="password" name="password" placeholder="Enter your password" required class="box">
          <input type="password" name="cpassword" placeholder="Confirm your password" required class="box">
-         <select name="user_type" class="box">
-            <option value="user">User</option>
-            <option value="admin">Admin</option>
-         </select>
          <input type="submit" name="submit" value="Register Now" class="btn">
          <p>Already have an account? <a href="login.php">Login Now</a></p>
       </form>
