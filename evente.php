@@ -8,6 +8,7 @@ echo $a; // Output: 10
 unset($referenceToA);
 // Shtyp vlerën e $a pas largimit të referencës
 echo $a;
+
 function llogarit($numri, $operacion) {
   return $operacion($numri);
 }
