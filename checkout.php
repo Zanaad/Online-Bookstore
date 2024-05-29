@@ -39,7 +39,7 @@ if (isset($_POST['submit'])) {
                     ],
                 ],
                 'mode' => 'payment',
-                'success_url' => 'https://yourdomain.com/success.php',
+                'success_url' => 'https://localhost/success.php',
                 'cancel_url' => 'https://yourdomain.com/cancel.php',
             ]);
 

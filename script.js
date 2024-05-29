@@ -176,35 +176,43 @@ document.addEventListener("DOMContentLoaded", () => {
   // Rate Book Function
   window.rateBook = (bookId, rating) => {
     const userId = window.userId; // Retrieve user ID set globally
-    $.ajax({
-      url: "./php/rate_book.php",
-      method: "POST",
-      data: {
-        book_id: bookId,
-        rating: rating,
-        user_id: userId,
-      },
-      success: function (response) {
-        const data = JSON.parse(response);
-        if (data.success) {
-          alert("Rating submitted successfully!");
-          // Update the average rating in the DOM
-          const avgRatingElem = document.getElementById(
-            `average-rating-${bookId}`
-          );
-          if (avgRatingElem) {
-            avgRatingElem.textContent = `Average Rating: ${data.average_rating.toFixed(
-              2
-            )}`;
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "./php/rate_book.php", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === XMLHttpRequest.DONE) {
+        if (xhr.status === 200) {
+          const data = JSON.parse(xhr.responseText);
+          if (data.success) {
+            alert("Rating submitted successfully!");
+            // Update the average rating in the DOM
+            const avgRatingElem = document.getElementById(
+              `average-rating-${bookId}`
+            );
+            if (avgRatingElem) {
+              avgRatingElem.textContent = `Average Rating: ${data.average_rating.toFixed(
+                2
+              )}`;
+            }
+          } else {
+            alert("Failed to submit rating: " + data.message);
           }
         } else {
-          alert("Failed to submit rating: " + data.message);
+          alert("An error occurred while submitting the rating.");
         }
-      },
-      error: function () {
-        alert("An error occurred while submitting the rating.");
-      },
-    });
+      }
+    };
+
+    xhr.send(
+      "book_id=" +
+        encodeURIComponent(bookId) +
+        "&rating=" +
+        encodeURIComponent(rating) +
+        "&user_id=" +
+        encodeURIComponent(userId)
+    );
   };
 
   // Attach event listener to the sort select element
