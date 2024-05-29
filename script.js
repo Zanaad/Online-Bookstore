@@ -136,7 +136,6 @@ $(document).ready(function () {
     $(".cart-window-1").toggle();
   });
 });
-
 //move to bag
 $(document).ready(function () {
   $(".move-to-bag-btn").click(function () {
@@ -160,7 +159,7 @@ $(document).ready(function () {
   });
 });
 
-$(document).ready(function () {
+document.addEventListener("DOMContentLoaded", () => {
   // Sort Books Function
   const sortBooks = () => {
     const sort = document.getElementById("sort").value;
@@ -175,8 +174,8 @@ $(document).ready(function () {
   }
 
   // Rate Book Function
-  const rateBook = (bookId, rating) => {
-    const userId = userId; // Assuming userId is defined globally
+  window.rateBook = (bookId, rating) => {
+    const userId = window.userId; // Retrieve user ID set globally
     $.ajax({
       url: "./php/rate_book.php",
       method: "POST",
@@ -213,9 +212,6 @@ $(document).ready(function () {
   if (sortElement) {
     sortElement.addEventListener("change", sortBooks);
   }
-
-  // Expose rateBook to global scope
-  window.rateBook = rateBook;
 });
 
 //funksionet per validim te te dhenave, te forma ne pjesen e kontaktit
