@@ -11,6 +11,9 @@ function changeLinkName(&$link_name_ref) {
 
 changeLinkName($link_name);
 
+$about_title = "Rreth Nesh";
+$contact_title = "Kontakto";
+
 ?>
   <footer>
    <div class="content">
@@ -36,8 +39,8 @@ changeLinkName($link_name);
      </ul>
      <ul class="box">
       <li class="link_name">Te duhet ndihme</li>
-      <li><a href="about.php">Rreth nesh</a></li>
-      <li><a href="contact.php">Na kontakto</a></li>
+      <li><a href="about.php"><?php echo $about_title; ?></a></li>
+      <li><a href="contact.php"><?php echo $contact_itle; ?></a></li>
       <li><a href="#">Politikat e privatesise</a></li>
      </ul>
 
