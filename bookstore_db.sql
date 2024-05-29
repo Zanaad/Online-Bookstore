@@ -3,11 +3,11 @@ CREATE TABLE `users` (
   `name` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `hashPassword` varchar(64) NOT NULL,
-  `salt` varchar(32) NOT NULL
+  `salt` varchar(32) NOT NULL,
   `user_type` varchar(20)  NOT NULL
-)
+);
 
-CREATE TABLE `books`{
+CREATE TABLE `books`(
    `id` int(100) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `title` varchar(100) NOT NULL,
   `author` varchar(100) NOT NULL,
@@ -15,7 +15,7 @@ CREATE TABLE `books`{
   `image` varchar(255) NOT NULL,
   `genre` varchar(100) NOT NULL,
   `average_rating` FLOAT DEFAULT 0
-}
+);
 CREATE TABLE `cart` (
   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `user_id` int NOT NULL,
