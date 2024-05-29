@@ -4,7 +4,6 @@ CREATE TABLE `users` (
   `email` varchar(100) NOT NULL,
   `hashPassword` varchar(64) NOT NULL,
   `salt` varchar(32) NOT NULL,
-  `user_type` varchar(20)  NOT NULL
 );
 
 CREATE TABLE `books`(
