@@ -1,12 +1,27 @@
-
 <?php
-$key = $_POST['key'];
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "bookstore_db";
 
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-$response = array(
-    'status' => 'success',
-    'message' => 'Data successfully processed',
-);
+if ($conn->connect_error) {
+    die("Lidhja dështoi: " . $conn->connect_error);
+}
 
- echo json_encode($response);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $key = $_POST['key'];
+    $value = $_POST['value'];
+
+    $sql = "UPDATE books SET some_column='$value' WHERE key_column='$key'";
+
+    if ($conn->query($sql) === TRUE) {
+        echo json_encode(["message" => "Përditësimi u krye me sukses"]);
+    } else {
+        echo json_encode(["error" => "Gabim gjatë përditësimit: " . $conn->error]);
+    }
+}
+
+$conn->close();
 ?>
