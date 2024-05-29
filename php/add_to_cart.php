@@ -48,14 +48,6 @@ if ($book) {
  $insert_query->bind_param('iissdis', $user_id, $book_id, $title, $author, $price, $quantity, $image);
 
  if ($insert_query->execute()) {
-  // Get the updated cart count
-  $cart_count_query = $conn->prepare("SELECT COUNT(*) AS cart_count FROM cart WHERE user_id = ?");
-  $cart_count_query->bind_param('i', $user_id);
-  $cart_count_query->execute();
-  $cart_count_result = $cart_count_query->get_result();
-  $cart_count_row = $cart_count_result->fetch_assoc();
-  $cart_count = $cart_count_row['cart_count'];
-
   echo json_encode(['status' => 'success', 'cart_count' => $cart_count]);
  } else {
   echo json_encode(['status' => 'error', 'message' => 'Failed to add book to cart']);

@@ -48,13 +48,6 @@ if ($book) {
  $insert_query->bind_param('iissdis', $user_id, $book_id, $title, $author, $price, $quantity, $image);
 
  if ($insert_query->execute()) {
-  $wishlist_count_query = $conn->prepare("SELECT COUNT(*) AS wishlist_count FROM wishlist WHERE user_id = ?");
-  $wishlist_count_query->bind_param('i', $user_id);
-  $wishlist_count_query->execute();
-  $wishlist_count_result = $wishlist_count_query->get_result();
-  $wishlist_count_row = $wishlist_count_result->fetch_assoc();
-  $wishlist_count = $wishlist_count_row['wishlist_count'];
-
   echo json_encode(['status' => 'success', 'wishlist_count' => $wishlist_count]);
  } else {
   echo json_encode(['status' => 'error', 'message' => 'Failed to add book to wishlist', 'error' => $insert_query->error]);

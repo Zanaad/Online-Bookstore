@@ -8,6 +8,7 @@ $queries = [
         `email` varchar(100) NOT NULL,
         `hashPassword` varchar(64) NOT NULL,
         `salt` varchar(32) NOT NULL,
+        `user_type` varchar(20) NOT NULL
     )",
     "CREATE TABLE `books` (
         `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -50,6 +51,7 @@ $queries = [
         FOREIGN KEY (`book_id`) REFERENCES `books`(`id`),
         FOREIGN KEY (`user_id`) REFERENCES `users`(`id`)
     )",
+
     "INSERT INTO books (title, author, price, image, genre)
 VALUES 
 ('Orbiting Jupiter', 'Gary Schmidt', 14.00, './images/Orbiting.png', 'English'),
