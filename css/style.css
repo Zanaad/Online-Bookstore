@@ -1156,3 +1156,6 @@ footer .bottom-details .bottom_text {
     font-size: 3rem;
   }
 }
+.error {
+  color: red;
+}

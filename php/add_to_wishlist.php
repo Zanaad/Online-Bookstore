@@ -6,9 +6,7 @@ if (!isset($_SESSION['user_id'])) {
  echo json_encode(['status' => 'error', 'message' => 'User not logged in']);
  exit();
 }
-
 $user_id = $_SESSION['user_id'];
-
 $book_id = isset($_POST['book_id']) ? $_POST['book_id'] : null;
 
 if (!$book_id) {

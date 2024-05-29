@@ -14,7 +14,6 @@
 <body>
    <?php
    include './php/header.php';
-
    include './php/db_connect.php';
 
    if (!isset($_SESSION['user_id'])) {

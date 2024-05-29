@@ -711,3 +711,6 @@ footer .content .link-boxes .box {
     width: 100%;
   }
 }
+.error {
+  color: red;
+}
