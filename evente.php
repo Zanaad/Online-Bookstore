@@ -8,6 +8,13 @@ echo $a; // Output: 10
 unset($referenceToA);
 // Shtyp vlerën e $a pas largimit të referencës
 echo $a;
+function llogarit($numri, $operacion) {
+  return $operacion($numri);
+}
+
+function dyfisho($x) {
+  return $x * 2;
+}
 ?>
 
 <!DOCTYPE html>
@@ -140,15 +147,15 @@ echo $a;
       <tr>
         <td>Cmimi</td>
         <td>
-          <h6 id="cmimi" style="display: none"><mark>10€</mark></h6>
+          <h6 id="cmimi" style="display: none"><<?php echo llogarit(5, 'dyfisho'); ?>€</mark></h6>
           <button id="button-3">Shiko cmimin</button>
         </td>
         <td>
-          <h6 id="cmimi-1" style="display: none"><mark>8€</mark></h6>
+          <h6 id="cmimi-1" style="display: none"><mark><<?php echo llogarit(4, 'dyfisho'); ?>€</mark></h6>
           <button id="button-4">Shiko cmimin</button>
         </td>
         <td>
-          <h6 id="cmimi-2" style="display: none"><mark>18€</mark></h6>
+          <h6 id="cmimi-2" style="display: none"><mark><<?php echo llogarit(6, 'dyfisho'); ?>€</mark></h6>
           <button id="button-5">Shiko cmimin</button>
         </td>
       </tr>
