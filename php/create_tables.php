@@ -7,8 +7,7 @@ $queries = [
         `name` varchar(100) NOT NULL,
         `email` varchar(100) NOT NULL,
         `hashPassword` varchar(64) NOT NULL,
-        `salt` varchar(32) NOT NULL,
-        `user_type` varchar(20) NOT NULL
+        `salt` varchar(32) NOT NULL
     )",
     "CREATE TABLE `books` (
         `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
