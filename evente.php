@@ -3,7 +3,7 @@ $a = 1984;
 // Krijoni një referencë të variablës $a
 $referenceToA = &$a;
 // Shtyp vlerën e $a përpara largimit të referencës
-echo $a; // Output: 10
+echo $a; 
 // Largo referencën
 unset($referenceToA);
 // Shtyp vlerën e $a pas largimit të referencës
