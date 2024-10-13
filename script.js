@@ -38,31 +38,44 @@ $(document).ready(function () {
         if (data.status === "success") {
           $(".cart-items").empty();
           var totalPrice = 0;
-          data.cart_items.forEach(function (item) {
-            $(".cart-items").append(
-              `<div class="book-card" data-id="${item.id}">
-                                <img src="${item.image}" alt="${item.title}">
-                                <h5>${item.title}</h5>
-                                <h6>${item.author}</h6>
-                                <p class="price">${item.price}€</p>
-                                <p class="quantity">Quantity: ${item.quantity}</p>
-                            </div>`
-            );
-            totalPrice += parseFloat(item.price) * item.quantity;
-          });
-          $("#cart-total-price").text(totalPrice.toFixed(2) + "€");
-          $(".cart-count").text(data.cart_count); // Update cart count
+          if (data.cart_items.length > 0) {
+            data.cart_items.forEach(function (item) {
+              $(".cart-items").append(
+                `<div class="book-card" data-id="${item.id}">
+                <img src="${item.image}" alt="${item.title}">
+                <h5>${item.title}</h5>
+                <h6>${item.author}</h6>
+                <p class="price">${item.price}€</p>
+                <p class="quantity">Quantity: ${item.quantity}</p>
+              </div>`
+              );
+              totalPrice += parseFloat(item.price) * item.quantity;
+            });
+            $("#cart-total-price").text(totalPrice.toFixed(2) + "€");
+            $(".cart-count").text(data.cart_count); // Update cart count
+          } else {
+            $(".cart-items").html('<p class="empty">Your cart is empty</p>');
+            $("#cart-total-price").text("0.00€");
+            $(".cart-count").text("0");
+          }
         } else {
-          alert("Error: " + data.message);
+          $(".cart-items").html(
+            '<p class="error-message">' + data.message + "</p>"
+          );
+          $("#cart-total-price").text("0.00€");
+          $(".cart-count").text("0");
         }
       },
       error: function () {
-        alert("Error fetching cart items");
+        $(".cart-items").html(
+          '<p class="error-message">Error fetching cart items</p>'
+        );
+        $("#cart-total-price").text("0.00€");
+        $(".cart-count").text("0");
       },
     });
   }
 
-  // Call displayCartItems() when the page is ready
   displayCartItems();
 
   $(".cart-toggle-btn").click(function () {
@@ -110,22 +123,34 @@ $(document).ready(function () {
         console.log("Wishlist items response:", data); // Log the response
         if (data.status === "success") {
           $(".cart-items-1").empty();
-          data.wishlist_items.forEach(function (item) {
-            $(".cart-items-1").append(
-              `<div class="book-card" data-id="${item.id}">
+          if (data.wishlist_items.length > 0) {
+            data.wishlist_items.forEach(function (item) {
+              $(".cart-items-1").append(
+                `<div class="book-card" data-id="${item.id}">
                 <img src="${item.image}" alt="${item.title}">
                 <h5>${item.title}</h5>
-                  <h6>${item.author}</h6>
+                <h6>${item.author}</h6>
                 <p class="price">${item.price}€</p>
               </div>`
+              );
+            });
+          } else {
+            // If there are no items in the wishlist, show a message
+            $(".cart-items-1").html(
+              '<p class="empty">Your wishlist is empty</p>'
             );
-          });
+          }
         } else {
-          alert("Error: " + data.message);
+          // Show the error message in the wishlist section instead of alert
+          $(".cart-items-1").html(
+            '<p class="error-message">' + data.message + "</p>"
+          );
         }
       },
       error: function () {
-        alert("Error fetching wishlist items");
+        $(".cart-items-1").html(
+          '<p class="error-message">Error fetching wishlist items</p>'
+        );
       },
     });
   }
