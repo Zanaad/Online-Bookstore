@@ -3,7 +3,7 @@ CREATE TABLE `users` (
   `name` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `hashPassword` varchar(64) NOT NULL,
-  `salt` varchar(32) NOT NULL,
+  `salt` varchar(32) NOT NULL
 );
 
 CREATE TABLE `books`(
@@ -19,7 +19,6 @@ CREATE TABLE `cart` (
   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `user_id` int NOT NULL,
   `book_id` int NOT NULL,
-  `name` varchar(100) NOT NULL,
   `name` varchar(100) NOT NULL,
   `author` varchar(100) NOT NULL,
   `price` int NOT NULL,

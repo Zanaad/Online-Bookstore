@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  php-apache:
+    build: ./php
+    container_name: php_apache_container
+    ports:
+      - "8000:80"
+    volumes:
+      - ./app:/var/www/html
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:8
+    container_name: mysql_container
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: bookstore_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+    - db_data:/var/lib/mysql
+    - ./bookstore_db.sql:/docker-entrypoint-initdb.d/bookstore_db.sql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin_container
+    restart: always
+    depends_on:
+      - mysql
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: mysql
+      MYSQL_ROOT_PASSWORD: root
+
+volumes:
+  db_data:
