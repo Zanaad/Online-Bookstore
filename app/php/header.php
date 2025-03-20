@@ -1,8 +1,12 @@
-<header class="container-fluid header-container">
+<?php
+// Start the session at the very top, before any HTML or output
+session_start();
+?>
 
+<header class="container-fluid header-container">
   <div class="logo">
     <img src="./images/StoryShop.png" alt="Logo">
-    <a href="home.php">LIBRARIA LIVING</a>
+    <a href="index.php">LIBRARIA LIVING</a>
   </div>
 
   <div class="search-container">
@@ -33,11 +37,6 @@
       <li>
         <a href="#">
           <?php
-          // Start session only if it hasn't been started
-          if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-          }
-
           // Display user's name if logged in, otherwise show "My Account"
           echo isset($_SESSION['user_name']) ? $_SESSION['user_name'] : "My account";
           ?>
@@ -95,3 +94,4 @@
     </ul>
   </nav>
 </header>
+

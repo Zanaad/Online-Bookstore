@@ -118,7 +118,7 @@ if (isset($_POST['submit'])) {
                 </div>
                 </br>
                 <button type="submit" name="submit" class="btn">Submit</button>
-                <a href="./home.php"> <button type="button" class="btn cancel">Close</button></a>
+                <a href="./index.php"> <button type="button" class="btn cancel">Close</button></a>
                 <span style="color:green"><?php echo $validator->getOrder(); ?></span>
             </form>
         </div>

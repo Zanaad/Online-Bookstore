@@ -43,7 +43,7 @@
 
   <div class="heading">
     <h3>Wishlist items</h3>
-    <p> <a href="home.php">Home</a> / wishlist </p>
+    <p> <a href="index.php">Home</a> / wishlist </p>
   </div>
 
   <section class="shopping-cart">
