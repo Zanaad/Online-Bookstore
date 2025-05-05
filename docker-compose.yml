@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   php-apache:
-    build: ./php
+    build: .
     container_name: php_apache_container
     ports:
       - "8000:80"
@@ -40,4 +40,5 @@ services:
 
 volumes:
   db_data:
+
 
