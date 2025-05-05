@@ -1,5 +1,0 @@
-MYSQL_ROOT_PASSWORD=root
-MYSQL_DATABASE=bookstore_db
-MYSQL_USER=user
-MYSQL_PASSWORD=password
-
