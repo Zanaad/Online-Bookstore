@@ -1,10 +1,11 @@
 <?php
-$servername = "mysql";
-$username = "user";
-$password = "password";
-$dbname = "bookstore_db";
+$servername = getenv('MYSQL_HOST') ?: 'mysql';
+$username   = getenv('MYSQL_USER');
+$password   = getenv('MYSQL_PASSWORD');
+$dbname     = getenv('MYSQL_DATABASE');
+
 $conn = mysqli_connect($servername, $username, $password, $dbname);
 
-if ($conn->connect_error) {
- die("Lidhja dështoi: " . $conn->connect_error);
+if (!$conn) {
+ die("Lidhja dështoi: " . mysqli_connect_error());
 }

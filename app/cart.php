@@ -1,4 +1,39 @@
-=
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+   session_start();
+}
+
+include './php/db_connect.php';
+
+if (!isset($_SESSION['user_id'])) {
+   header('Location: login.php');
+   exit();
+}
+
+// Set the user ID
+$user_id = $_SESSION['user_id'];
+
+// Handle cart updates
+if (isset($_POST['update_cart'])) {
+   $cart_id = $_POST['cart_id'];
+   $cart_quantity = $_POST['cart_quantity'];
+   mysqli_query($conn, "UPDATE `cart` SET quantity = '$cart_quantity' WHERE id = '$cart_id'") or die('query failed');
+   $message[] = 'Cart quantity updated!';
+}
+
+// Handle item deletion
+if (isset($_GET['delete'])) {
+   $delete_id = $_GET['delete'];
+   mysqli_query($conn, "DELETE FROM `cart` WHERE id = '$delete_id'") or die('query failed');
+   header('location:cart.php');
+}
+
+// Handle delete all items
+if (isset($_GET['delete_all'])) {
+   mysqli_query($conn, "DELETE FROM `cart` WHERE user_id = '$user_id'") or die('query failed');
+   header('location:cart.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,41 +49,7 @@
 
 <body>
    <?php
-   if (session_status() === PHP_SESSION_NONE) {
-      session_start();
-   }
-
    include './php/header.php';
-   include './php/db_connect.php';
-
-   if (!isset($_SESSION['user_id'])) {
-      header('Location: login.php');
-      exit();
-   }
-
-   // Set the user ID
-   $user_id = $_SESSION['user_id'];
-
-   // Handle cart updates
-   if (isset($_POST['update_cart'])) {
-      $cart_id = $_POST['cart_id'];
-      $cart_quantity = $_POST['cart_quantity'];
-      mysqli_query($conn, "UPDATE `cart` SET quantity = '$cart_quantity' WHERE id = '$cart_id'") or die('query failed');
-      $message[] = 'Cart quantity updated!';
-   }
-
-   // Handle item deletion
-   if (isset($_GET['delete'])) {
-      $delete_id = $_GET['delete'];
-      mysqli_query($conn, "DELETE FROM `cart` WHERE id = '$delete_id'") or die('query failed');
-      header('location:cart.php');
-   }
-
-   // Handle delete all items
-   if (isset($_GET['delete_all'])) {
-      mysqli_query($conn, "DELETE FROM `cart` WHERE user_id = '$user_id'") or die('query failed');
-      header('location:cart.php');
-   }
    ?>
 
    <div class="heading">
@@ -61,15 +62,15 @@
       <div class="box-container">
          <?php
          $grand_total = 0;
-         // Fetch cart items for the logged-in user
-         $select_cart = mysqli_query($conn, "SELECT * FROM `cart` WHERE user_id = '$user_id'") or die('query failed');
+         // Fetch cart items for the logged-in user with book details from books table
+         $select_cart = mysqli_query($conn, "SELECT cart.id, cart.quantity, books.title, books.author, books.price, books.image FROM `cart` JOIN `books` ON cart.book_id = books.id WHERE cart.user_id = '$user_id'") or die('query failed');
          if (mysqli_num_rows($select_cart) > 0) {
             while ($fetch_cart = mysqli_fetch_assoc($select_cart)) {
          ?>
                <div class="box">
                   <a href="cart.php?delete=<?php echo $fetch_cart['id']; ?>" class="fas fa-times" onclick="return confirm('Delete this item from the cart?');"></a>
-                  <img src="<?php echo $fetch_cart['image']; ?>" alt="<?php echo $fetch_cart['name']; ?>">
-                  <div class="name"><?php echo $fetch_cart['name']; ?></div>
+                  <img src="<?php echo $fetch_cart['image']; ?>" alt="<?php echo $fetch_cart['title']; ?>">
+                  <div class="name"><?php echo $fetch_cart['title']; ?></div>
                   <div class="name"><?php echo $fetch_cart['author']; ?></div>
                   <div class="price"><?php echo $fetch_cart['price']; ?>€</div>
                   <form action="" method="post">

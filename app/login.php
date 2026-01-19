@@ -75,9 +75,14 @@ if (isset($_POST['submit'])) {
 
    <div class="form-container">
       <form action="" method="post">
-         <h3>Login Now</h3>
-         <input type="email" name="email" placeholder="Enter your email" required class="box">
-         <input type="password" name="password" placeholder="Enter your password" required class="box">
+         <h3>
+            <i class="fas fa-sign-in-alt"></i> Login Now
+         </h3>
+         <div style="margin-bottom: 1.5rem; font-size: 4rem; color: rgba(102, 126, 234, 0.8);">
+            <i class="fas fa-book"></i>
+         </div>
+         <input type="email" name="email" placeholder="📧 Enter your email" required class="box">
+         <input type="password" name="password" placeholder="🔒 Enter your password" required class="box">
          <input type="submit" name="submit" value="Login Now" class="btn">
          <p>Don't have an account? <a href="signup.php">Register Now</a></p>
       </form>

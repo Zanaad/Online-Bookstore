@@ -38,7 +38,7 @@
    <div class="background-section" style="margin-top: 45px;">
      <?php
       if (!isset($_COOKIE['logged_in'])) {
-        echo '<img src="./images/living2.png" alt="Not Logged In Image">';
+        echo '<img src="./images/living.png" alt="Not Logged In Image">';
       } else if (isset($_COOKIE['logged_in'])) {
         echo '<img src="./images/living.png" alt="Logged In Image">';
       }
@@ -1086,7 +1086,7 @@
    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
    <script src="script.js"></script>
-     <script src="ajax-requests.js"></script>
+   <script src="ajax-requests.js"></script>
 
  </body>
 

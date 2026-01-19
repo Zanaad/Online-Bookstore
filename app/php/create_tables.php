@@ -141,10 +141,6 @@ VALUES
 ('Istanbul\'a Son Tren', 'Ayse Kulin', './images/last.png', 13.50, 'Turkish'),
 ('Aylak Adam', 'Yusuf Atilgan', './images/aylak.png', 9.80, 'Turkish');"
 
-
-
-
-
 ];
 
 foreach ($queries as $query) {

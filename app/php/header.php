@@ -57,41 +57,36 @@ session_start();
           <li><a href="./wishlist.php">Wishlist</a></li>
         </ul>
       </li>
-
-      <div class="cart-box">
-        <div class="dropdown-cart">
-          <button class="cart-toggle-btn">
-            <i class="fas fa-shopping-cart"></i>
-            <span class="cart-count">0</span>
-          </button>
-          <div class="cart-window">
-            <div class="cart-items"></div>
-            <div class="cart-total">
-              <p>Total: <span id="cart-total-price">0€</span></p>
-            </div>
-            <div class="cart-footer">
-              <a href="cart.php"><button>View Bag</button></a>
-              <a href="checkout.php"><button>Checkout</button></a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="cart-box-1">
-        <div class="dropdown-cart-1">
-          <button class="cart-toggle-btn-1">
-            <i class="fas fa-heart"></i>
-            <span class="cart-count-1">0</span>
-          </button>
-          <div class="cart-window-1">
-            <div class="cart-items-1"></div>
-            <div class="wishlist-footer">
-              <a href="wishlist.php"><button>View</button></a>
-            </div>
-          </div>
-        </div>
-      </div>
     </ul>
   </nav>
 </header>
 
+<div class="dropdown-cart">
+  <button class="cart-toggle-btn">
+    <i class="fas fa-shopping-cart"></i>
+    <span class="cart-count">0</span>
+  </button>
+  <div class="cart-window">
+    <div class="cart-items"></div>
+    <div class="cart-total">
+      <p>Total: <span id="cart-total-price">0€</span></p>
+    </div>
+    <div class="cart-footer">
+      <a href="cart.php"><button>View Bag</button></a>
+      <a href="checkout.php"><button>Checkout</button></a>
+    </div>
+  </div>
+</div>
+
+<div class="dropdown-cart-1">
+  <button class="cart-toggle-btn-1">
+    <i class="fas fa-heart"></i>
+    <span class="cart-count-1">0</span>
+  </button>
+  <div class="cart-window-1">
+    <div class="cart-items-1"></div>
+    <div class="wishlist-footer">
+      <a href="wishlist.php"><button>View</button></a>
+    </div>
+  </div>
+</div>

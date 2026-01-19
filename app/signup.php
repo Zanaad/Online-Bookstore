@@ -76,14 +76,19 @@ if (isset($_POST['submit'])) {
    <div class="form-container">
 
       <form action="" method="post">
-         <h3>Register Now</h3>
-         <input type="text" name="name" placeholder="Enter your name" required class="box" value="<?= isset($name) ? htmlspecialchars($name) : '' ?>">
+         <h3>
+            <i class="fas fa-user-plus"></i> Register Now
+         </h3>
+         <div style="margin-bottom: 1.5rem; font-size: 4rem; color: rgba(102, 126, 234, 0.8);">
+            <i class="fas fa-book"></i>
+         </div>
+         <input type="text" name="name" placeholder="👤 Enter your name" required class="box" value="<?= isset($name) ? htmlspecialchars($name) : '' ?>">
          <span class="error"><?= isset($nameErr) ? $nameErr : '' ?></span>
-         <input type="email" name="email" placeholder="Enter your email" required class="box" value="<?= isset($email) ? htmlspecialchars($email) : '' ?>">
+         <input type="email" name="email" placeholder="📧 Enter your email" required class="box" value="<?= isset($email) ? htmlspecialchars($email) : '' ?>">
          <span class="error"><?= isset($emailErr) ? $emailErr : '' ?></span>
-         <input type="password" name="password" placeholder="Enter your password" required class="box">
+         <input type="password" name="password" placeholder="🔒 Enter your password" required class="box">
          <span class="error"><?= isset($passwordErr) ? $passwordErr : '' ?></span>
-         <input type="password" name="cpassword" placeholder="Confirm your password" required class="box">
+         <input type="password" name="cpassword" placeholder="🔐 Confirm your password" required class="box">
          <span class="error"><?= isset($confirmPasswordErr) ? $confirmPasswordErr : '' ?></span>
          <input type="submit" name="submit" value="Register Now" class="btn">
          <p>Already have an account? <a href="login.php">Login Now</a></p>

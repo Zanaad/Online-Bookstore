@@ -1,3 +1,28 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+  session_start();
+}
+
+include './php/db_connect.php';
+
+if (!isset($_SESSION['user_id'])) {
+  header('Location: login.php');
+  exit();
+}
+
+$user_id = $_SESSION['user_id'];
+
+if (isset($_GET['delete'])) {
+  $delete_id = $_GET['delete'];
+  mysqli_query($conn, "DELETE FROM `wishlist` WHERE id = '$delete_id'") or die('query failed');
+  header('location:wishlist.php');
+}
+
+if (isset($_GET['delete_all'])) {
+  mysqli_query($conn, "DELETE FROM `wishlist` WHERE user_id = '$user_id'") or die('query failed');
+  header('location:wishlist.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,32 +38,8 @@
 
 <body>
 
-
   <?php
-  if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-  }
-
   include './php/header.php';
-  include './php/db_connect.php';
-
-  if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php');
-    exit();
-  }
-
-  $user_id = $_SESSION['user_id'];
-
-  if (isset($_GET['delete'])) {
-    $delete_id = $_GET['delete'];
-    mysqli_query($conn, "DELETE FROM `wishlist` WHERE id = '$delete_id'") or die('query failed');
-    header('location:wishlist.php');
-  }
-
-  if (isset($_GET['delete_all'])) {
-    mysqli_query($conn, "DELETE FROM `wishlist` WHERE user_id = '$user_id'") or die('query failed');
-    header('location:wishlist.php');
-  }
   ?>
 
   <div class="heading">
