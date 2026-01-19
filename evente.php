@@ -3,17 +3,19 @@ $a = 1984;
 // Krijoni një referencë të variablës $a
 $referenceToA = &$a;
 // Shtyp vlerën e $a përpara largimit të referencës
-echo $a; 
+echo $a;
 // Largo referencën
 unset($referenceToA);
 // Shtyp vlerën e $a pas largimit të referencës
 echo $a;
 
-function llogarit($numri, $operacion) {
+function llogarit($numri, $operacion)
+{
   return $operacion($numri);
 }
 
-function dyfisho($x) {
+function dyfisho($x)
+{
   return $x * 2;
 }
 ?>
@@ -26,8 +28,8 @@ function dyfisho($x) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Evente</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet " integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
-  <link rel="stylesheet" href="style2.css" />
-  <link rel="stylesheet" href="style1.css" />
+  <link rel="stylesheet" href="css/style2.css" />
+  <link rel="stylesheet" href="css/style1.css" />
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 
@@ -148,15 +150,21 @@ function dyfisho($x) {
       <tr>
         <td>Cmimi</td>
         <td>
-          <h6 id="cmimi" style="display: none"><<?php echo llogarit(5, 'dyfisho'); ?>€</mark></h6>
+          <h6 id="cmimi" style="display: none">
+            <<?php echo llogarit(5, 'dyfisho'); ?>€< /mark>
+          </h6>
           <button id="button-3">Shiko cmimin</button>
         </td>
         <td>
-          <h6 id="cmimi-1" style="display: none"><mark><<?php echo llogarit(4, 'dyfisho'); ?>€</mark></h6>
+          <h6 id="cmimi-1" style="display: none"><mark>
+              <<?php echo llogarit(4, 'dyfisho'); ?>€< /mark>
+          </h6>
           <button id="button-4">Shiko cmimin</button>
         </td>
         <td>
-          <h6 id="cmimi-2" style="display: none"><mark><<?php echo llogarit(6, 'dyfisho'); ?>€</mark></h6>
+          <h6 id="cmimi-2" style="display: none"><mark>
+              <<?php echo llogarit(6, 'dyfisho'); ?>€< /mark>
+          </h6>
           <button id="button-5">Shiko cmimin</button>
         </td>
       </tr>
