@@ -1,11 +1,11 @@
 services:
   php-apache:
-    build: .
+    image: zanaad/online-bookstore
     container_name: php_apache_container
     ports:
       - "8000:80"
     volumes:
-      - ./app:/var/www/html
+      - .:/var/www/html
     depends_on:
       - mysql
     environment:
@@ -27,7 +27,7 @@ services:
       - "3307:3306"
     volumes:
       - db_data:/var/lib/mysql
-      - ./app/bookstore_db.sql:/docker-entrypoint-initdb.d/bookstore_db.sql
+      - ./bookstore_db.sql:/docker-entrypoint-initdb.d/bookstore_db.sql
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
